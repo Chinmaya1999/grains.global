@@ -1,5 +1,5 @@
 const n = (v) => (Number.isFinite(+v) ? +v : 0);
-const usd = (v) => `$${Math.round(v).toLocaleString('en-US')}`;
+const usd = (v) => `${v < 0 ? '-' : ''}$${Math.abs(Math.round(v)).toLocaleString('en-US')}`;
 const f = (v, d = 2) => (+v).toLocaleString('en-US', { maximumFractionDigits: d });
 
 export const CALCS = [

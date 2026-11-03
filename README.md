@@ -17,7 +17,7 @@ To become admin, register with the email in `ADMIN_EMAIL`, then open `/admin`.
 
 ## Security
 - **Sessions:** a 15-minute access token (kept in memory) plus a 7-day refresh token in an HttpOnly, SameSite=Strict cookie. Refresh tokens rotate on every use, are stored hashed, and replaying an old one signs the user out everywhere.
-- **Passwords:** bcrypt, 8–72 characters with a letter and a number. Five failed logins lock the account for 15 minutes.
+- **Passwords:** bcrypt, 8–72 characters with a letter and a number. Five failed logins lock that account for 15 minutes; an IP address is paused after 20 *failed* attempts (successful sign-ins never count, so offices sharing one IP are fine).
 - **Authorization:** role checks on every protected route (admin, seller). Changing a password or an admin reset signs the user out of all devices.
 - **Hardening:** security headers (CSP, nosniff, frame-deny), rate limits, NoSQL-injection filtering, same-origin check on cookie endpoints, request-size limits.
 - **Production:** set `NODE_ENV=production` (Secure cookies, HSTS), `CLIENT_ORIGIN` to your site's URL, `TRUST_PROXY=1` behind nginx, and serve over HTTPS.
@@ -40,3 +40,9 @@ Pull requests and other branches run the CI workflow only (tests + a Docker buil
 - Logs: `ssh ec2-user@<host> 'cd /opt/grains && docker compose logs -f'`
 - Redeploy a specific commit: Actions → Deploy → Run workflow (or `bash deploy.sh <tag>` on the server).
 - **HTTPS**: with a domain pointing at the server, put a TLS terminator in front (Caddy or certbot), then set the repo variables `CLIENT_ORIGIN=https://your-domain` and `COOKIE_SECURE=true`. Cookies are not marked Secure while the site is served over plain HTTP.
+
+
+## Tests
+- `cd server && npm test` – unit tests for the password policy, injection filtering, token handling, role checks and rate limiting (no database needed).
+- CI runs these plus a client build and Docker image builds on every push and pull request.
+- Browser-level checks used while building this (all pages, search, menus, calculators, forms, sign-in/up, the admin console, accessibility and overflow at 6 screen widths) drove real Chrome with `puppeteer-core`. They create test data, so run them against a throw-away database, not production.

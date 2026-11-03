@@ -34,7 +34,7 @@ export default function Admin() {
   if (!user || user.role !== 'admin') {
     return shell(
       <div className="gate glass"><h1>Admin access only</h1><p>{user ? 'Your account is not an administrator.' : 'Sign in with the admin account to continue.'}</p>
-        <Link className="gbtn pri" to="/account">{user ? 'Go to your account' : 'Sign in'}</Link><Link className="gbtn" to="/">Back to site</Link></div>,
+        <Link className="gbtn pri" to="/account?next=/admin">{user ? 'Go to your account' : 'Sign in'}</Link><Link className="gbtn" to="/">Back to site</Link></div>,
     );
   }
 

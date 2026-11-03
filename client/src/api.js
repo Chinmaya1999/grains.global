@@ -19,7 +19,7 @@ export const setAccess = (t) => { access = t; };
 function refreshAccess() {
   if (!refreshing) {
     refreshing = fetch('/api/auth/refresh', { method: 'POST', credentials: 'same-origin' })
-      .then(async (res) => { if (!res.ok) { access = null; return null; } const d = await res.json(); access = d.token; return d; })
+      .then(async (res) => { if (!res.ok) { access = null; return null; } const d = await res.json(); access = d.token || null; return d.token ? d : null; })
       .catch(() => null)
       .finally(() => { refreshing = null; });
   }

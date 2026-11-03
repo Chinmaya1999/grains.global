@@ -9,24 +9,31 @@ import { STEPS, ROLES, PROMPTS, FALLBACK_VARIETIES } from '../lib/data.js';
 import { CALCS, SCORES } from '../lib/tools.js';
 import { inGroup, priceLabel } from '../lib/format.js';
 
-const TABS = [['Buy (RFQ)', 'cart', '/join?role=buyer'], ['Sell (Offer)', 'tag', '/account'], ['Find Finance', 'bank', '/tools?tool=lc'], ['Find a Partner', 'people', '/partner']];
+// Each tab changes what the bar asks and where the button goes; nothing navigates until you press the button.
+const TABS = [
+  ['Buy (RFQ)', 'cart', 'Search commodity, variety (e.g., 1121 Basmati)', (q) => (q ? `/marketplace?q=${encodeURIComponent(q)}` : '/marketplace'), 'Search the marketplace'],
+  ['Sell (Offer)', 'tag', 'What do you want to sell? (e.g., 1121 Basmati)', () => '/account?mode=register&role=seller', 'Start selling'],
+  ['Find Finance', 'bank', 'Which instrument? (LC, BG, invoice finance)', () => '/finance', 'See finance options'],
+  ['Find a Partner', 'people', 'Which country do you trade in?', () => '/partner', 'See the partner program'],
+];
 const FAMILIES = ['Basmati', 'Non-Basmati', 'Sella'];
 
 function Finder() {
   const nav = useNavigate();
   const [tab, setTab] = useState(0);
   const [q, setQ] = useState('');
-  const go = (e) => { e.preventDefault(); nav(q.trim() ? `/marketplace?q=${encodeURIComponent(q.trim())}` : TABS[tab][2]); };
+  const [, , placeholder, route, label] = TABS[tab];
+  const go = (e) => { e.preventDefault(); nav(route(q.trim())); };
   return (
     <form className="finder" onSubmit={go} role="search">
-      <div className="ftabs" role="tablist">
+      <div className="ftabs" role="tablist" aria-label="What would you like to do?">
         {TABS.map(([l, ic], i) => (
-          <button type="button" key={l} role="tab" aria-selected={i === tab} className={i === tab ? 'on' : ''} onClick={() => { setTab(i); nav(TABS[i][2]); }}><Icon n={ic} size={20} />{l}</button>
+          <button type="button" key={l} role="tab" aria-selected={i === tab} className={i === tab ? 'on' : ''} onClick={() => setTab(i)}><Icon n={ic} size={20} />{l}</button>
         ))}
       </div>
       <div className="fsearch">
-        <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search commodity, variety (e.g., 1121 Basmati)" aria-label="Search commodity or variety" />
-        <button aria-label="Search"><Icon n="search" size={22} /></button>
+        <input value={q} onChange={(e) => setQ(e.target.value)} placeholder={placeholder} aria-label={placeholder} />
+        <button aria-label={label} title={label}><Icon n="search" size={22} /></button>
       </div>
     </form>
   );

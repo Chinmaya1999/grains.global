@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs';
 import { User, Offer, Product, RefreshToken } from '../models/index.js';
 import {
   auth, admin, requireRole, passwordProblem, hashPassword, DUMMY_HASH, startSession, rotateSession, clearSessionCookie,
-  revokeAllSessions, currentSessionHash, loginLimiter, registerLimiter, refreshLimiter, sameOrigin,
+  revokeAllSessions, currentSessionHash, hasSessionCookie, loginLimiter, passwordLimiter, registerLimiter, refreshLimiter, sameOrigin,
 } from '../security.js';
 
 const r = Router();
@@ -49,7 +49,10 @@ r.post('/auth/login', loginLimiter, sameOrigin, wrap(async (req, res) => {
 }));
 
 // Restore a session from the HttpOnly cookie; issues a fresh access token and rotates the refresh token.
-r.post('/auth/refresh', refreshLimiter, sameOrigin, wrap(async (req, res) => {
+// A first-time visitor simply has no session yet: that is an answer, not an error (no red 401 in the console),
+// and it must not use up anyone's rate-limit budget, so it is answered before the limiter runs.
+const noSession = (req, res, next) => (hasSessionCookie(req) ? next() : res.json({ token: null, user: null }));
+r.post('/auth/refresh', noSession, refreshLimiter, sameOrigin, wrap(async (req, res) => {
   const s = await rotateSession(req, res);
   if (!s) return res.status(401).json({ error: 'Please sign in.' });
   res.json({ token: s.token, user: pub(s.user) });
@@ -70,7 +73,7 @@ r.post('/auth/logout-all', auth, wrap(async (req, res) => {
   res.json({ ok: true });
 }));
 
-r.post('/auth/password', auth, loginLimiter, sameOrigin, wrap(async (req, res) => {
+r.post('/auth/password', auth, passwordLimiter, sameOrigin, wrap(async (req, res) => {
   const { currentPassword, newPassword } = req.body || {};
   if (typeof currentPassword !== 'string' || !(await bcrypt.compare(currentPassword, req.user.passwordHash))) return res.status(401).json({ error: 'Your current password is incorrect.' });
   const problem = passwordProblem(newPassword);

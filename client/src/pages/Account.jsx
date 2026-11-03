@@ -1,44 +1,23 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../lib/auth.jsx';
 import { request, getProducts, setAccess } from '../api.js';
 import { Reveal } from '../components/bits.jsx';
-import { Photo } from '../components/Art.jsx';
-import { LogoMark } from '../components/Logo.jsx';
+import Auth from './Auth.jsx';
 
-function AuthForm() {
-  const { login, register } = useAuth();
-  const [mode, setMode] = useState('login');
-  const [err, setErr] = useState('');
-  const [busy, setBusy] = useState(false);
-  async function submit(e) {
-    e.preventDefault();
-    setBusy(true); setErr('');
-    const body = Object.fromEntries(new FormData(e.currentTarget));
-    try { await (mode === 'login' ? login(body) : register(body)); }
-    catch (x) { setErr(x.message); setBusy(false); }
-  }
+
+function Welcome({ user, onClose }) {
+  const seller = user.role === 'seller';
   return (
-    <section className="auth">
-      <Photo name="login-bg" scene="paddy" alt="" className="auth-bg" />
-      <div className="auth-card">
-        <LogoMark size={44} />
-        <h1>{mode === 'login' ? 'Welcome back.' : 'Join the harvest.'}</h1>
-        <p className="muted">{mode === 'login' ? 'Sign in to manage offers, verification and requests.' : 'Create an account to trade, finance and grow on the AIM corridor.'}</p>
-        <div className="chips"><button className={mode === 'login' ? 'on' : ''} onClick={() => setMode('login')}>Sign in</button><button className={mode === 'register' ? 'on' : ''} onClick={() => setMode('register')}>Register</button></div>
-        <form className="form one" onSubmit={submit}>
-          {mode === 'register' && <>
-            <label>Name<input name="name" required autoComplete="name" /></label>
-            <label>Company<input name="company" autoComplete="organization" /></label>
-            <label>I am a<select name="role"><option value="buyer">Buyer</option><option value="seller">Seller / exporter</option><option value="partner">Trading partner</option><option value="agropreneur">AgroPreneur</option><option value="bank">Bank / NBFC</option></select></label>
-          </>}
-          <label>Email<input name="email" type="email" required autoComplete="email" /></label>
-          <label>Password<input name="password" type="password" required minLength={8} maxLength={72} autoComplete={mode === 'login' ? 'current-password' : 'new-password'} />
-            {mode === 'register' && <small>At least 8 characters, with a letter and a number.</small>}</label>
-          {err && <p className="err" role="alert">{err}</p>}
-          <button className="btn lime" disabled={busy}>{busy ? 'Please wait…' : mode === 'login' ? 'Sign in' : 'Create account'}</button>
-        </form>
-      </div>
+    <section className="welcome" aria-label="Getting started">
+      <button className="x" onClick={onClose} aria-label="Dismiss">×</button>
+      <h2>Welcome aboard, {user.name.split(' ')[0]}.</h2>
+      <p>Your account is ready. Here is how to get the most out of it:</p>
+      <ol>
+        <li><b>1. Verify your business</b>Add your GSTIN or IEC number below. Verified accounts earn buyers’ trust{seller ? ' and go live instantly' : ''}.</li>
+        <li><b>2. {seller ? 'Post your first offer' : 'Browse the market'}</b>{seller ? 'Use “Post an offer” below to list rice for global buyers.' : <><Link to="/marketplace">Open the marketplace</Link> to compare varieties and send an RFQ.</>}</li>
+        <li><b>3. Try the free tools</b><Link to="/tools">Calculators and scorecards</Link> for landed cost, LC cost and your trust score.</li>
+      </ol>
     </section>
   );
 }
@@ -75,10 +54,11 @@ function Seller() {
   useEffect(() => { getProducts().then(setProducts); load(); }, []);
   async function submit(e) {
     e.preventDefault(); setMsg('');
-    const b = Object.fromEntries(new FormData(e.currentTarget));
+    const form = e.currentTarget; // React clears currentTarget after an await, so keep a reference
+    const b = Object.fromEntries(new FormData(form));
     try {
       const o = await request('/my/offers', { method: 'POST', body: { ...b, quantityMT: +b.quantityMT, priceUsdPerMT: +b.priceUsdPerMT } });
-      setMsg(o.status === 'live' ? 'Offer is live.' : 'Offer saved and waiting for review.'); load(); e.currentTarget.reset();
+      setMsg(o.status === 'live' ? 'Offer is live.' : 'Offer saved and waiting for review.'); load(); form.reset();
     } catch (x) { setMsg(x.message); }
   }
   return (
@@ -131,10 +111,11 @@ function Security({ toast }) {
 
   async function changePassword(e) {
     e.preventDefault();
-    const f = Object.fromEntries(new FormData(e.currentTarget));
+    const form = e.currentTarget;
+    const f = Object.fromEntries(new FormData(form));
     try {
       const d = await request('/auth/password', { method: 'POST', body: f });
-      setAccess(d.token); e.currentTarget.reset(); setMsg({ text: 'Password changed. Your other devices were signed out.', bad: false }); load();
+      setAccess(d.token); form.reset(); setMsg({ text: 'Password changed. Your other devices were signed out.', bad: false }); load();
     } catch (x) { setMsg({ text: x.message, bad: true }); }
   }
   const revoke = (id) => request(`/auth/sessions/${id}`, { method: 'DELETE' }).then(load);
@@ -167,12 +148,14 @@ function Security({ toast }) {
 
 export default function Account() {
   const { user, setUser, ready, logout } = useAuth();
+  const [params, setParams] = useSearchParams();
   if (!ready) return <div className="page" />;
-  if (!user) return <AuthForm />;
+  if (!user) return <Auth />;
   return (
     <div className="page">
       <Reveal><p className="tag">DASHBOARD · {user.role.toUpperCase()}</p><h1 className="h1">Hello, {user.name.split(' ')[0]}.</h1>
         <div className="row">{user.role === 'admin' && <Link className="btn lime sm" to="/admin">Open admin console</Link>}<button className="btn ghost sm" onClick={logout}>Sign out</button></div></Reveal>
+      {params.get('welcome') && <Welcome user={user} onClose={() => setParams({}, { replace: true })} />}
       <Kyc user={user} setUser={setUser} />
       <Security />
       {(user.role === 'seller' || user.role === 'admin') && <Seller />}

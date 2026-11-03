@@ -54,6 +54,7 @@ export default function SatelliteMap() {
 
     // On wide screens push the corridor to the right so the headline and woman sit over open ground.
     const fit = () => {
+      if (!el.current) return; // can fire after navigating away
       map.invalidateSize();
       const w = el.current.clientWidth, wide = w > 1180;
       map.fitBounds([[-30, -6], [40, 96]], { paddingTopLeft: [wide ? w * 0.4 : 6, wide ? 56 : 8], paddingBottomRight: [8, wide ? 70 : 8], animate: false });

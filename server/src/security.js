@@ -56,10 +56,13 @@ const clean = (o) => {
 };
 export const sanitize = (req, _res, next) => { clean(req.body); clean(req.params); clean(req.query); next(); };
 
-const limit = (windowMs, max, error) => rateLimit({ windowMs, limit: max, standardHeaders: 'draft-7', legacyHeaders: false, message: { error } });
-export const apiLimiter = limit(15 * 60e3, 600, 'Too many requests. Please slow down.');
-export const loginLimiter = limit(15 * 60e3, 10, 'Too many sign-in attempts. Please try again in 15 minutes.');
-export const registerLimiter = limit(60 * 60e3, 10, 'Too many sign-ups from this address. Please try again later.');
+const limit = (windowMs, max, error, extra = {}) => rateLimit({ windowMs, limit: max, standardHeaders: 'draft-7', legacyHeaders: false, message: { error }, ...extra });
+export const apiLimiter = limit(15 * 60e3, 1500, 'Too many requests. Please slow down.');
+// Only FAILED attempts count, so a whole office signing in behind one IP address is never locked out by successes.
+// Per-account lockout (5 failures) still protects each individual account.
+export const loginLimiter = limit(15 * 60e3, 20, 'Too many failed sign-in attempts. Please try again in 15 minutes.', { skipSuccessfulRequests: true });
+export const passwordLimiter = limit(15 * 60e3, 10, 'Too many password attempts. Please try again in 15 minutes.', { skipSuccessfulRequests: true });
+export const registerLimiter = limit(60 * 60e3, 30, 'Too many sign-ups from this address. Please try again later.');
 export const refreshLimiter = limit(15 * 60e3, 120, 'Too many session checks. Please slow down.');
 export const leadLimiter = limit(60 * 60e3, 20, 'Too many submissions. Please try again later.');
 
@@ -90,6 +93,7 @@ export async function startSession(u, req, res) {
 }
 export const clearSessionCookie = (res) => res.clearCookie(COOKIE, cookieOpts);
 export const revokeAllSessions = (userId) => RefreshToken.updateMany({ user: userId, revokedAt: null }, { revokedAt: new Date() });
+export const hasSessionCookie = (req) => !!req.cookies?.[COOKIE];
 export const currentSessionHash = (req) => (req.cookies?.[COOKIE] ? sha(req.cookies[COOKIE]) : null);
 
 // Swap the refresh token for a new one. Presenting an already-used token means it was stolen,

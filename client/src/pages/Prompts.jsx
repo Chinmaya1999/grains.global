@@ -7,8 +7,22 @@ const GROUPS = ['All', ...new Set(PROMPTS.map((p) => p[0]))];
 export default function Prompts() {
   const [g, setG] = useState('All');
   const [copied, setCopied] = useState(null);
+  // navigator.clipboard only exists on HTTPS / localhost, so on a plain-HTTP site fall back to the older copy command.
+  async function copyText(text) {
+    try { if (navigator.clipboard && window.isSecureContext) { await navigator.clipboard.writeText(text); return true; } } catch { /* fall through */ }
+    try {
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.setAttribute('readonly', ''); ta.style.cssText = 'position:fixed;top:-1000px;opacity:0';
+      document.body.appendChild(ta); ta.select();
+      const ok = document.execCommand('copy');
+      ta.remove();
+      return ok;
+    } catch { return false; }
+  }
   const copy = async (text, i) => {
-    try { await navigator.clipboard.writeText(text); setCopied(i); setTimeout(() => setCopied(null), 1500); } catch { /* clipboard blocked */ }
+    const ok = await copyText(text);
+    setCopied(ok ? i : `fail-${i}`);
+    setTimeout(() => setCopied(null), 2200);
   };
   return (
     <div className="page">
@@ -18,8 +32,8 @@ export default function Prompts() {
       <div className="spec-grid">
         {PROMPTS.map(([grp, title, text], i) => (g === 'All' || g === grp) && (
           <article className="spec prompt" key={title}>
-            <small>{grp}</small><h3>{title}</h3><p>{text}</p>
-            <button className="btn ghost sm" onClick={() => copy(text, i)}>{copied === i ? 'Copied ✓' : 'Copy'}</button>
+            <small>{grp}</small><h3>{title}</h3><p className="prompt-text">{text}</p>
+            <button className="btn ghost sm" onClick={() => copy(text, i)}>{copied === i ? 'Copied ✓' : copied === `fail-${i}` ? 'Press Ctrl+C to copy' : 'Copy'}</button>
           </article>
         ))}
       </div>

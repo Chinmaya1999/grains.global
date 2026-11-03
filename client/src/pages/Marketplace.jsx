@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
+import { Icon } from '../components/Art.jsx';
 import { Reveal } from '../components/bits.jsx';
 import LeadForm from '../components/LeadForm.jsx';
 import { getProducts, getOffers } from '../api.js';
@@ -10,11 +11,14 @@ const FAMILIES = ['All', 'Basmati', 'Non-Basmati', 'Sella'];
 export default function Marketplace() {
   const [products, setProducts] = useState([]);
   const [offers, setOffers] = useState([]);
-  const [params] = useSearchParams();
+  const [params, setParams] = useSearchParams();
   const [family, setFamily] = useState(FAMILIES.includes(params.get('family')) ? params.get('family') : 'All');
   useEffect(() => { getProducts().then(setProducts); getOffers().then(setOffers); }, []);
-  const term = (params.get('q') || '').toLowerCase();
-  const shown = products.filter((p) => inGroup(p, family) && (!term || p.name.toLowerCase().includes(term)));
+  const q = params.get('q') || '';
+  const terms = q.toLowerCase().split(/\s+/).filter(Boolean);
+  const hay = (p) => `${p.name} ${p.family} ${p.processing} ${p.hsn || ''} ${p.grain?.length || ''}`.toLowerCase();
+  const shown = products.filter((p) => inGroup(p, family) && terms.every((t) => hay(p).includes(t)));
+  const setQ = (v) => { const next = new URLSearchParams(params); if (v) next.set('q', v); else next.delete('q'); setParams(next, { replace: true }); };
 
   return (
     <div className="page">
@@ -39,7 +43,19 @@ export default function Marketplace() {
       <p className="note">Offers from sellers named “Sample” are illustrative until real sellers go live.</p>
 
       <h2 className="h3">Catalogue</h2>
+      <div className="mk-bar">
+        <div className="mk-search">
+          <Icon n="search" size={19} />
+          <input type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search varieties, e.g. 1121, sella, PR 14" aria-label="Search varieties" />
+          {q && <button onClick={() => setQ('')} aria-label="Clear search"><Icon n="close" size={16} /></button>}
+        </div>
+        <p className="mk-count" aria-live="polite">{products.length ? `${shown.length} of ${products.length} varieties` : ''}</p>
+      </div>
       <div className="chips">{FAMILIES.map((f) => <button key={f} className={f === family ? 'on' : ''} onClick={() => setFamily(f)}>{f}</button>)}</div>
+      {products.length > 0 && shown.length === 0 && (
+        <div className="mk-empty"><b>No varieties match{q ? ` “${q}”` : ''}{family !== 'All' ? ` in ${family}` : ''}.</b><p>Check the spelling, or try a broader search.</p>
+          <div className="row"><button className="btn sm" onClick={() => { setQ(''); setFamily('All'); }}>Show all varieties</button><a className="btn ghost sm" href="#rfq">Can’t find it? Post a requirement</a></div></div>
+      )}
       <div className="spec-grid">
         {shown.map((p) => (
           <Link className="spec" key={p.slug} to={`/rice/${p.slug}`}>

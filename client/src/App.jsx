@@ -28,6 +28,8 @@ function TabBar() {
   );
 }
 
+const DEFAULT_TITLE = document.title;
+
 function Shell() {
   const { pathname } = useLocation();
   const isAdmin = pathname.startsWith('/admin');
@@ -39,6 +41,15 @@ function Shell() {
     }
     scrollTo(0, 0);
   }, [pathname, hash]);
+  // Each page gets its own browser-tab / history title, taken from its main heading.
+  useEffect(() => {
+    const t = setTimeout(() => {
+      const h = document.querySelector('h1')?.textContent?.trim();
+      const short = h && h.length > 58 ? `${h.slice(0, 57)}…` : h;
+      document.title = isAdmin ? `Admin${short ? ` · ${short}` : ''}` : pathname === '/' || !short ? DEFAULT_TITLE : `${short} · Grains Global`;
+    }, 250);
+    return () => clearTimeout(t);
+  }, [pathname, isAdmin]);
   if (isAdmin) return <Routes><Route path="/admin/:tab?" element={<Admin />} /></Routes>;
 
   return (

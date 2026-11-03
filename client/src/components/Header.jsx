@@ -3,6 +3,7 @@ import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useAuth } from '../lib/auth.jsx';
 import { Icon } from './Art.jsx';
 import { Logo } from './Logo.jsx';
+import Search from './Search.jsx';
 import { SETTINGS } from '../lib/content.js';
 
 // [label, items, columns, feature]; item = [title, path, icon, description]
@@ -68,8 +69,18 @@ export default function Header() {
   const [open, setOpen] = useState(false);
   const { pathname } = useLocation();
   const [group, setGroup] = useState(null);
+  const [searching, setSearching] = useState(false);
   const [last, setLast] = useState(pathname);
-  if (last !== pathname) { setLast(pathname); setOpen(false); setGroup(null); }
+  if (last !== pathname) { setLast(pathname); setOpen(false); setGroup(null); setSearching(false); }
+  // "/" or Ctrl/⌘+K opens search from anywhere (unless you are typing in a field)
+  useEffect(() => {
+    const onKey = (e) => {
+      const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName) || document.activeElement?.isContentEditable;
+      if ((e.key === '/' && !typing && !e.metaKey && !e.ctrlKey) || ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k')) { e.preventDefault(); setSearching(true); setOpen(false); }
+    };
+    addEventListener('keydown', onKey);
+    return () => removeEventListener('keydown', onKey);
+  }, []);
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
@@ -83,7 +94,7 @@ export default function Header() {
         <Logo />
         <nav className={`menu ${open ? 'open' : ''}`} aria-label="Main">
           {MENU.map(([label, items, cols, feat], idx) => {
-            const here = items.some((it) => it[1].split(/[?#]/)[0] === pathname);
+            const here = items.some((it) => it[1].split(/[?#]/)[0] === pathname && pathname !== '/account'); // /account is shared by sign-in links, so it doesn't mark one section
             return (
               <div className={`mi ${group === label ? 'open' : ''} ${idx >= MENU.length - 3 ? 'edge' : ''} ${feat ? feat.theme : ''}`} key={label}>
                 <button className={`mb ${here ? 'cur' : ''}`} aria-haspopup="true" aria-expanded={group === label} onClick={() => setGroup(group === label ? null : label)}>{label}<Icon n="chev" size={14} /></button>
@@ -110,14 +121,16 @@ export default function Header() {
           <Link className="m-only" to="/account">{user ? 'My account' : 'Log In'}</Link>
         </nav>
         <div className="hdr-act">
-          <Link to="/marketplace" className="ib" aria-label="Search marketplace"><Icon n="search" size={19} /></Link>
+          <button className="ib" aria-label="Search" aria-haspopup="dialog" onClick={() => { setSearching(true); setOpen(false); }}><Icon n="search" size={19} /></button>
           {user?.role === 'admin' && <Link to="/admin" className="ib txt">Admin</Link>}
           <Link to="/account" className="login">{user ? user.name.split(' ')[0] : 'Log In'}</Link>
-          <Link to="/join" className="cta">Get Started<Icon n="arrow" size={16} /></Link>
+          <Link to="/account" className="ib acct" aria-label={user ? 'My account' : 'Log in'}><Icon n="user" size={19} /></Link>
+          <Link to="/account?mode=register" className="cta">Get Started<Icon n="arrow" size={16} /></Link>
           <button className="ib burger" onClick={() => setOpen(!open)} aria-label="Menu" aria-expanded={open}><Icon n={open ? 'close' : 'menu'} /></button>
         </div>
       </div>
     </header>
+    {searching && <Search onClose={() => setSearching(false)} />}
     </>
   );
 }
