@@ -1,0 +1,17 @@
+# Runs on the EC2 server. Images are built by GitHub Actions and pulled from Docker Hub.
+name: grains
+services:
+  server:
+    image: ${DOCKERHUB_USER}/grains-server:${TAG}
+    restart: unless-stopped
+    env_file: .env.app          # secrets, written by the deploy job (never committed)
+    expose: ["5050"]
+    logging: { driver: json-file, options: { max-size: "10m", max-file: "3" } }
+
+  web:
+    image: ${DOCKERHUB_USER}/grains-web:${TAG}
+    restart: unless-stopped
+    depends_on:
+      server: { condition: service_healthy }
+    ports: ["80:80"]
+    logging: { driver: json-file, options: { max-size: "10m", max-file: "3" } }

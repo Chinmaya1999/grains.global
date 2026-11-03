@@ -1,0 +1,12 @@
+{
+  "name": "grains-global",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently -n api,web -c green,yellow \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
+    "seed": "npm run seed --prefix server",
+    "install:all": "npm i && npm i --prefix server && npm i --prefix client",
+    "build": "npm run build --prefix client",
+    "start": "npm start --prefix server"
+  },
+  "devDependencies": { "concurrently": "^9.0.0" }
+}

@@ -1,0 +1,61 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches-ignore: [main]   # main is covered by the Deploy workflow, which runs the same checks first
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  server:
+    name: Server tests
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: server } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm, cache-dependency-path: server/package-lock.json }
+      - run: npm ci
+      - name: Syntax check every source file
+        run: find src -name '*.js' -print0 | xargs -0 -n1 node --check
+      - run: npm test
+
+  client:
+    name: Client build
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: client } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm, cache-dependency-path: client/package-lock.json }
+      - run: npm ci
+      - run: npm run build
+
+  images:
+    name: Docker images build
+    needs: [server, client]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/build-push-action@v6
+        with: { context: server, push: false, cache-from: 'type=gha,scope=server', cache-to: 'type=gha,scope=server,mode=max' }
+      - uses: docker/build-push-action@v6
+        with: { context: client, push: false, cache-from: 'type=gha,scope=web', cache-to: 'type=gha,scope=web,mode=max' }
+
+  audit:
+    name: Dependency audit
+    runs-on: ubuntu-latest
+    continue-on-error: true   # reports known vulnerabilities without blocking a release
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm audit --omit=dev --audit-level=high --prefix server
+      - run: npm audit --omit=dev --audit-level=high --prefix client

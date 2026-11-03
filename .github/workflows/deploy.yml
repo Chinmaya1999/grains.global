@@ -1,0 +1,138 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Never run two deploys at once, and never cancel one that is already in flight.
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm, cache-dependency-path: '**/package-lock.json' }
+      - name: Server
+        working-directory: server
+        run: |
+          npm ci
+          find src -name '*.js' -print0 | xargs -0 -n1 node --check
+          npm test
+      - name: Client
+        working-directory: client
+        run: |
+          npm ci
+          npm run build
+
+  images:
+    name: Build & push images
+    needs: test
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.tag.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: tag
+        run: echo "tag=${GITHUB_SHA::12}" >> "$GITHUB_OUTPUT"
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Server image
+        uses: docker/build-push-action@v6
+        with:
+          context: server
+          push: true
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/grains-server:${{ steps.tag.outputs.tag }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/grains-server:latest
+          cache-from: type=gha,scope=server
+          cache-to: type=gha,scope=server,mode=max
+      - name: Web image (React build + nginx)
+        uses: docker/build-push-action@v6
+        with:
+          context: client
+          push: true
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/grains-web:${{ steps.tag.outputs.tag }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/grains-web:latest
+          cache-from: type=gha,scope=web
+          cache-to: type=gha,scope=web,mode=max
+
+  deploy:
+    name: Deploy to EC2
+    needs: images
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: ${{ vars.CLIENT_ORIGIN }}
+    env:
+      HOST: ${{ secrets.EC2_HOST }}
+      SSH_USER: ${{ secrets.EC2_USER }}
+      TAG: ${{ needs.images.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Prepare SSH (host key is pinned, not trusted on first use)
+        env:
+          EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
+          EC2_KNOWN_HOSTS: ${{ secrets.EC2_KNOWN_HOSTS }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$EC2_SSH_KEY" > ~/.ssh/deploy_key && chmod 600 ~/.ssh/deploy_key
+          printf '%s\n' "$EC2_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          printf 'Host target\n  HostName %s\n  User %s\n  IdentityFile ~/.ssh/deploy_key\n  StrictHostKeyChecking yes\n  BatchMode yes\n  ServerAliveInterval 15\n  ConnectTimeout 20\n' "$HOST" "$SSH_USER" > ~/.ssh/config
+
+      - name: Upload release files
+        run: scp deploy/docker-compose.yml deploy/deploy.sh target:/opt/grains/
+
+      - name: Write the app environment on the server
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+          CLIENT_ORIGIN: ${{ vars.CLIENT_ORIGIN }}
+          COOKIE_SECURE: ${{ vars.COOKIE_SECURE }}
+        run: |
+          umask 077
+          {
+            echo "NODE_ENV=production"
+            echo "PORT=5050"
+            echo "TRUST_PROXY=1"
+            echo "MONGODB_URI=$MONGODB_URI"
+            echo "JWT_SECRET=$JWT_SECRET"
+            echo "ADMIN_EMAIL=$ADMIN_EMAIL"
+            echo "CLIENT_ORIGIN=${CLIENT_ORIGIN:-http://$HOST}"
+            echo "COOKIE_SECURE=${COOKIE_SECURE:-false}"
+          } | ssh target 'umask 077; cat > /opt/grains/.env.app'
+
+      - name: Deploy (pull, restart, health-check, roll back on failure)
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+        run: |
+          # credentials go over stdin so they never appear in a process list; $TAG is meant to expand locally
+          # shellcheck disable=SC2029
+          printf '%s\n%s\n' "$DOCKERHUB_USERNAME" "$DOCKERHUB_TOKEN" | ssh target \
+            "read -r DOCKERHUB_USER; read -r DOCKERHUB_TOKEN; export DOCKERHUB_USER DOCKERHUB_TOKEN; bash /opt/grains/deploy.sh $TAG"
+
+      - name: Smoke test from the public internet
+        run: |
+          for _ in $(seq 1 20); do
+            if curl -fsS -m 8 "http://$HOST/healthz" >/dev/null && curl -fsS -m 8 "http://$HOST/api/health" >/dev/null && curl -fsS -m 8 "http://$HOST/api/products" | grep -q '"slug"'; then
+              echo "Site and API are reachable at http://$HOST"; exit 0
+            fi
+            sleep 5
+          done
+          echo "::error::The site is not reachable from the internet. Check that the EC2 security group allows inbound port 80." >&2
+          exit 1
