@@ -5,11 +5,11 @@ import { Icon, Photo } from '../components/Art.jsx';
 import { LogoMark } from '../components/Logo.jsx';
 
 const ROLES = [
-  ['buyer', 'Buyer', 'cart', 'Source verified rice'],
-  ['seller', 'Seller', 'store', 'Sell to global buyers'],
-  ['partner', 'Partner', 'handshake', 'Own a local market'],
-  ['agropreneur', 'AgroPreneur', 'sprout', 'Aggregate from farms'],
-  ['bank', 'Lender', 'bank', 'Finance real trades'],
+  ['buyer', 'Buyer', 'cart', 'Source verified rice from India with transparent pricing.'],
+  ['seller', 'Seller', 'store', 'List offers and sell to verified global buyers.'],
+  ['partner', 'Partner', 'handshake', 'Own the buyer relationship in your country and share the margin.'],
+  ['agropreneur', 'AgroPreneur', 'sprout', 'Aggregate supply from farmers, with free training and funding.'],
+  ['bank', 'Lender', 'bank', 'Quote finance on real, verified trades.'],
 ];
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const LEVELS = ['Too weak', 'Weak', 'Okay', 'Good', 'Strong'];
@@ -105,14 +105,14 @@ export default function Auth() {
       </aside>
 
       <div className="auth-panel">
-        <div className="auth-box">
+        <div className={`auth-box ${mode === 'register' ? 'reg' : ''}`}>
           <div className="seg" role="tablist" aria-label="Sign in or create an account">
             <button role="tab" aria-selected={mode === 'login'} className={mode === 'login' ? 'on' : ''} onClick={() => switchMode('login')}>Sign in</button>
             <button role="tab" aria-selected={mode === 'register'} className={mode === 'register' ? 'on' : ''} onClick={() => switchMode('register')}>Create account</button>
           </div>
 
           <h1>{mode === 'login' ? 'Welcome back' : 'Join the harvest'}</h1>
-          <p className="auth-sub">{mode === 'login' ? 'Sign in to manage your offers, verification and requests.' : 'Create a free account to trade, finance and grow on the AIM corridor.'}</p>
+          <p className="auth-sub">{mode === 'login' ? 'Sign in to manage your offers, verification and requests.' : 'Free to join. Trade, finance and grow on the AIM corridor.'}</p>
 
           <form onSubmit={submit} noValidate>
             {banner && <div className="banner" role="alert"><Icon n="alert" size={18} />{banner}</div>}
@@ -120,14 +120,15 @@ export default function Auth() {
             {mode === 'register' && (
               <fieldset className="roles">
                 <legend>I am a…</legend>
-                <div>
-                  {ROLES.map(([k, label, ic, d]) => (
+                <div className="pills">
+                  {ROLES.map(([k, label, ic]) => (
                     <label key={k} className={role === k ? 'on' : ''}>
                       <input type="radio" name="role" value={k} checked={role === k} onChange={() => setRole(k)} />
-                      <Icon n={ic} size={22} /><b>{label}</b><small>{d}</small>
+                      <Icon n={ic} size={18} /><span>{label}</span>
                     </label>
                   ))}
                 </div>
+                <p className="role-desc" aria-live="polite">{ROLES.find(([k]) => k === role)[3]}</p>
               </fieldset>
             )}
 
@@ -142,20 +143,22 @@ export default function Auth() {
               </div>
             )}
 
-            <Field id="f-email" label="Email" error={show_('email')}>
-              <input id="f-email" ref={mode === 'login' ? first : null} type="email" inputMode="email" value={v.email} onChange={set('email')} onBlur={blur('email')} autoComplete="email" autoCapitalize="none" spellCheck="false" maxLength={254} aria-invalid={!!show_('email')} aria-describedby="f-email-msg" />
-              {emailTaken && <p className="fld-msg"><button type="button" className="linkbtn" onClick={() => switchMode('login')}>Sign in instead →</button></p>}
-            </Field>
+            <div className={mode === 'register' ? 'two-col' : 'stack'}>
+              <Field id="f-email" label="Email" error={show_('email')}>
+                <input id="f-email" ref={mode === 'login' ? first : null} type="email" inputMode="email" value={v.email} onChange={set('email')} onBlur={blur('email')} autoComplete="email" autoCapitalize="none" spellCheck="false" maxLength={254} aria-invalid={!!show_('email')} aria-describedby="f-email-msg" />
+                {emailTaken && <p className="fld-msg"><button type="button" className="linkbtn" onClick={() => switchMode('login')}>Sign in instead →</button></p>}
+              </Field>
 
-            <Field id="f-password" label="Password" error={show_('password')}>
-              <div className="pw">
-                <input id="f-password" type={show ? 'text' : 'password'} value={v.password} onChange={set('password')} onBlur={blur('password')} onKeyUp={(e) => setCaps(e.getModifierState?.('CapsLock') || false)}
-                  autoComplete={mode === 'login' ? 'current-password' : 'new-password'} maxLength={72} aria-invalid={!!show_('password')} aria-describedby="f-password-msg" />
-                {eye}
-              </div>
-              {caps && <p className="fld-msg warn">Caps Lock is on.</p>}
-              {mode === 'login' && <p className="fld-msg forgot">Forgot your password? <Link to="/contact" className="link">Contact us</Link> and we’ll reset it.</p>}
-            </Field>
+              <Field id="f-password" label="Password" error={show_('password')}>
+                <div className="pw">
+                  <input id="f-password" type={show ? 'text' : 'password'} value={v.password} onChange={set('password')} onBlur={blur('password')} onKeyUp={(e) => setCaps(e.getModifierState?.('CapsLock') || false)}
+                    autoComplete={mode === 'login' ? 'current-password' : 'new-password'} maxLength={72} aria-invalid={!!show_('password')} aria-describedby="f-password-msg" />
+                  {eye}
+                </div>
+                {caps && <p className="fld-msg warn">Caps Lock is on.</p>}
+                {mode === 'login' && <p className="fld-msg forgot">Forgot your password? <Link to="/contact" className="link">Contact us</Link> and we’ll reset it.</p>}
+              </Field>
+            </div>
 
             {mode === 'register' && (
               <div className={`pwcheck ${touched.password && !pw.met ? 'bad' : ''}`} aria-live="polite">

@@ -588,16 +588,6 @@ input:focus, textarea:focus, select:focus { outline: none; border-color: var(--g
 .eye:hover { background: var(--g3); color: var(--g); }
 .linkbtn { border: 0; background: none; padding: 0; color: var(--g); font: inherit; font-weight: 700; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
 
-.roles { border: 0; padding: 0; margin: 0; min-width: 0; }
-.roles legend { font-weight: 700; font-size: .82rem; margin-bottom: 9px; padding: 0; }
-.roles > div { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; }
-.roles label { position: relative; display: grid; justify-items: center; gap: 3px; padding: 13px 6px 11px; text-align: center; border: 1.5px solid #cfd9cc; border-radius: 14px; cursor: pointer; transition: all .15s; color: var(--mut); }
-.roles label b { font-size: .86rem; color: var(--ink); } .roles label small { font-size: .68rem; line-height: 1.25; }
-.roles label:hover { border-color: #a9bba5; transform: translateY(-1px); }
-.roles label.on { border-color: var(--g); background: #f1f8ee; color: var(--g); box-shadow: 0 0 0 3px rgba(29, 107, 58, .12); }
-.roles label.on::after { content: '✓'; position: absolute; top: 6px; right: 8px; width: 17px; height: 17px; display: grid; place-items: center; border-radius: 50%; background: var(--g); color: #fff; font-size: .65rem; font-weight: 800; }
-.roles input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
-.roles label:has(input:focus-visible) { outline: 3px solid var(--gold); outline-offset: 2px; }
 
 .pwcheck { display: grid; grid-template-columns: 1fr auto; gap: 8px 12px; align-items: center; margin-top: -4px; }
 .meter { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; } .meter i { height: 5px; border-radius: 5px; background: #e1e8df; transition: background .25s; }
@@ -629,7 +619,6 @@ input:focus, textarea:focus, select:focus { outline: none; border-color: var(--g
   .auth-panel { padding: 24px 18px 40px; place-items: start center; }
   .auth-box h1 { font-size: 1.7rem; }
 }
-@media (max-width: 420px) { .two-col { grid-template-columns: 1fr; } .roles > div { grid-template-columns: repeat(2, 1fr); } }
 @media (prefers-reduced-motion: reduce) { .spin { animation-duration: 2s; } }
 
 /* ---------- global search panel ---------- */
@@ -697,3 +686,42 @@ input:focus, textarea:focus, select:focus { outline: none; border-color: var(--g
   .hero-map .aim-m b { font-size: .98rem; }
 }
 @media (max-width: 760px) { .hero2 .hero-copy2 { padding: 22px 16px 16px; } .hero2 .hero-woman { height: 320px; } }
+
+/* ---------- create account: compact, fits a laptop screen ---------- */
+.auth2 { align-items: start; }
+.auth-art { position: sticky; top: 54px; height: calc(100svh - 54px); min-height: 440px; }   /* stays in view while the form scrolls */
+.auth-panel { min-height: calc(100svh - 54px); padding: 28px 24px 44px; }
+.auth-box.reg { width: min(528px, 100%); }
+.auth-box form { gap: 14px; }
+.auth-box.reg .seg { margin-bottom: 18px; } .auth-box.reg h1 { font-size: 1.8rem; } .auth-box.reg .auth-sub { margin: 6px 0 16px; }
+.stack { display: grid; gap: 14px; }
+.fld input { height: 48px; }
+.fld label { margin-bottom: 6px; }
+
+.roles { border: 0; padding: 0; margin: 0; min-width: 0; }
+.roles legend { font-weight: 700; font-size: .82rem; margin-bottom: 8px; padding: 0; }
+.pills { display: flex; flex-wrap: wrap; gap: 7px; }
+.pills label { position: relative; display: inline-flex; align-items: center; gap: 6px; padding: 8px 11px; border: 1.5px solid #cfd9cc; border-radius: 999px; background: #fff; color: var(--mut); font-weight: 700; font-size: .86rem; cursor: pointer; transition: border-color .15s, background .15s, color .15s, box-shadow .15s; }
+.pills label:hover { border-color: #a9bba5; color: var(--ink); }
+.pills label.on { border-color: var(--g); background: #eaf5e6; color: var(--g); box-shadow: 0 0 0 3px rgba(29, 107, 58, .12); }
+.pills input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+.pills label:has(input:focus-visible) { outline: 3px solid var(--gold); outline-offset: 2px; }
+.role-desc { margin-top: 8px; min-height: 1.3em; font-size: .82rem; color: var(--mut); line-height: 1.4; }
+
+.pwcheck { gap: 6px 12px; margin-top: -2px; }
+.pwcheck ul { gap: 4px 14px; }
+.auth-box .legal { margin-top: -2px; } .auth-box .swap { margin-top: 14px; }
+
+@media (max-width: 900px) {
+  .auth-art { position: relative; top: 0; height: auto; min-height: 120px; }
+  .auth-panel { min-height: 0; padding: 18px 16px 36px; }
+  .auth-box.reg { width: min(520px, 100%); }
+}
+@media (max-width: 560px) {
+  .two-col { grid-template-columns: 1fr; gap: 14px; }
+  .auth-box h1, .auth-box.reg h1 { font-size: 1.5rem; }
+  .auth-sub { margin-bottom: 16px; font-size: .92rem; }
+  .seg { margin-bottom: 18px; } .seg button { padding: 10px 6px; }
+  .pills label { padding: 9px 12px; }
+  .authbtn { height: 52px; }
+}
