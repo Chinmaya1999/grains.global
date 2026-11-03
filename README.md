@@ -46,3 +46,7 @@ Pull requests and other branches run the CI workflow only (tests + a Docker buil
 - `cd server && npm test` – unit tests for the password policy, injection filtering, token handling, role checks and rate limiting (no database needed).
 - CI runs these plus a client build and Docker image builds on every push and pull request.
 - Browser-level checks used while building this (all pages, search, menus, calculators, forms, sign-in/up, the admin console, accessibility and overflow at 6 screen widths) drove real Chrome with `puppeteer-core`. They create test data, so run them against a throw-away database, not production.
+
+Email	contact@adihuman.com
+Password	8JJUOQKSxdS8ftK2Aa9
+Role	admin

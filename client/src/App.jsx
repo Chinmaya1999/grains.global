@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { Routes, Route, Link, NavLink, useLocation } from 'react-router-dom';
-import { AuthProvider } from './lib/auth.jsx';
+import { Routes, Route, Link, Navigate, NavLink, useLocation } from 'react-router-dom';
+import { AuthProvider, useAuth } from './lib/auth.jsx';
 import Header from './components/Header.jsx';
 import { Logo } from './components/Logo.jsx';
 import { Icon } from './components/Art.jsx';
@@ -12,6 +12,7 @@ import Prompts from './pages/Prompts.jsx';
 import Join from './pages/Join.jsx';
 import Account from './pages/Account.jsx';
 import Admin from './admin/Admin.jsx';
+import Dashboard from './dashboard/Dashboard.jsx';
 import ProductDetail from './pages/ProductDetail.jsx';
 import { About, WhyUs, Team, Manifesto, Sustainability, Livelihood, Contact, Privacy, Terms, Documents } from './pages/Company.jsx';
 import { Platform, Corridor, Trust, Fraud, Technology, ForBuyers, ForSellers, Agropreneur, Finance, Lenders } from './pages/Platform.jsx';
@@ -25,6 +26,36 @@ function TabBar() {
     <nav className="tabbar" aria-label="Quick navigation">
       {TABS.map(([to, label, ic]) => <NavLink key={to} to={to} end={to === '/'}><Icon n={ic} size={22} /><span>{label}</span></NavLink>)}
     </nav>
+  );
+}
+
+// Signed-in users land on their dashboard; the home page / hero is for visitors (and for everyone after sign-out).
+function HomeGate() {
+  const { user, ready } = useAuth();
+  if (!ready) return null;
+  return user ? <Navigate to={user.role === 'admin' ? '/admin' : '/dashboard'} replace /> : <Home />;
+}
+
+export function PublicRoutes({ location }) {
+  return (
+    <Routes location={location}>
+          <Route path="/" element={<HomeGate />} />
+          <Route path="/marketplace" element={<Marketplace />} />
+          <Route path="/tools" element={<Tools />} />
+          <Route path="/partner" element={<Partner />} />
+          <Route path="/prompts" element={<Prompts />} />
+          <Route path="/join" element={<Join />} />
+          <Route path="/account" element={<Account />} />
+          <Route path="/rice/:slug" element={<ProductDetail />} />
+          <Route path="/about" element={<About />} /><Route path="/why-us" element={<WhyUs />} /><Route path="/team" element={<Team />} />
+          <Route path="/manifesto" element={<Manifesto />} /><Route path="/sustainability" element={<Sustainability />} /><Route path="/livelihood" element={<Livelihood />} />
+          <Route path="/contact" element={<Contact />} /><Route path="/privacy" element={<Privacy />} /><Route path="/terms" element={<Terms />} /><Route path="/documents" element={<Documents />} />
+          <Route path="/platform" element={<Platform />} /><Route path="/corridor" element={<Corridor />} /><Route path="/trust" element={<Trust />} />
+          <Route path="/fraud-prevention" element={<Fraud />} /><Route path="/technology" element={<Technology />} />
+          <Route path="/for-buyers" element={<ForBuyers />} /><Route path="/for-sellers" element={<ForSellers />} /><Route path="/agropreneur" element={<Agropreneur />} />
+          <Route path="/finance" element={<Finance />} /><Route path="/lenders" element={<Lenders />} />
+          <Route path="*" element={<div className="page"><h1 className="h1">Off the map.</h1><Link className="btn" to="/">Back home</Link></div>} />
+    </Routes>
   );
 }
 
@@ -50,30 +81,14 @@ function Shell() {
     }, 250);
     return () => clearTimeout(t);
   }, [pathname, isAdmin]);
+  if (pathname.startsWith('/dashboard')) return <Routes><Route path="*" element={<Dashboard />} /></Routes>;
   if (isAdmin) return <Routes><Route path="/admin/:tab?" element={<Admin />} /></Routes>;
 
   return (
     <>
       <Header />
       <main>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/marketplace" element={<Marketplace />} />
-          <Route path="/tools" element={<Tools />} />
-          <Route path="/partner" element={<Partner />} />
-          <Route path="/prompts" element={<Prompts />} />
-          <Route path="/join" element={<Join />} />
-          <Route path="/account" element={<Account />} />
-          <Route path="/rice/:slug" element={<ProductDetail />} />
-          <Route path="/about" element={<About />} /><Route path="/why-us" element={<WhyUs />} /><Route path="/team" element={<Team />} />
-          <Route path="/manifesto" element={<Manifesto />} /><Route path="/sustainability" element={<Sustainability />} /><Route path="/livelihood" element={<Livelihood />} />
-          <Route path="/contact" element={<Contact />} /><Route path="/privacy" element={<Privacy />} /><Route path="/terms" element={<Terms />} /><Route path="/documents" element={<Documents />} />
-          <Route path="/platform" element={<Platform />} /><Route path="/corridor" element={<Corridor />} /><Route path="/trust" element={<Trust />} />
-          <Route path="/fraud-prevention" element={<Fraud />} /><Route path="/technology" element={<Technology />} />
-          <Route path="/for-buyers" element={<ForBuyers />} /><Route path="/for-sellers" element={<ForSellers />} /><Route path="/agropreneur" element={<Agropreneur />} />
-          <Route path="/finance" element={<Finance />} /><Route path="/lenders" element={<Lenders />} />
-          <Route path="*" element={<div className="page"><h1 className="h1">Off the map.</h1><Link className="btn" to="/">Back home</Link></div>} />
-        </Routes>
+        <PublicRoutes />
         <footer className="foot">
           <div className="foot-in">
             <div><Logo /><p>{COMPANY.legalName}<br />Registered office: {COMPANY.registered}</p><p>Corporate office: {COMPANY.corporate}</p></div>

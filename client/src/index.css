@@ -26,7 +26,6 @@ small { font-size: .78rem; color: var(--mut); }
 .hdr-act { display: flex; align-items: center; gap: 10px; flex: none; }
 .ib { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; border: 0; background: none; color: var(--ink); }
 .ib:hover { background: var(--g3); }
-.ib.txt { width: auto; padding: 0 12px; border-radius: 10px; font-weight: 700; font-size: .85rem; color: var(--rust); }
 .burger { display: none; }
 .m-only { display: none; }
 .hdr-in { min-height: 54px; }
@@ -725,3 +724,28 @@ input:focus, textarea:focus, select:focus { outline: none; border-color: var(--g
   .pills label { padding: 9px 12px; }
   .authbtn { height: 52px; }
 }
+
+/* ---------- signed-in header: admin console button + account chip (no more "Admin Admin" collision) ---------- */
+.hdr .adm-link { display: inline-flex; align-items: center; gap: 6px; padding: 7px 12px; border-radius: 9px; border: 1.2px solid #f0c4ad; background: #fff5ef; color: #b3400f; font-weight: 700; font-size: .82rem; white-space: nowrap; transition: background .15s, border-color .15s; }
+.hdr .adm-link:hover { background: #ffe9dc; border-color: #e7a98a; }
+.hdr .login.me { display: inline-flex; align-items: center; gap: 8px; padding: 4px 13px 4px 4px; border-radius: 999px; max-width: 170px; }
+.hdr .av { display: grid; place-items: center; flex: none; width: 26px; height: 26px; border-radius: 50%; background: var(--g); color: #fff; font-weight: 800; font-size: .78rem; line-height: 1; }
+.hdr .login.me .nm { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hdr .ib.acct .av { width: 30px; height: 30px; font-size: .85rem; }
+@media (max-width: 1400px) and (min-width: 1181px) { .hdr .adm-link { padding: 8px 10px; } .hdr .adm-link span { display: none; } }
+@media (max-width: 1180px) { .hdr .adm-link { display: none; } }
+
+/* ---------- wide-but-not-huge screens: the 8-item nav + signed-in actions must not overlap the logo or search ---------- */
+.menu { overflow: visible; }
+@media (min-width: 1181px) and (max-width: 1700px) {
+  .hdr-in { gap: 12px; padding-inline: 16px; }
+  .mb { padding: 9px 7px; font-size: .84rem; gap: 3px; }
+  .hdr .adm-link span { display: none; } .hdr .adm-link { padding: 8px 10px; }
+  .hdr .login.me .nm { display: none; } .hdr .login.me { padding: 4px; }
+}
+
+/* ---------- per-role dashboard card ---------- */
+.roledash .muted { margin: 4px 0 16px; }
+.rd-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; margin-bottom: 18px; }
+.rd-stats div { padding: 14px 16px; border-radius: 14px; background: var(--g3); }
+.rd-stats b { display: block; font-size: 1.7rem; line-height: 1.1; color: var(--g); }

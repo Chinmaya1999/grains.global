@@ -72,7 +72,7 @@ export default function Auth() {
     try {
       if (mode === 'login') await login({ email: v.email.trim(), password: v.password });
       else await register({ name: v.name.trim(), company: v.company.trim(), email: v.email.trim(), password: v.password, role });
-      nav(safeNext || (mode === 'register' ? '/account?welcome=1' : '/account'), { replace: true });
+      nav(safeNext || '/account', { replace: true });
     } catch (x) {
       setBusy(false);
       if (x.status === 409) { setEmailTaken(true); setTouched((t) => ({ ...t, email: true })); document.getElementById('f-email')?.focus(); }

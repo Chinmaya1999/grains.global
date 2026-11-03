@@ -15,7 +15,7 @@ const Err = ({ e }) => (e ? <Empty>{e}</Empty> : null);
 const Loading = () => <Empty>Loading…</Empty>;
 
 /* ---------------------------------------------------------------- overview */
-export function Overview({ toast, go }) {
+export function Overview({ toast, go, me }) {
   const { data: d, error, reload } = useList('/admin/overview');
   if (error) return <Err e={error} />;
   if (!d) return <Loading />;
@@ -27,8 +27,20 @@ export function Overview({ toast, go }) {
     ['Live offer value', null, usd(t.liveValueUsd), `${t.liveMT.toLocaleString('en-US')} MT listed`, '#b794ff', 'offers'],
   ];
   const act = (path, approve, msg) => request(path, { method: 'POST', body: { approve } }).then(() => { toast(msg); reload(); }).catch((e) => toast(e.message, true));
+  const todo = (d.kycByStatus.pending || 0) + (d.offersByStatus.review || 0) + (d.leadsByStatus.new || 0);
   return (
     <>
+      <section className="glass card ahero">
+        <div><small>{new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' }).toUpperCase()}</small>
+          <h2>Welcome back, {(me?.name || 'Admin').split(' ')[0]}.</h2>
+          <p className="muted">{todo ? `${todo} item(s) need attention: ${d.kycByStatus.pending || 0} KYC, ${d.offersByStatus.review || 0} offers, ${d.leadsByStatus.new || 0} new leads.` : 'Everything is up to date.'}</p></div>
+        <div className="aquick">
+          <button className="gbtn pri" onClick={() => go('users')}>Manage users</button>
+          <button className="gbtn" onClick={() => go('offers')}>Review offers</button>
+          <button className="gbtn" onClick={() => go('leads')}>Open leads</button>
+          <button className="gbtn" onClick={() => go('content')}>Edit site</button>
+        </div>
+      </section>
       <div className="kpis">
         {kpis.map(([l, n, text, sub, c, tab]) => (
           <button key={l} className="glass kpi" style={{ '--c': c }} onClick={() => go(tab)}>

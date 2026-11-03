@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, Navigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../lib/auth.jsx';
 import { request, getProducts, setAccess } from '../api.js';
 import { Reveal } from '../components/bits.jsx';
@@ -146,19 +146,48 @@ function Security({ toast }) {
   );
 }
 
+// Each role gets its own dashboard: a headline, quick actions and (for admin / seller) live numbers.
+const ROLE_DASH = {
+  buyer: { title: 'Buyer dashboard', lead: 'Source verified rice and compare offers.', actions: [['Browse offers', '/marketplace'], ['Post a requirement', '/marketplace#rfq'], ['Landed-cost calculator', '/tools?tool=landed'], ['Get finance quotes', '/finance']] },
+  seller: { title: 'Seller dashboard', lead: 'List offers and reach verified buyers.', actions: [['View marketplace', '/marketplace'], ['Export pricing calculator', '/tools?tool=export'], ['Pre-shipment finance', '/finance#sellers']] },
+  partner: { title: 'Partner dashboard', lead: 'Own the buyer relationship and share the margin.', actions: [['Partnership program', '/partner'], ['Profit sharing', '/partner#profit'], ['Browse offers', '/marketplace'], ['Trade toolkit', '/tools']] },
+  agropreneur: { title: 'AgroPreneur dashboard', lead: 'Your training, funding and livelihood network.', actions: [['The program', '/agropreneur'], ['Livelihood generation', '/livelihood'], ['Sustainability', '/sustainability']] },
+  bank: { title: 'Bank / NBFC dashboard', lead: 'Deal-level intelligence for lenders.', actions: [['Lender hub', '/lenders'], ['Trade finance', '/finance'], ['Trust framework', '/trust'], ['Fraud prevention', '/fraud-prevention']] },
+  admin: { title: 'Admin dashboard', lead: 'Manage every user, offer and lead on the platform.', actions: [['Open admin console', '/admin'], ['Marketplace', '/marketplace']] },
+};
+
+function RoleDash({ user }) {
+  const d = ROLE_DASH[user.role] || ROLE_DASH.buyer;
+  const [n, setN] = useState([]);
+  useEffect(() => {
+    if (user.role === 'admin') request('/admin/overview').then((o) => setN([['Users', o.totals.users], ['Offers', o.totals.offers], ['Leads', o.totals.leads], ['Awaiting KYC', o.kycByStatus?.pending || 0]])).catch(() => {});
+    else if (user.role === 'seller') request('/my/offers').then((m) => setN([['My offers', m.length], ['Live', m.filter((o) => o.status === 'live').length], ['In review', m.filter((o) => o.status === 'review').length]])).catch(() => {});
+  }, [user.role]);
+  return (
+    <section className="panel roledash" aria-label={d.title}>
+      <h2 className="h3">{d.title}</h2>
+      <p className="muted">{d.lead}</p>
+      {n.length > 0 && <div className="rd-stats">{n.map(([k, v]) => <div key={k}><b>{v}</b><small>{k}</small></div>)}</div>}
+      <div className="row">{d.actions.map(([t, to], i) => <Link key={t} className={`btn sm ${i ? 'ghost' : ''}`} to={to}>{t}</Link>)}</div>
+    </section>
+  );
+}
+
 export default function Account() {
   const { user, setUser, ready, logout } = useAuth();
   const [params, setParams] = useSearchParams();
   if (!ready) return <div className="page" />;
   if (!user) return <Auth />;
+  return <Navigate to={user.role === 'admin' ? '/admin' : '/dashboard'} replace />;
   return (
     <div className="page">
       <Reveal><p className="tag">DASHBOARD · {user.role.toUpperCase()}</p><h1 className="h1">Hello, {user.name.split(' ')[0]}.</h1>
         <div className="row">{user.role === 'admin' && <Link className="btn lime sm" to="/admin">Open admin console</Link>}<button className="btn ghost sm" onClick={logout}>Sign out</button></div></Reveal>
       {params.get('welcome') && <Welcome user={user} onClose={() => setParams({}, { replace: true })} />}
-      <Kyc user={user} setUser={setUser} />
+      <RoleDash user={user} />
+      {user.role !== 'admin' && <Kyc user={user} setUser={setUser} />}
+      {user.role === 'seller' && <Seller />}
       <Security />
-      {(user.role === 'seller' || user.role === 'admin') && <Seller />}
       {user.role === 'admin' && <Admin />}
     </div>
   );

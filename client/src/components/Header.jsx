@@ -70,6 +70,7 @@ export default function Header() {
   const { pathname } = useLocation();
   const [group, setGroup] = useState(null);
   const [searching, setSearching] = useState(false);
+  const initial = (user?.name || '').trim().charAt(0).toUpperCase();
   const [last, setLast] = useState(pathname);
   if (last !== pathname) { setLast(pathname); setOpen(false); setGroup(null); setSearching(false); }
   // "/" or Ctrl/⌘+K opens search from anywhere (unless you are typing in a field)
@@ -91,7 +92,7 @@ export default function Header() {
     {SETTINGS.announcement && <div className="annc" role="status">{SETTINGS.announcement}</div>}
     <header className="hdr">
       <div className="hdr-in">
-        <Logo />
+        <Logo to={user ? (user.role === 'admin' ? '/admin' : '/dashboard') : '/'} />
         <nav className={`menu ${open ? 'open' : ''}`} aria-label="Main">
           {MENU.map(([label, items, cols, feat], idx) => {
             const here = items.some((it) => it[1].split(/[?#]/)[0] === pathname && pathname !== '/account'); // /account is shared by sign-in links, so it doesn't mark one section
@@ -118,14 +119,19 @@ export default function Header() {
               </div>
             );
           })}
+          {user?.role === 'admin' && <Link className="m-only" to="/admin">Admin console</Link>}
           <Link className="m-only" to="/account">{user ? 'My account' : 'Log In'}</Link>
         </nav>
         <div className="hdr-act">
           <button className="ib" aria-label="Search" aria-haspopup="dialog" onClick={() => { setSearching(true); setOpen(false); }}><Icon n="search" size={19} /></button>
-          {user?.role === 'admin' && <Link to="/admin" className="ib txt">Admin</Link>}
-          <Link to="/account" className="login">{user ? user.name.split(' ')[0] : 'Log In'}</Link>
-          <Link to="/account" className="ib acct" aria-label={user ? 'My account' : 'Log in'}><Icon n="user" size={19} /></Link>
-          <Link to="/account?mode=register" className="cta">Get Started<Icon n="arrow" size={16} /></Link>
+          {user?.role === 'admin' && <Link to="/admin" className="adm-link" aria-label="Open the admin console"><Icon n="shield" size={16} /><span>Console</span></Link>}
+          <Link to="/account" className={`login ${user ? 'me' : ''}`} aria-label={user ? `My account (${user.name})` : 'Log in'}>
+            {user ? <><span className="av" aria-hidden>{initial}</span><span className="nm">{user.name.split(' ')[0]}</span></> : 'Log In'}
+          </Link>
+          <Link to="/account" className="ib acct" aria-label={user ? `My account (${user.name})` : 'Log in'}>
+            {user ? <span className="av" aria-hidden>{initial}</span> : <Icon n="user" size={19} />}
+          </Link>
+          {!user && <Link to="/account?mode=register" className="cta">Get Started<Icon n="arrow" size={16} /></Link>}
           <button className="ib burger" onClick={() => setOpen(!open)} aria-label="Menu" aria-expanded={open}><Icon n={open ? 'close' : 'menu'} /></button>
         </div>
       </div>

@@ -1,9 +1,10 @@
-import { useMemo, useState } from 'react';
+import { useContext, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Reveal } from '../components/bits.jsx';
 import { FAQ, Table } from '../components/Blocks.jsx';
 import { TOOLS_FAQ, TRUST_VS } from '../lib/content.js';
 import { CALCS, SCORES } from '../lib/tools.js';
+import { ToolAccess } from '../lib/access.js';
 
 function Calc({ tool }) {
   const [v, setV] = useState(() => Object.fromEntries(tool.fields.map(([k, , d]) => [k, d])));
@@ -47,7 +48,8 @@ function Score({ tool }) {
 }
 
 export default function Tools() {
-  const all = [...CALCS.map((t) => ({ ...t, kind: 'calc' })), ...SCORES.map((t) => ({ ...t, kind: 'score' }))];
+  const allow = useContext(ToolAccess);
+  const all = [...CALCS.map((t) => ({ ...t, kind: 'calc' })), ...SCORES.map((t) => ({ ...t, kind: 'score' }))].filter((t) => !allow || allow.includes(t.id));
   const [params] = useSearchParams();
   const [id, setId] = useState(all.some((t) => t.id === params.get('tool')) ? params.get('tool') : all[0].id);
   const tool = all.find((t) => t.id === id);

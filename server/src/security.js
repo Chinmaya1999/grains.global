@@ -114,7 +114,7 @@ export async function rotateSession(req, res) {
   }
   if (row.expiresAt < new Date()) { clearSessionCookie(res); return null; }
   const user = await User.findById(row.user);
-  if (!user) { clearSessionCookie(res); return null; }
+  if (!user || user.active === false) { clearSessionCookie(res); return null; }
   row.revokedAt = new Date();
   await row.save();
   return { user, token: await startSession(user, req, res) };
@@ -128,7 +128,7 @@ export const auth = async (req, res, next) => {
   try {
     const p = jwt.verify(token, process.env.JWT_SECRET, { algorithms: ['HS256'] });
     const u = await User.findById(p.sub);
-    if (u && (u.tokenVersion || 0) === p.tv) req.user = u;
+    if (u && u.active !== false && (u.tokenVersion || 0) === p.tv) req.user = u;
   } catch (e) { expired = e?.name === 'TokenExpiredError'; }
   if (!req.user) return res.status(401).json({ error: 'Please sign in.', code: expired ? 'expired' : 'invalid' });
   next();

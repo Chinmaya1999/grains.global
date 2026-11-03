@@ -1,0 +1,24 @@
+.adm .hero { padding: 30px; margin-bottom: 14px; }
+.adm .hero h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; letter-spacing: -.02em; margin: 6px 0; }
+.adm .hero small { font: 600 .68rem var(--mono); letter-spacing: .18em; color: var(--lime); }
+.adm .hbtns { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+.adm .dform { display: grid; gap: 12px; align-content: start; }
+.adm .dform label { display: grid; gap: 6px; font: 600 .8rem var(--sans); color: var(--mut); }
+.adm .dform textarea.gin { resize: vertical; }
+.adm .dform .dform { padding: 0; }
+.adm .dcards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+.adm .dcard { display: grid; gap: 6px; padding: 24px; color: inherit; text-decoration: none; transition: transform .3s, border-color .3s; }
+.adm .dcard:hover { transform: translateY(-4px); border-color: var(--lime); }
+.adm .dcard b { font-size: 1.05rem; } .adm .dcard span { color: var(--lime); font-weight: 700; font-size: .85rem; margin-top: 8px; }
+.adm .est { margin: 0; padding: 14px; border-radius: 12px; background: rgba(0, 0, 0, .28); font: .8rem var(--mono); white-space: pre-wrap; }
+.adm .tbl { width: 100%; border-collapse: collapse; } .adm .tbl th { text-align: left; font: 600 .68rem var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--mut); padding: 8px 10px; }
+.adm .tbl td { padding: 11px 10px; border-top: 1px solid rgba(255, 255, 255, .08); } .adm .tbl td small { display: block; }
+/* public pages shown inside the dashboard: light card, no extra page padding */
+.adm .demb .page { padding: 28px 24px 40px; max-width: none; }
+.adm .demb a, .adm .demb button { cursor: pointer !important; }
+
+/* embedded public pages: no sign-up / role-switching prompts for someone who already has an account */
+.adm .demb a[href^="/join"], .adm .demb a[href="/account"] { display: none !important; }
+.adm .demb .iband:not(:has(a:not([href^="/join"]))) { display: none; }
+.adm .demb:not([data-role="buyer"]) #rfq, .adm .demb:not([data-role="buyer"]) a[href="#rfq"] { display: none !important; }
+.adm .nope { max-width: 520px; display: grid; gap: 12px; justify-items: start; }

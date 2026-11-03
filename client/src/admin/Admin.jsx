@@ -1,9 +1,10 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../lib/auth.jsx';
 import { Overview, Users, Offers, Products, Leads, SiteStats, SiteContent, Settings, Activity } from './sections.jsx';
 import { LogoMark } from '../components/Logo.jsx';
 import './admin.css';
+import '../admin/glass-motion.css';
 
 const TABS = [
   ['overview', 'Overview', 'M3 12l9-8 9 8M5 10v10h5v-6h4v6h5V10'],
@@ -29,6 +30,7 @@ export default function Admin() {
     setTimeout(() => setToasts((t) => t.filter((x) => x.k !== k)), 3200);
   }, []);
 
+  useEffect(() => { document.querySelector('.adm .body')?.scrollTo(0, 0); document.querySelector('.adm')?.scrollTo(0, 0); }, [tab]);
   const shell = (children) => <div className="adm"><div className="orb o1" /><div className="orb o2" /><div className="orb o3" />{children}</div>;
   if (!ready) return shell(null);
   if (!user || user.role !== 'admin') {
@@ -46,18 +48,17 @@ export default function Admin() {
   return shell(
     <>
       <aside className="side glass">
-        <Link to="/" className="brand"><LogoMark size={30} /><span>GRAINS<em>admin</em></span></Link>
+        <Link to="/admin" className="brand"><LogoMark size={30} /><span>GRAINS<em>admin</em></span></Link>
         <nav>{TABS.map(([k, label, d]) => (
           <button key={k} className={k === current[0] ? 'on' : ''} onClick={() => go(k)}>
             <svg viewBox="0 0 24 24" aria-hidden><path d={d} /></svg>{label}
           </button>))}
         </nav>
-        <div className="me"><b>{user.name}</b><small>{user.email}</small><button className="gbtn sm" onClick={() => { logout(); nav('/'); }}>Sign out</button></div>
+        <div className="me"><b>{user.name}</b><small>{user.email}</small><button className="gbtn sm" onClick={async () => { await logout(); nav('/'); }}>Sign out</button></div>
       </aside>
       <section className="body">
         <header className="top">
-          <div><small>ADMIN CONSOLE</small><h1>{current[1]}</h1></div>
-          <Link to="/" className="gbtn">View site ↗</Link>
+          <div>{current[0] !== 'overview' && <button className="gbtn back" onClick={() => (window.history.state?.idx > 0 ? nav(-1) : nav('/admin'))} aria-label="Go back">← Back</button>}<small>ADMIN CONSOLE</small><h1>{current[1]}</h1></div>
         </header>
         <View key={current[0]} {...props} />
       </section>

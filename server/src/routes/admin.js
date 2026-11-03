@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { User, Offer, Product, Lead, Stat, Content, AuditLog } from '../models/index.js';
+import { User, Offer, Product, Lead, Stat, Content, AuditLog, RefreshToken } from '../models/index.js';
 import { auth, admin, passwordProblem, hashPassword, revokeAllSessions } from '../security.js';
 
 const r = Router();
@@ -42,19 +42,44 @@ r.get('/overview', wrap(async (_req, res) => {
   });
 }));
 
-// ---------- users ----------
+// ---------- users (every role: buyer, seller, partner, agropreneur, bank, admin) ----------
+const ROLES = ['buyer', 'seller', 'partner', 'agropreneur', 'bank', 'admin'];
+const KYC = ['none', 'pending', 'verified', 'rejected'];
+const SAFE = '-passwordHash -tokenVersion -failedLogins';
+const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const isSelf = (req) => String(req.params.id) === String(req.user._id);
+
+r.get('/users/summary', wrap(async (_req, res) => {
+  const [roles, kyc, suspended, total] = await Promise.all([countBy(User, 'role'), countBy(User, 'kyc.status'), User.countDocuments({ active: false }), User.countDocuments()]);
+  res.json({ roles, kyc, suspended, total });
+}));
+
 r.get('/users', wrap(async (req, res) => {
-  const { q, role, kyc } = req.query;
+  const { q, role, kyc, status } = req.query;
   const f = {};
   if (role) f.role = String(role);
   if (kyc) f['kyc.status'] = String(kyc);
+  if (status === 'suspended') f.active = false;
+  if (status === 'active') f.active = { $ne: false };
   if (q) f.$or = ['name', 'email', 'company'].map((k) => ({ [k]: new RegExp(esc(q), 'i') }));
-  res.json(await User.find(f).select('-passwordHash').sort({ createdAt: -1 }).limit(300));
+  res.json(await User.find(f).select(SAFE).sort({ createdAt: -1 }).limit(500));
 }));
-const ROLES = ['buyer', 'seller', 'partner', 'agropreneur', 'bank', 'admin'];
+
+// Everything an admin needs to know about one account.
+r.get('/users/:id', wrap(async (req, res) => {
+  const user = await User.findById(req.params.id).select(SAFE);
+  if (!user) return res.status(404).json({ error: 'User not found.' });
+  const [offers, sessions, leads] = await Promise.all([
+    Offer.find({ owner: user._id }).populate('product', 'name').sort({ createdAt: -1 }).limit(10),
+    RefreshToken.countDocuments({ user: user._id, revokedAt: null, expiresAt: { $gt: new Date() } }),
+    Lead.countDocuments({ email: user.email }),
+  ]);
+  res.json({ user, offers, sessions, leads });
+}));
+
 r.post('/users', wrap(async (req, res) => {
   const { name, email, password, role, company } = req.body || {};
-  if (!name || !/^\S+@\S+\.\S+$/.test(email || '')) return res.status(400).json({ error: 'A name and a valid email are required.' });
+  if (!name || !EMAIL.test(email || '')) return res.status(400).json({ error: 'A name and a valid email are required.' });
   if (passwordProblem(password)) return res.status(400).json({ error: passwordProblem(password) });
   if (await User.findOne({ email: String(email).toLowerCase() })) return res.status(409).json({ error: 'That email is already registered.' });
   const u = await User.create({ name, email, company, role: ROLES.includes(role) ? role : 'buyer', passwordHash: await hashPassword(password) });
@@ -63,24 +88,51 @@ r.post('/users', wrap(async (req, res) => {
 
 r.patch('/users/:id', wrap(async (req, res) => {
   const b = req.body || {};
-  const set = pick(b, ['name', 'company']);
+  const set = {}, inc = {};
+  if (b.name !== undefined) { if (!String(b.name).trim()) return res.status(400).json({ error: 'Name cannot be empty.' }); set.name = String(b.name).trim().slice(0, 100); }
+  if (b.company !== undefined) set.company = String(b.company).trim().slice(0, 150);
+  if (b.email !== undefined) {
+    const email = String(b.email).trim().toLowerCase();
+    if (!EMAIL.test(email)) return res.status(400).json({ error: 'Enter a valid email address.' });
+    if (await User.findOne({ email, _id: { $ne: req.params.id } })) return res.status(409).json({ error: 'Another account already uses that email.' });
+    set.email = email;
+  }
+  if (b.role !== undefined) {
+    if (!ROLES.includes(b.role)) return res.status(400).json({ error: 'Unknown role.' });
+    if (isSelf(req) && b.role !== 'admin') return res.status(400).json({ error: "You can't remove your own admin role." });
+    set.role = b.role;
+  }
+  if (b.kycStatus !== undefined) {
+    if (!KYC.includes(b.kycStatus)) return res.status(400).json({ error: 'Unknown verification status.' });
+    set['kyc.status'] = b.kycStatus;
+  }
+  if (b.active !== undefined) {
+    if (!b.active && isSelf(req)) return res.status(400).json({ error: "You can't suspend your own account." });
+    set.active = !!b.active;
+    if (!b.active) { inc.tokenVersion = 1; await revokeAllSessions(req.params.id); } // suspended users are signed out immediately
+  }
   if (b.password !== undefined) {
     if (passwordProblem(b.password)) return res.status(400).json({ error: passwordProblem(b.password) });
     set.passwordHash = await hashPassword(b.password);
-    set.$inc = { tokenVersion: 1 }; // signs the user out everywhere
+    inc.tokenVersion = 1; // signs the user out everywhere
     await revokeAllSessions(req.params.id);
   }
-  if (b.role) {
-    if (String(req.params.id) === String(req.user._id) && b.role !== 'admin') return res.status(400).json({ error: "You can't remove your own admin role." });
-    set.role = b.role;
-  }
-  if (b.kycStatus) set['kyc.status'] = b.kycStatus;
-  const u = await User.findByIdAndUpdate(req.params.id, set, { new: true, runValidators: true }).select('-passwordHash');
+  const update = Object.keys(inc).length ? { ...set, $inc: inc } : set;
+  const u = await User.findByIdAndUpdate(req.params.id, update, { new: true, runValidators: true }).select(SAFE);
   if (!u) return res.status(404).json({ error: 'User not found.' });
   res.json(u);
 }));
+
+r.post('/users/:id/signout', wrap(async (req, res) => {
+  await User.findByIdAndUpdate(req.params.id, { $inc: { tokenVersion: 1 } });
+  await revokeAllSessions(req.params.id);
+  res.json({ ok: true });
+}));
+
 r.delete('/users/:id', wrap(async (req, res) => {
-  if (String(req.params.id) === String(req.user._id)) return res.status(400).json({ error: "You can't delete yourself." });
+  if (isSelf(req)) return res.status(400).json({ error: "You can't delete yourself." });
+  const target = await User.findById(req.params.id);
+  if (target?.role === 'admin' && (await User.countDocuments({ role: 'admin' })) <= 1) return res.status(400).json({ error: "You can't delete the last administrator." });
   await Offer.deleteMany({ owner: req.params.id, status: { $ne: 'live' } });
   await revokeAllSessions(req.params.id);
   await User.findByIdAndDelete(req.params.id);

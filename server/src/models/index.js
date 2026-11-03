@@ -59,6 +59,7 @@ export const User = model('User', new Schema({
   passwordHash: { type: String, required: true },
   role: { type: String, enum: ['buyer', 'seller', 'partner', 'agropreneur', 'bank', 'admin'], default: 'buyer' },
   company: String,
+  active: { type: Boolean, default: true },       // false = suspended by an admin (cannot sign in)
   tokenVersion: { type: Number, default: 0 },   // bumping this invalidates every access token for the user
   failedLogins: { type: Number, default: 0 },
   lockUntil: Date,

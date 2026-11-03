@@ -43,6 +43,7 @@ r.post('/auth/login', loginLimiter, sameOrigin, wrap(async (req, res) => {
     }
     return res.status(401).json({ error: 'Email or password is incorrect.' });
   }
+  if (u.active === false) return res.status(403).json({ error: 'This account has been suspended. Please contact support.' });
   u.failedLogins = 0; u.lockUntil = undefined; u.lastLoginAt = new Date();
   await u.save();
   res.json({ token: await startSession(u, req, res), user: pub(u) });
