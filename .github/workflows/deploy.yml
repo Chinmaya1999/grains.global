@@ -14,8 +14,35 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  preflight:
+    name: Check secrets
+    runs-on: ubuntu-latest
+    steps:
+      - name: Every required secret is set
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+          EC2_HOST: ${{ secrets.EC2_HOST }}
+          EC2_USER: ${{ secrets.EC2_USER }}
+          EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
+          EC2_KNOWN_HOSTS: ${{ secrets.EC2_KNOWN_HOSTS }}
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+        run: |
+          missing=""
+          for name in DOCKERHUB_USERNAME DOCKERHUB_TOKEN EC2_HOST EC2_USER EC2_SSH_KEY EC2_KNOWN_HOSTS MONGODB_URI JWT_SECRET ADMIN_EMAIL; do
+            [ -n "${!name}" ] || missing="$missing $name"
+          done
+          if [ -n "$missing" ]; then
+            echo "::error title=Missing repository secrets::Add these in Settings → Secrets and variables → Actions:$missing"
+            exit 1
+          fi
+          echo "All 9 required secrets are set."
+
   test:
     name: Test
+    needs: preflight
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

@@ -682,3 +682,18 @@ input:focus, textarea:focus, select:focus { outline: none; border-color: var(--g
   .hdr .cta { min-height: 40px; padding: 0 14px; display: inline-flex; align-items: center; }
   .linkbtn { padding: 10px 4px; margin: -10px -4px; }
 }
+
+/* ---------- phones/tablets: heading, then the MAP, then the woman (the page used to show them the other way round) ---------- */
+.aim-m { display: none; }
+@media (max-width: 1180px) {
+  .hero2 .hero-in { display: contents; }               /* lets the text and the photo be ordered around the map */
+  .hero2 .hero-copy2 { order: 1; padding: 26px 16px 18px; max-width: none; position: relative; z-index: 2; } /* keep the text above the sky background now that .hero-in no longer forms a layer */
+  .hero2 .hero-map { order: 2; }
+  .hero2 .hero-woman { order: 3; height: 340px; margin: 18px 16px 78px; }
+  .hero2 > .aim { display: none; }                      /* the card inside the map is used instead */
+  .hero-map .aim-m { display: flex; position: absolute; z-index: 5; left: 14px; right: auto; bottom: 56px; }
+  .hero-map .aim-m span { display: none; }
+  .hero-map .aim-m svg { width: 26px; height: 26px; }
+  .hero-map .aim-m b { font-size: .98rem; }
+}
+@media (max-width: 760px) { .hero2 .hero-copy2 { padding: 22px 16px 16px; } .hero2 .hero-woman { height: 320px; } }

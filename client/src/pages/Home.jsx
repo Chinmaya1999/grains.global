@@ -64,7 +64,11 @@ export default function Home() {
     <>
       <section className="hero2">
         <Photo name="hero" scene="hero" alt="" className="hero-bg" />
-        <div className="hero-map"><Suspense fallback={null}><SatelliteMap /></Suspense></div>
+        <div className="hero-map">
+          <Suspense fallback={null}><SatelliteMap /></Suspense>
+          {/* on phones the map sits in the middle of the page, so the AIM card lives on it (the desktop card is hidden there) */}
+          <div className="aim aim-m"><Icon n="globe" size={34} /><div><b>AIM Corridor</b><span>India ↔ Africa ↔ Middle East</span><small>{corridor.value} Countries • Growing</small></div></div>
+        </div>
         <Photo name="hero-port" scene="port" alt="" className="hero-port" />
         <div className="hero-in">
           <div className="hero-copy2">

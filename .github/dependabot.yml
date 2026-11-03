@@ -1,7 +1,15 @@
 version: 2
 updates:
-  - { package-ecosystem: npm, directory: /server, schedule: { interval: weekly } }
-  - { package-ecosystem: npm, directory: /client, schedule: { interval: weekly } }
+  # Major npm upgrades (Express 5, Mongoose 9, ...) can break the app, so they are done by hand and tested.
+  # Minor and patch updates still arrive automatically.
+  - package-ecosystem: npm
+    directory: /server
+    schedule: { interval: weekly }
+    ignore: [ { dependency-name: "*", update-types: ["version-update:semver-major"] } ]
+  - package-ecosystem: npm
+    directory: /client
+    schedule: { interval: weekly }
+    ignore: [ { dependency-name: "*", update-types: ["version-update:semver-major"] } ]
   - { package-ecosystem: docker, directory: /server, schedule: { interval: weekly } }
   - { package-ecosystem: docker, directory: /client, schedule: { interval: weekly } }
   - { package-ecosystem: github-actions, directory: /, schedule: { interval: weekly } }

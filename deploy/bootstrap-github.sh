@@ -8,7 +8,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-REPO="${REPO:-Chinmaya1999/grains-global}"
+REPO="${REPO:-Chinmaya1999/grains.global}"
 EC2_HOST="${EC2_HOST:-13.126.73.0}"
 EC2_USER="${EC2_USER:-ec2-user}"
 PEM="${PEM:-adihuman.pem}"
