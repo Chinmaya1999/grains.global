@@ -4,7 +4,7 @@ import { Hero, Sec, Checks, FAQ, Table, Band } from '../components/Blocks.jsx';
 import { Photo } from '../components/Art.jsx';
 import LeadForm from '../components/LeadForm.jsx';
 import { request } from '../api.js';
-import { RICE } from '../lib/content.js';
+import { RICE, productImage } from '../lib/content.js';
 import { priceLabel, lengthLabel } from '../lib/format.js';
 
 export default function ProductDetail() {
@@ -44,7 +44,7 @@ export default function ProductDetail() {
             <Table head={['Parameter', 'Value']} rows={[['Variety', p.name], ['Processing', p.processing], ['Grain length (raw)', lengthLabel(p)], ['Broken grains', `Less than ${p.grain?.broken || 2}%, export quality`], ...RICE.specs.filter(([k]) => k !== 'Broken grains')]} />
             <p className="note">Typical values for the range; confirm exact specification and grade in your offer or sample.</p>
           </div>
-          <Photo name="rice" alt={p.name} className="pphoto" />
+          <Photo name={productImage(p)} scene="rice" alt={p.name} className="pphoto" />
         </div>
       </Sec>
 

@@ -13,5 +13,20 @@ services:
     restart: unless-stopped
     depends_on:
       server: { condition: service_healthy }
-    ports: ["80:80"]
+    ports: ["127.0.0.1:8080:80"]   # local only (health checks); public traffic arrives through Caddy
     logging: { driver: json-file, options: { max-size: "10m", max-file: "3" } }
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    depends_on: [web, server]
+    ports: ["80:80", "443:443", "443:443/udp"]
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data           # certificates live here; keep it across deploys
+      - caddy_config:/config
+    logging: { driver: json-file, options: { max-size: "10m", max-file: "3" } }
+
+volumes:
+  caddy_data:
+  caddy_config:

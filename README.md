@@ -1,4 +1,4 @@
-# Grains Global (MERN)
+# Agri Global (MERN)
 
 - `server/` Express + Mongoose API: products, offers, leads, stats, partner earnings, JWT auth, KYC, seller offers, admin review
 - `client/` React + Vite, three.js (react-three-fiber), framer-motion, Lenis
@@ -39,7 +39,7 @@ Pull requests and other branches run the CI workflow only (tests + a Docker buil
 ### Everyday
 - Logs: `ssh ec2-user@<host> 'cd /opt/grains && docker compose logs -f'`
 - Redeploy a specific commit: Actions → Deploy → Run workflow (or `bash deploy.sh <tag>` on the server).
-- **HTTPS**: with a domain pointing at the server, put a TLS terminator in front (Caddy or certbot), then set the repo variables `CLIENT_ORIGIN=https://your-domain` and `COOKIE_SECURE=true`. Cookies are not marked Secure while the site is served over plain HTTP.
+- **HTTPS**: Caddy (in `deploy/docker-compose.yml`, configured by `deploy/Caddyfile`) serves `agriglobal.co.in` (site) and `api.agriglobal.co.in` (API) over HTTPS with automatic Let's Encrypt certificates. Requirements: DNS A records for `agriglobal.co.in`, `www` and `api` pointing at the server, inbound ports 80 and 443 open in the security group, and repo variables `CLIENT_ORIGIN=https://agriglobal.co.in` and `COOKIE_SECURE=true`.
 
 
 ## Tests

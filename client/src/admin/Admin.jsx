@@ -48,7 +48,7 @@ export default function Admin() {
   return shell(
     <>
       <aside className="side glass">
-        <Link to="/admin" className="brand"><LogoMark size={30} /><span>GRAINS<em>admin</em></span></Link>
+        <Link to="/admin" className="brand"><LogoMark size={30} /><span>AGRI<em>admin</em></span></Link>
         <nav>{TABS.map(([k, label, d]) => (
           <button key={k} className={k === current[0] ? 'on' : ''} onClick={() => go(k)}>
             <svg viewBox="0 0 24 24" aria-hidden><path d={d} /></svg>{label}

@@ -60,8 +60,8 @@ grep '^ADMIN_EMAIL=' server/.env | cut -d= -f2- | secret ADMIN_EMAIL
 ssh_ec2 "grep '^JWT_SECRET=' /opt/grains/.env.app | cut -d= -f2-" | secret JWT_SECRET
 
 say "Variables (not secret; edit later in GitHub → Settings → Variables)"
-run gh variable set CLIENT_ORIGIN --repo "$REPO" --body "http://$EC2_HOST"
-run gh variable set COOKIE_SECURE --repo "$REPO" --body "false"   # change to true once the site is served over HTTPS
+run gh variable set CLIENT_ORIGIN --repo "$REPO" --body "https://agriglobal.co.in"
+run gh variable set COOKIE_SECURE --repo "$REPO" --body "true"   # the site is served over HTTPS
 
 say "Push (this starts the first pipeline run)"
 run git branch -M main

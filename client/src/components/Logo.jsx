@@ -17,9 +17,9 @@ export function LogoMark({ size = 38 }) {
 
 export function Logo({ to = '/' }) {
   return (
-    <Link to={to} className="logo" aria-label="Grains Global home">
+    <Link to={to} className="logo" aria-label="Agri Global home">
       <LogoMark />
-      <span className="lg"><b>GRAINS</b><i>global</i></span>
+      <span className="lg"><b>AGRI</b><i>global</i></span>
     </Link>
   );
 }

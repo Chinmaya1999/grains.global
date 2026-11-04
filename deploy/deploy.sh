@@ -11,7 +11,7 @@ echo "Deploying $NEW_TAG (previous: ${PREV_TAG:-none})"
 
 health() { # waits up to ~2 minutes for the site and the API to answer
   for _ in $(seq 1 40); do
-    if curl -fsS -m 4 http://127.0.0.1/healthz >/dev/null 2>&1 && curl -fsS -m 4 http://127.0.0.1/api/health >/dev/null 2>&1; then return 0; fi
+    if curl -fsS -m 4 http://127.0.0.1:8080/healthz >/dev/null 2>&1 && curl -fsS -m 4 http://127.0.0.1:8080/api/health >/dev/null 2>&1; then return 0; fi
     sleep 3
   done
   return 1

@@ -91,7 +91,7 @@ export default function Auth() {
       <aside className="auth-art">
         <Photo name="login-bg" scene="paddy" alt="" className="auth-bg2" />
         <div className="auth-art-in">
-          <Link to="/" className="auth-brand"><LogoMark size={34} /><span><b>GRAINS</b><i>global</i></span></Link>
+          <Link to="/" className="auth-brand"><LogoMark size={34} /><span><b>AGRI</b><i>global</i></span></Link>
           <div>
             <h2>From village fields to harbour, on one trusted platform.</h2>
             <ul>
@@ -175,7 +175,7 @@ export default function Auth() {
             {mode === 'register' && <p className="legal">By creating an account you agree to our <Link to="/terms" className="link">Terms</Link> and <Link to="/privacy" className="link">Privacy policy</Link>.</p>}
           </form>
 
-          <p className="swap">{mode === 'login' ? <>New to Grains Global? <button className="linkbtn" onClick={() => switchMode('register')}>Create an account</button></> : <>Already have an account? <button className="linkbtn" onClick={() => switchMode('login')}>Sign in</button></>}</p>
+          <p className="swap">{mode === 'login' ? <>New to Agri Global? <button className="linkbtn" onClick={() => switchMode('register')}>Create an account</button></> : <>Already have an account? <button className="linkbtn" onClick={() => switchMode('login')}>Sign in</button></>}</p>
         </div>
       </div>
     </section>

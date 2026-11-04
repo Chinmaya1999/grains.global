@@ -2,14 +2,13 @@
 // Roadmap items are marked so the site doesn't present them as live.
 
 export const COMPANY = {
-  legalName: 'Agropreneurs Market Technologies Pvt. Ltd.',
-  registered: '1105, Colonnade2, Bodakdev, Sindhu Bhavan Road, Thaltej, Ahmedabad, Gujarat, India, 380054',
-  corporate: 'AG-112, AMP Vaisaakkhi Mall, 7th Floor, Room No-11, Sector-II, Salt Lake, Kolkata, West Bengal, India - 700091',
+  legalName: 'Agrimaati Ecosystem Private Limited',
+  registered: '204, Saumya Square, Nr. Govardhan Party Plot, Thaltej, Daskroi, Ahmedabad, Gujarat, India, 380059',
   ids: [
-    ['CIN', 'U62099GJ2023PTC143438'], ['GST', '24AAZCA1441M1ZB'], ['IEC', 'AAZCA1441M'],
-    ['APEDA RCMC', 'RCMC/APEDA/08299/2024-2025'], ['D-U-N-S®', '959966062'], ['DPIIT', 'DIPP147690'], ['LEI', '98450098ABU5D5FE5955'],
+    ['CIN', 'U01610GJ2025PTC164738'], ['Date of incorporation', 'July 2, 2025'], ['Registrar of Companies', 'RoC Ahmedabad'],
+    ['Authorised & paid-up capital', '₹10,000'],
   ],
-  documents: ['Incorporation Certificate', 'GST Certificate', 'IEC Certificate', 'RCMC Certificate', 'Startup India – DPIIT Certificate', 'LEI Certificate', 'ICC Registration Certificate', 'SGCCI Registration Certificate'],
+  documents: ['Incorporation Certificate'],
   social: [
     ['YouTube', 'https://www.youtube.com/@GrainsGlobal'], ['Instagram', 'https://www.instagram.com/grainsglobal'],
     ['LinkedIn', 'https://www.linkedin.com/company/grains-global/posts/?feedView=all'],
@@ -32,7 +31,7 @@ export const ABOUT = {
   ],
   mission: [
     'Agriculture feeds the world, yet millions of producers and traders still struggle with information gaps, high financing costs and slow manual processes. We exist to change that.',
-    'Grains Global is committed to a fair, transparent and inclusive trade environment that empowers farmers, traders and financial institutions with real-time insights and trusted digital workflows.',
+    'Agri Global is committed to a fair, transparent and inclusive trade environment that empowers farmers, traders and financial institutions with real-time insights and trusted digital workflows.',
     'At the heart of our mission is a bold commitment: empowering one million women AgroPreneurs to take part directly in global value chains and significantly increase their income.',
   ],
   vision: [
@@ -50,7 +49,7 @@ export const WHY = {
   ],
   chambers: [
     ['Indian Chamber of Commerce (ICC)', 'Founded in 1925 by G. D. Birla, ICC is one of India’s oldest and most influential national chambers, known for policy leadership, economic research and global trade facilitation.'],
-    ['Southern Gujarat Chamber of Commerce & Industry (SGCCI)', 'Established in 1940, SGCCI is one of India’s premier regional chambers, known for its industry-shaping trade fairs and its role in elevating South Gujarat and Brand Surat globally. Grains Global holds a Gold Membership.'],
+    ['Southern Gujarat Chamber of Commerce & Industry (SGCCI)', 'Established in 1940, SGCCI is one of India’s premier regional chambers, known for its industry-shaping trade fairs and its role in elevating South Gujarat and Brand Surat globally. Agri Global holds a Gold Membership.'],
   ],
 };
 
@@ -61,7 +60,7 @@ export const TEAM = {
 };
 
 export const MANIFESTO = [
-  'At Grains Global, we believe the future of agriculture is not just in the soil, but in the system.',
+  'At Agri Global, we believe the future of agriculture is not just in the soil, but in the system.',
   'We believe global trade should be as reliable as code and as human as a handshake. Success today needs more than moving commodities: it needs artificial intelligence and ethical responsibility built into the supply chain. Our mission is to empower a new generation of traders, financiers and producers to dismantle the opacity of traditional trade and build a more equitable world through Engineered Trust.',
   'In a landscape often clouded by price volatility and fragmented data, trust is too valuable to be left to chance. It must be designed. Being a leader in AgTech goes beyond digital tools; it is about a standard of integrity that is unshakeable, using AI-driven insight to secure every step from the first seed to the final delivery.',
   'Others see the agricultural supply chain as disconnected intermediaries. We see a global network of potential for social and economic transformation, and we want our clients to thrive by using automation and transparent data to take on the world’s most critical challenge: sustainable food security.',
@@ -106,9 +105,9 @@ export const PLATFORM = {
   ],
   horizons: [['Smart Trade, Global Reach', 'Reach verified counterparties across the AIM corridor.'], ['Finance Without Barriers', 'Quotes, approvals and documents in a single window.'], ['Trade with Trust and Transparency', 'Every price, margin and document visible.']],
   faq: [
-    ['What is Grains Global and who can use the platform?', 'An AI-driven marketplace for cross-border agri-commodity trading, used by buyers, sellers, trading partners, AgroPreneurs and lenders.'],
+    ['What is Agri Global and who can use the platform?', 'An AI-driven marketplace for cross-border agri-commodity trading, used by buyers, sellers, trading partners, AgroPreneurs and lenders.'],
     ['How do I create an account, and is there a fee?', 'Sign up in minutes. There is no fee to create an account or explore the platform.'],
-    ['How does Grains Global ensure the quality and reliability of buyers and sellers?', 'Through KYB and KYC verification, plus AI-driven risk scoring.'],
+    ['How does Agri Global ensure the quality and reliability of buyers and sellers?', 'Through KYB and KYC verification, plus AI-driven risk scoring.'],
     ['What is the process for identity verification and partner authentication?', 'Official documents, compliance checks and automated validation.'],
     ['Is my business data and trade activity confidential?', 'Data is encrypted and not shared with third parties, and you control who sees your trade activity.'],
   ],
@@ -263,7 +262,7 @@ export const FINANCE = {
   benefits: [['Easier, faster access to finance', 'Skip repeated paperwork; finance requests start from your trade.'], ['Transparent pricing & charges', 'Compare quotes side by side before you commit.'], ['Fewer collateral hassles', 'Verified trade data supports your case, not only your balance sheet.']],
   steps: [['Submit your trade details', 'Describe the deal, the instrument you need and the documents you have.'], ['Get multi-bank quotes', 'Banks respond with comparable quotes: rates, fees and timelines.'], ['Choose & close securely', 'Pick the best offer and complete the finance with an audit trail.']],
   faq: [
-    ['How can I access trade finance through Grains Global?', 'Submit your trade details, choose the instrument and receive quotes from participating banks.'],
+    ['How can I access trade finance through Agri Global?', 'Submit your trade details, choose the instrument and receive quotes from participating banks.'],
     ['Can first-time exporters or SMEs without traditional banking relationships get financing?', 'Yes. Simplified onboarding and alternative credit assessment help SMEs and first-time exporters.'],
     ['What is Smart Credit & Trust Scoring, and how does it affect approval?', 'It evaluates trading track record, documentation quality and transaction behaviour.'],
     ['How does the multi-bank RFQ work?', 'One request goes to multiple banks, which compete with comparable quotes.'],
@@ -341,7 +340,7 @@ export const TERMS = [
   ['User conduct', 'You must not attempt unauthorised access or upload malicious content.'],
   ['Limitation of liability', 'We are not liable for indirect, incidental, special or consequential damages, including lost profits or data.'],
   ['Termination', 'We may suspend or terminate access for violations of these terms.'],
-  ['Intellectual property', 'Site content, logos and materials belong to Grains Global and may not be reproduced or distributed without permission.'],
+  ['Intellectual property', 'Site content, logos and materials belong to Agri Global and may not be reproduced or distributed without permission.'],
   ['Privacy', 'See the Privacy Policy for how personal data is handled.'],
   ['Changes to these terms', 'Updates are posted on this page.'],
 ];
@@ -364,3 +363,12 @@ export const CONTENT_META = {
 export const REGISTRY = { SETTINGS, COMPANY, ABOUT, WHY, TEAM, MANIFESTO, SUSTAIN, LIVELIHOOD, PLATFORM, DTC, CORRIDOR, TRUST, FRAUD, TECH, BUYER, SELLER, PARTNER, AGRO, FINANCE, LENDERS, RICE, TOOLS_FAQ, TRUST_VS, PRIVACY, TERMS };
 // Snapshot of the built-in text, taken before any admin overrides are applied.
 export const DEFAULTS = JSON.parse(JSON.stringify(REGISTRY));
+
+// Catalogue photos (Wikimedia Commons, CC licensed; see public/images/products/CREDITS.txt).
+export function productImage(p) {
+  const s = p.slug || '';
+  if (s.startsWith('sona-masoori')) return 'products/sona-masoori';
+  if (p.processing === 'Golden Sella') return 'products/parboiled';
+  if (p.family === 'Basmati') return s.startsWith('1121') || s.startsWith('1401') ? 'products/basmati-raw' : 'products/basmati-india';
+  return p.processing === 'Raw' ? 'products/closeup' : 'products/parboiled';
+}

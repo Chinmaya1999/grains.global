@@ -121,7 +121,7 @@ jobs:
           printf 'Host target\n  HostName %s\n  User %s\n  IdentityFile ~/.ssh/deploy_key\n  StrictHostKeyChecking yes\n  BatchMode yes\n  ServerAliveInterval 15\n  ConnectTimeout 20\n' "$HOST" "$SSH_USER" > ~/.ssh/config
 
       - name: Upload release files
-        run: scp deploy/docker-compose.yml deploy/deploy.sh target:/opt/grains/
+        run: scp deploy/docker-compose.yml deploy/deploy.sh deploy/Caddyfile target:/opt/grains/
 
       - name: Write the app environment on the server
         env:
@@ -154,12 +154,15 @@ jobs:
             "read -r DOCKERHUB_USER; read -r DOCKERHUB_TOKEN; export DOCKERHUB_USER DOCKERHUB_TOKEN; bash /opt/grains/deploy.sh $TAG"
 
       - name: Smoke test from the public internet
+        env:
+          CLIENT_ORIGIN: ${{ vars.CLIENT_ORIGIN }}
         run: |
+          BASE="${CLIENT_ORIGIN:-http://$HOST}"
           for _ in $(seq 1 20); do
-            if curl -fsS -m 8 "http://$HOST/healthz" >/dev/null && curl -fsS -m 8 "http://$HOST/api/health" >/dev/null && curl -fsS -m 8 "http://$HOST/api/products" | grep -q '"slug"'; then
-              echo "Site and API are reachable at http://$HOST"; exit 0
+            if curl -fsS -m 8 "$BASE/healthz" >/dev/null && curl -fsS -m 8 "$BASE/api/health" >/dev/null && curl -fsS -m 8 "$BASE/api/products" | grep -q '"slug"'; then
+              echo "Site and API are reachable at $BASE"; exit 0
             fi
             sleep 5
           done
-          echo "::error::The site is not reachable from the internet. Check that the EC2 security group allows inbound port 80." >&2
+          echo "::error::The site is not reachable from the internet. Check that the EC2 security group allows inbound ports 80 and 443, and that DNS points at the server." >&2
           exit 1

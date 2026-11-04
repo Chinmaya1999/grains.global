@@ -1,0 +1,19 @@
+# HTTPS for Agri Global. Caddy gets and renews Let's Encrypt certificates automatically.
+# DNS A records for all three names must point at this server, and ports 80 and 443 must be open.
+{
+	email pradipta@uuoinnovation.com
+}
+
+agriglobal.co.in {
+	encode gzip
+	reverse_proxy web:80
+}
+
+www.agriglobal.co.in {
+	redir https://agriglobal.co.in{uri} permanent
+}
+
+api.agriglobal.co.in {
+	encode gzip
+	reverse_proxy server:5050
+}

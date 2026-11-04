@@ -14,9 +14,9 @@ export function About() {
       <Sec alt tag="MISSION & VISION" title="Fair, transparent, inclusive trade.">
         <div className="two"><Reveal className="panelx"><h3>Our mission</h3>{ABOUT.mission.map((p) => <p key={p}>{p}</p>)}</Reveal><Reveal className="panelx"><h3>Our vision</h3>{ABOUT.vision.map((p) => <p key={p}>{p}</p>)}</Reveal></div>
       </Sec>
-      <Sec tag="THE TRUST ADVANTAGE" title="Transforming global agri-trade with technology." lede="Grains Global is a next-generation digital platform that simplifies how agricultural commodities are traded and financed across borders. It brings traders, exporters, banks and global buyers onto one ecosystem, reducing friction, increasing transparency and enabling faster, more efficient trade." />
+      <Sec tag="THE TRUST ADVANTAGE" title="Transforming global agri-trade with technology." lede="Agri Global is a next-generation digital platform that simplifies how agricultural commodities are traded and financed across borders. It brings traders, exporters, banks and global buyers onto one ecosystem, reducing friction, increasing transparency and enabling faster, more efficient trade." />
       <Sec alt tag="OFFICES" title="Where to find us.">
-        <div className="two"><Reveal className="panelx"><h3>Registered office</h3><p>{COMPANY.registered}</p></Reveal><Reveal className="panelx"><h3>Corporate office</h3><p>{COMPANY.corporate}</p></Reveal></div>
+        <div className="two"><Reveal className="panelx"><h3>Registered office</h3><p>{COMPANY.registered}</p></Reveal></div>
       </Sec>
       <Band title="Every trade is a relationship here, built on trust." actions={[['Trade with trust', '/marketplace'], ['Contact us', '/contact', true]]} />
     </>
@@ -26,7 +26,7 @@ export function About() {
 export function WhyUs() {
   return (
     <>
-      <Hero tag="WHY US" title="Why the world trades & finances with confidence on Grains Global." lede="The only platform that unifies trust, trade and trade finance for global agri-SMEs: powered by AI, backed by real partners, and built for transparent cross-border trade." actions={[['Understand the platform', '/platform']]} />
+      <Hero tag="WHY US" title="Why the world trades & finances with confidence on Agri Global." lede="The only platform that unifies trust, trade and trade finance for global agri-SMEs: powered by AI, backed by real partners, and built for transparent cross-border trade." actions={[['Understand the platform', '/platform']]} />
       <Sec tag="THE CHALLENGE" title="The global agri-trade system is broken." lede="Cross-border agri trade is slow and opaque; critical data is missing at every stage. Lack of data leads directly to lack of financing, and that makes for slow deals. The problem is trust, or the lack of it."><Checks items={WHY.broken} /></Sec>
       <Sec alt tag="OUR APPROACH" title="We bring trust back into trading."><Checks items={WHY.approach} /></Sec>
       <Sec tag="VALUE FOR EVERY ROLE" title="Why buyers, sellers, partners & banks choose us.">
@@ -44,10 +44,10 @@ export function Team() {
   const Person = ({ n, t }) => <Reveal className="person"><span>{initials(n)}</span><h3>{n}</h3>{t && <p>{t}</p>}</Reveal>;
   return (
     <>
-      <Hero tag="OUR TEAM" title="The team behind it." lede="The founders and leaders behind the vision of Grains Global." />
+      <Hero tag="OUR TEAM" title="The team behind it." lede="The founders and leaders behind the vision of Agri Global." />
       <Sec tag="FOUNDERS" title="Brains behind the vision."><div className="people">{TEAM.founders.map(([n]) => <Person key={n} n={n} t="Founder" />)}</div></Sec>
       <Sec alt tag="LEADERSHIP" title="Behind the scenes, our real superheroes."><div className="people">{TEAM.leaders.map(([n, t]) => <Person key={n} n={n} t={t} />)}</div></Sec>
-      <Sec tag="PARTNERS" title="Fuelling the journey of Grains Global."><div className="people">{TEAM.partners.map(([n, t]) => <Person key={n} n={n} t={t} />)}</div></Sec>
+      <Sec tag="PARTNERS" title="Fuelling the journey of Agri Global."><div className="people">{TEAM.partners.map(([n, t]) => <Person key={n} n={n} t={t} />)}</div></Sec>
     </>
   );
 }
@@ -100,7 +100,6 @@ export function Contact() {
               {SETTINGS.contactEmail && <a href={`mailto:${SETTINGS.contactEmail}`}>{SETTINGS.contactEmail}</a>}
               {SETTINGS.whatsapp && <a href={`https://wa.me/${SETTINGS.whatsapp.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer">WhatsApp {SETTINGS.whatsapp}</a>}</p></Reveal>}
             <Reveal className="panelx"><h3>Registered office</h3><p>{COMPANY.registered}</p></Reveal>
-            <Reveal className="panelx"><h3>Corporate office</h3><p>{COMPANY.corporate}</p></Reveal>
             <Reveal className="panelx"><h3>Follow us</h3><p className="socials">{COMPANY.social.map(([n, u]) => <a key={n} href={u} target="_blank" rel="noopener noreferrer">{n}</a>)}</p></Reveal>
           </div>
         </div>
@@ -121,7 +120,7 @@ export const Terms = () => <Legal tag="LEGAL" title="Terms & conditions" items={
 export function Documents() {
   return (
     <>
-      <Hero tag="DOCUMENTS" title="Registrations & certificates." lede={`${COMPANY.legalName} develops Grains Global.`} />
+      <Hero tag="DOCUMENTS" title="Registrations & certificates." lede={`${COMPANY.legalName} develops Agri Global.`} />
       <Sec tag="REGISTRATION NUMBERS" title="Our identifiers."><Table head={['Registration', 'Number']} rows={COMPANY.ids} /></Sec>
       <Sec alt tag="CERTIFICATES" title="Available on request." lede="Copies of the certificates below are available to verified counterparties. Contact us to request them."><Checks items={COMPANY.documents} /><p style={{ marginTop: 22 }}><Link className="link" to="/contact">Request documents →</Link></p></Sec>
     </>

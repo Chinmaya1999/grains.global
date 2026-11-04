@@ -273,7 +273,7 @@ export default function Dashboard() {
   return shell(
     <>
       <aside className="side glass">
-        <Link to="/dashboard" className="brand"><LogoMark size={30} /><span>GRAINS<em>{user.role}</em></span></Link>
+        <Link to="/dashboard" className="brand"><LogoMark size={30} /><span>AGRI<em>{user.role}</em></span></Link>
         <nav>{menu.map(([k, label, ic]) => (
           <button key={k} className={k === cur[0] ? 'on' : ''} onClick={() => go(k)}><svg viewBox="0 0 24 24" aria-hidden><path d={I[ic] || I.home} /></svg>{label}</button>))}
         </nav>

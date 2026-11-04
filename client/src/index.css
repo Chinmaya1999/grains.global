@@ -186,6 +186,7 @@ small { font-size: .78rem; color: var(--mut); }
 .spec-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
 .spec { padding: 22px; border-radius: 16px; background: #fff; box-shadow: var(--shadow); display: flex; flex-direction: column; transition: transform .3s, box-shadow .3s; }
 .spec:hover { transform: translateY(-4px); box-shadow: 0 16px 32px rgba(16, 48, 31, .16); }
+.spec-ph { height: 150px; margin: -22px -22px 14px; width: calc(100% + 44px); border-radius: 16px 16px 0 0; overflow: hidden; } .spec-ph img { width: 100%; height: 100%; object-fit: cover; }
 .spec h3 { font-size: 1.25rem; margin: 6px 0 12px; } .spec p { color: var(--mut); font-size: .86rem; flex: 1; }
 .spec .hot { font-size: 1.7rem; margin-top: 12px; } .spec .hot small { margin-left: 5px; }
 .bar { height: 6px; border-radius: 6px; background: #e4ebe1; overflow: hidden; margin-bottom: 12px; }

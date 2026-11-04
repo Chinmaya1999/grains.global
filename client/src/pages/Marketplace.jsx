@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { Icon } from '../components/Art.jsx';
+import { Icon, Photo } from '../components/Art.jsx';
 import { Reveal } from '../components/bits.jsx';
 import LeadForm from '../components/LeadForm.jsx';
 import { getProducts, getOffers } from '../api.js';
 import { inGroup, priceLabel } from '../lib/format.js';
+import { productImage } from '../lib/content.js';
 
 const FAMILIES = ['All', 'Basmati', 'Non-Basmati', 'Sella'];
 
@@ -59,6 +60,7 @@ export default function Marketplace() {
       <div className="spec-grid">
         {shown.map((p) => (
           <Link className="spec" key={p.slug} to={`/rice/${p.slug}`}>
+            <Photo name={productImage(p)} scene="rice" alt={p.name} className="spec-ph" />
             <small>{p.family} · {p.processing}</small>
             <h3>{p.name}</h3>
             <div className="bar"><i style={{ width: `${(p.grain.length / 8.6) * 100}%` }} /></div>

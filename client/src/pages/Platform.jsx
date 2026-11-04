@@ -102,7 +102,7 @@ export function ForSellers() {
         <div className="icards" style={{ '--cols': 3 }}>{SELLER.why.map(([t, items], i) => <Reveal key={t} delay={i * 0.07} className="icard"><small className="itag">0{i + 1}</small><h3>{t}</h3><Checks items={items} /></Reveal>)}</div>
       </Sec>
       <Sec alt id="finance" tag="FINANCE FOR SELLERS" title="Choose the right product."><Table head={['Your situation', 'Suggested product']} rows={FINANCE.sellerGuide} /></Sec>
-      <Band title="Grains Global empowers sellers to expand beyond traditional networks." actions={[['Join as a seller', '/join?role=seller']]} />
+      <Band title="Agri Global empowers sellers to expand beyond traditional networks." actions={[['Join as a seller', '/join?role=seller']]} />
     </>
   );
 }
