@@ -76,7 +76,7 @@ function Shell() {
   useEffect(() => {
     if (pathname.startsWith('/rice/')) return;
     const known = seoFor(pathname);
-    if (known) { applySeo({ image: '/images/hero-woman.jpg', ...known }); return; }
+    if (known) { applySeo({ image: '/images/hero-trade.jpg', ...known }); return; }
     const t = setTimeout(() => {
       const h = document.querySelector('h1')?.textContent?.trim();
       const short = h && h.length > 58 ? `${h.slice(0, 57)}…` : h;

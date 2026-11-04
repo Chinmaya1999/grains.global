@@ -1,6 +1,6 @@
 Site photos (high resolution, from Wikimedia Commons, CC BY / CC BY-SA / CC0; credit required where noted):
 hero-port.jpg      2400x600   Port Jersey container ship sunset 2018 (CC BY-SA 2.0)
-hero-woman.jpg     1400x1795  Woman at work, Gujarat (CC BY-SA 3.0)
+hero-trade.jpg     1400x1795  Bulk carrier at Halifax Grain Elevator (CC BY 4.0)
 port.jpg           2000x1128  Container ship NYK Themis at the Port of Los Angeles (CC BY-SA 4.0)
 trade-finance.jpg  1200x1600  Aerial image of the Eurogate and Burchardkai container terminals (CC BY-SA 4.0)
 sellers.jpg        1800x1200  Philippines worker (CC BY-SA 4.0)

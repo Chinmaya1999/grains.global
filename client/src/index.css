@@ -64,7 +64,7 @@ small { font-size: .78rem; color: var(--mut); }
 .checks svg { color: var(--g); }
 .hero-woman { align-self: end; margin-bottom: -96px; height: 520px; position: relative; z-index: 1; }
 .hero-woman .photo { height: 100%; width: 100%; background: transparent; -webkit-mask-image: linear-gradient(90deg, transparent, #000 20%, #000 90%, transparent), linear-gradient(180deg, transparent, #000 12%); -webkit-mask-composite: source-in; mask-image: linear-gradient(90deg, transparent, #000 20%, #000 90%, transparent), linear-gradient(180deg, transparent, #000 12%); mask-composite: intersect; }
-.hero-woman img { object-position: 60% 100%; }
+.hero-woman img { object-position: 50% 62%; }
 .hero2 .hero-port { position: absolute; right: 0; bottom: 0; width: min(46%, 700px); aspect-ratio: 802 / 190; z-index: 1; background: transparent; -webkit-mask-image: linear-gradient(180deg, transparent, #000 40%), linear-gradient(90deg, transparent, #000 22%); -webkit-mask-composite: source-in; mask-image: linear-gradient(180deg, transparent, #000 40%), linear-gradient(90deg, transparent, #000 22%); mask-composite: intersect; }
 .hero2 .hero-port img, .hero2 .hero-port .photo-art { width: 100%; height: 100%; }
 .hero-map { position: relative; align-self: center; height: 410px; border-radius: 22px; overflow: hidden; box-shadow: 0 18px 44px rgba(8, 40, 30, .35); border: 3px solid rgba(255, 255, 255, .85); background: #1d4d5c; }
@@ -279,7 +279,7 @@ input:focus, textarea:focus, select:focus { outline: none; border-color: var(--g
 @media (max-width: 1180px) {
   .hero-woman { height: 300px; margin: 0; align-self: auto; }
   .hero-woman .photo { border-radius: 22px; -webkit-mask-image: none; mask-image: none; background: var(--g3); box-shadow: 0 14px 34px rgba(16, 48, 31, .22); }
-  .hero-woman img { object-position: 55% 20%; }
+  .hero-woman img { object-position: 50% 60%; }
   .hero-map { height: 360px; }
 }
 @media (max-width: 760px) {

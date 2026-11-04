@@ -82,7 +82,7 @@ export default function Home() {
             </div>
             <ul className="checks"><li><Icon n="check" size={14} />Verified Buyers &amp; Sellers</li><li><Icon n="check" size={14} />Trade Finance (LC, BG, SBLC)</li><li><Icon n="check" size={14} />End-to-End Trade Support</li></ul>
           </div>
-          <div className="hero-woman"><Photo name="hero-woman" scene="people" tone="woman" alt="Woman farmer tending a young green rice crop" /></div>
+          <div className="hero-woman"><Photo name="hero-trade" scene="port" alt="Cargo ship loading at a grain terminal and container port" /></div>
         </div>
         <div className="aim"><Icon n="globe" size={34} /><div><b>Global Corridor</b><span>Asia ↔ Africa ↔ Middle East</span><small>{corridor.value} Countries • Growing</small></div></div>
       </section>
