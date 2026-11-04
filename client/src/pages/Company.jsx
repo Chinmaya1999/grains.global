@@ -32,7 +32,7 @@ export function WhyUs() {
       <Sec tag="VALUE FOR EVERY ROLE" title="Why buyers, sellers, partners & banks choose us.">
         <div className="two">{WHY.roles.map(([r, items]) => <Reveal key={r} className="panelx"><h3>{r}</h3><Checks items={items} /></Reveal>)}</div>
       </Sec>
-      <Sec alt tag="BACKED BY EXCELLENCE" title="Accredited by India’s oldest and most influential chambers of commerce.">
+      <Sec alt tag="BACKED BY EXCELLENCE" title="Backed by some of the oldest and most influential chambers of commerce.">
         <Cards items={WHY.chambers} cols={2} />
       </Sec>
       <Band title="Trust is not assumed here. It’s engineered." actions={[['Trade with trust', '/marketplace'], ['See our trust framework', '/trust', true]]} />

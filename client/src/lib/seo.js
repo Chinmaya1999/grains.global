@@ -4,19 +4,19 @@ export const SITE = 'https://agriglobal.co.in';
 export const BRAND = 'Agri Global';
 
 const PAGES = {
-  '/': ['Agri Global | Buy & Sell Indian Rice Online | Trade Finance', 'Agri Global is a B2B marketplace to buy and sell Indian basmati and non-basmati rice, with verified partners, trade finance and the Africa – India – Middle East trade corridor.'],
-  '/marketplace': ['Buy Indian Rice Online: Basmati, PR 14, Sharbati, Sona Masoori', 'Browse 22 export-grade Indian rice varieties with live offers, grain specs and per-tonne prices. Post a requirement and get quotes from verified sellers.'],
+  '/': ['Agri Global | Global Agri Commodity Trade & Finance Platform', 'Agri Global is a global B2B marketplace to buy, sell and finance agricultural commodities, starting with rice, with verified partners and trade finance across Asia, Africa and the Middle East.'],
+  '/marketplace': ['Buy Rice Online: Basmati, PR 14, Sharbati, Sona Masoori', 'Browse 22 export-grade rice varieties with live offers, grain specs and per-tonne prices. Post a requirement and get quotes from verified sellers.'],
   '/finance': ['Trade Finance for Agri Exporters: LC, BG, SBLC & Invoice Financing', 'Compare trade finance quotes for letters of credit, bank guarantees, SBLCs and invoice financing from participating banks on Agri Global.'],
   '/lenders': ['For Banks & NBFCs: Agri Trade Finance Deal Flow', 'Reach verified agri-commodity traders and originate trade finance deals with AI-driven risk scoring on Agri Global.'],
   '/tools': ['Free Agri Trade Calculators & Counterparty Scorecards', 'Free rice export calculators, landed-cost tools and counterparty risk scorecards for buyers, sellers and traders.'],
   '/prompts': ['AI Prompts for Agri Trade, Sourcing & Finance', 'Ready-to-use AI prompts for sourcing rice, drafting offers, vetting counterparties and preparing trade finance requests.'],
-  '/partner': ['Become a Trade Partner | Agri Global', 'Partner with Agri Global to bring buyers, sellers and financiers onto the platform across the Africa – India – Middle East corridor.'],
+  '/partner': ['Become a Trade Partner | Agri Global', 'Partner with Agri Global to bring buyers, sellers and financiers onto the platform across our global trade corridor.'],
   '/join': ['Join Agri Global as a Buyer, Seller or Partner', 'Create a free account to buy rice, list your stock, or join as a partner, AgroPreneur or lender.'],
-  '/for-buyers': ['For Rice Buyers: Verified Indian Suppliers & Transparent Pricing', 'Source Indian rice from KYB-verified sellers with transparent pricing, digital documentation and optional trade finance.'],
+  '/for-buyers': ['For Rice Buyers: Verified Suppliers & Transparent Pricing', 'Source rice and agri commodities from KYB-verified sellers with transparent pricing, digital documentation and optional trade finance.'],
   '/for-sellers': ['For Rice Sellers & Exporters: Reach Global Buyers', 'List your rice, reach buyers across Africa and the Middle East, and get paid with trade finance support on Agri Global.'],
   '/agropreneur': ['AgroPreneurs: Empowering Women in Agri Trade', 'Agri Global’s AgroPreneur programme equips women entrepreneurs with market access, training and trade tools.'],
   '/platform': ['The Agri Global Platform: Marketplace, Finance & Intelligence', 'One platform for agri-commodity trading, trade finance, market intelligence and verified counterparties.'],
-  '/corridor': ['Africa – India – Middle East Digital Trade Corridor', 'Trade rice and grains across 30 countries in the Africa – India – Middle East digital trade corridor.'],
+  '/corridor': ['Global Digital Trade Corridor: Asia, Africa & Middle East', 'Trade rice and grains across 30 countries in the Asia – Africa – Middle East digital trade corridor.'],
   '/trust': ['Trust & Verification: KYB, KYC and AI Risk Scoring', 'How Agri Global verifies buyers and sellers with KYB and KYC checks and AI-driven risk scoring.'],
   '/fraud-prevention': ['Fraud Prevention in Agri Trade | Agri Global', 'Practical guidance and platform safeguards to avoid fraud in international agri-commodity trading.'],
   '/technology': ['Technology: AI-Driven Agri Trade Platform', 'The technology behind Agri Global: AI-driven matching, risk scoring, digital documentation and market intelligence.'],
@@ -26,7 +26,7 @@ const PAGES = {
   '/manifesto': ['Our Manifesto: The Future of Agriculture Is the System', 'Why Agri Global believes the future of agriculture is not just in the soil, but in the system.'],
   '/sustainability': ['Sustainability | Agri Global', 'How Agri Global supports sustainable, fair and inclusive agri trade for farmers and traders.'],
   '/livelihood': ['Farmer Livelihoods | Agri Global', 'Improving farmer livelihoods through fair market access and transparent pricing.'],
-  '/contact': ['Contact Agri Global | Ahmedabad, India', 'Get in touch with Agri Global to buy or sell rice, request a quote or discuss trade finance. Registered office in Ahmedabad, Gujarat.'],
+  '/contact': ['Contact Agri Global', 'Get in touch with Agri Global to buy or sell rice, request a quote or discuss trade finance. Registered office in Ahmedabad, Gujarat.'],
   '/documents': ['Company Registrations & Certificates | Agri Global', 'Registration details and certificates of Agrimaati Ecosystem Private Limited, which develops Agri Global.'],
   '/privacy': ['Privacy Policy | Agri Global', 'How Agri Global collects, uses and protects your personal data.'],
   '/terms': ['Terms & Conditions | Agri Global', 'The terms for using the Agri Global platform.'],
@@ -62,7 +62,7 @@ export function seoFor(path) {
 export function productSeo(p) {
   const kind = p.family === 'Basmati' ? 'Basmati' : 'Non-Basmati';
   return {
-    title: `${p.name} Export from India | ${kind} Rice ${p.grain?.length ? `${Number(p.grain.length).toFixed(2)} mm ` : ''}| ${BRAND}`.replace(/\s+\|/g, ' |'),
+    title: `${p.name} Export | ${kind} Rice ${p.grain?.length ? `${Number(p.grain.length).toFixed(2)} mm ` : ''}| ${BRAND}`.replace(/\s+\|/g, ' |'),
     description: `Buy ${p.name} (${kind}, ${p.processing}) from India. ${p.grain?.length ? `Average grain length ${Number(p.grain.length).toFixed(2)} mm, ` : ''}under ${p.grain?.broken ?? 2}% broken. FOB, CIF and CNF offers from verified exporters on ${BRAND}.`,
     path: `/rice/${p.slug}`,
   };

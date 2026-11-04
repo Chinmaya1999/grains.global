@@ -33,7 +33,7 @@ export const PROMPTS = [
   ['Finance', 'LC checklist', 'List the documents and checks needed for a letter of credit on a rice export of {amount} USD to {country}. Flag the most common discrepancies that cause rejection.'],
   ['Finance', 'Explain LC vs SBLC', 'Explain in plain language when a rice exporter should use an LC versus a standby LC (SBLC), with costs, risks and a recommendation for a {amount} USD, {tenor}-day deal.'],
   ['Finance', 'Pre-shipment finance pitch', 'Draft a one-page request to an NBFC for pre-shipment finance of {amount} USD against a confirmed order from {buyer}. Include deal summary, repayment source and risk mitigants.'],
-  ['Partner', 'Intro to local buyers', 'Write a short WhatsApp message in {language} from a trading partner introducing Indian {variety} rice to a wholesaler in {country}, with a call to action for samples.'],
+  ['Partner', 'Intro to local buyers', 'Write a short WhatsApp message in {language} from a trading partner introducing {variety} rice to a wholesaler in {country}, with a call to action for samples.'],
   ['Partner', 'Margin explainer', 'Explain to a new trading partner how a {margin}% deal margin on {volume} USD monthly volume turns into earnings at a {share}% share, using a worked example.'],
   ['Operations', 'Shipment document check', 'Review this document list for a rice shipment to {country}: {paste list}. Identify missing or inconsistent items (BL, phyto, CoO, fumigation, packing list, invoice).'],
   ['Operations', 'Quality dispute response', 'A buyer reports {issue} on a {quantity} MT shipment of {variety}. Draft a calm, factual response asking for lab reports and photos, and outlining the claim process.'],

@@ -47,7 +47,7 @@ const MENU = [
   ]],
   ['Platform', [
     ['Overview', '/platform', 'spark', 'Trade and finance on one platform'],
-    ['Digital Trade Corridor', '/corridor', 'compass', 'Africa · India · Middle East'],
+    ['Digital Trade Corridor', '/corridor', 'compass', 'Asia · Africa · Middle East'],
     ['Trust framework', '/trust', 'lock', 'Trust engineered into every stage'],
     ['Fraud prevention', '/fraud-prevention', 'shield', 'Layered checks, safer trades'],
     ['Technology', '/technology', 'cpu', 'AI, APIs and security'],

@@ -51,12 +51,12 @@ export default function Home() {
   const shown = items.filter((p) => inGroup(p, fam)).slice(0, 4);
 
   const strip = [
-    ['leaf', items.length, '', 'Rice varieties'], ['globe', corridor.value, '', 'AIM countries'], ['people', ROLES.length, '', 'Stakeholder types'],
+    ['leaf', items.length, '', 'Rice varieties'], ['globe', corridor.value, '', 'Corridor countries'], ['people', ROLES.length, '', 'Stakeholder types'],
     ['calc', CALCS.length + SCORES.length, '', 'Free tools'], ['spark', PROMPTS.length, '', 'AI prompt templates'], ['sprout', women.value, women.suffix || 'M', 'Women AgroPreneurs (target)'],
   ];
   const audience = [
-    ['For Buyers', 'cart', 'Source verified Indian rice with transparent pricing & finance.', '/join?role=buyer', 'port', 'port'],
-    ['For Sellers', 'store', 'Access global buyers and get pre/post-shipment finance.', '/join?role=seller', 'sellers', 'rice'],
+    ['For Buyers', 'cart', 'Source verified agri commodities from trusted origins, with transparent pricing & finance.', '/join?role=buyer', 'port', 'port'],
+    ['For Sellers', 'store', 'Reach buyers in every region and get pre/post-shipment finance.', '/join?role=seller', 'sellers', 'rice'],
     ['For Global Partners', 'handshake', 'Own the buyer relationship and earn 25–40.5% margin.', '/partner', 'partners', 'people'],
     ['For AgroPreneurs', 'sprout', 'Aggregate from farmers, get training, finance and market linkage.', '/join?role=agropreneur', 'agropreneur', 'people'],
   ];
@@ -68,23 +68,23 @@ export default function Home() {
         <div className="hero-map">
           <Suspense fallback={null}><SatelliteMap /></Suspense>
           {/* on phones the map sits in the middle of the page, so the AIM card lives on it (the desktop card is hidden there) */}
-          <div className="aim aim-m"><Icon n="globe" size={34} /><div><b>AIM Corridor</b><span>India ↔ Africa ↔ Middle East</span><small>{corridor.value} Countries • Growing</small></div></div>
+          <div className="aim aim-m"><Icon n="globe" size={34} /><div><b>Global Corridor</b><span>Asia ↔ Africa ↔ Middle East</span><small>{corridor.value} Countries • Growing</small></div></div>
         </div>
         <Photo name="hero-port" scene="port" alt="" className="hero-port" />
         <div className="hero-in">
           <div className="hero-copy2">
             <p className="kick">The AI-Powered Global Agri Trade &amp; Finance Platform</p>
-            <h1>From Indian Farms to Global Markets</h1>
-            <p className="sub">Trade, Finance, Source and Grow — all in one platform for agricultural commodities, starting with Indian Rice.</p>
+            <h1>Global Agri Trade, Simplified.</h1>
+            <p className="sub">Source, trade, finance and grow: one trusted platform connecting farmers, exporters, buyers and banks worldwide. Starting with rice, expanding to grains, pulses, spices and oilseeds.</p>
             <div className="cta-row">
               <Link to="/marketplace" className="hbtn solid">Explore Marketplace<Icon n="arrow" size={18} /></Link>
               <Link to="/join?role=partner" className="hbtn light">Join as Partner</Link>
             </div>
             <ul className="checks"><li><Icon n="check" size={14} />Verified Buyers &amp; Sellers</li><li><Icon n="check" size={14} />Trade Finance (LC, BG, SBLC)</li><li><Icon n="check" size={14} />End-to-End Trade Support</li></ul>
           </div>
-          <div className="hero-woman"><Photo name="hero-woman" scene="people" tone="woman" alt="Smiling woman farmer holding freshly harvested rice" /></div>
+          <div className="hero-woman"><Photo name="hero-woman" scene="people" tone="woman" alt="Woman farmer tending a young green rice crop" /></div>
         </div>
-        <div className="aim"><Icon n="globe" size={34} /><div><b>AIM Corridor</b><span>India ↔ Africa ↔ Middle East</span><small>{corridor.value} Countries • Growing</small></div></div>
+        <div className="aim"><Icon n="globe" size={34} /><div><b>Global Corridor</b><span>Asia ↔ Africa ↔ Middle East</span><small>{corridor.value} Countries • Growing</small></div></div>
       </section>
 
       <Finder />
@@ -151,13 +151,13 @@ export default function Home() {
           <Link to="/tools?tool=trust" className="sc"><Icon n="check" size={26} /><div><h3>Trust Score</h3><p>A clear, explainable view of who you’re trading with.</p></div><span>Assess your Trust Score →</span></Link>
           <Link to="/tools?tool=credit" className="sc"><Icon n="bank" size={26} /><div><h3>Credit Score</h3><p>A transparent view of trade-level financial readiness.</p></div><span>Assess your Credit Score →</span></Link>
         </div>
-        <p className="accred">Accredited by <b>DPIIT</b>, <b>MCA</b> and India’s oldest chambers of commerce: <b>ICC</b> and <b>SGCCI</b>.</p>
+        <p className="accred">Recognised by <b>DPIIT</b>, <b>MCA</b> and leading chambers of commerce: <b>ICC</b> and <b>SGCCI</b>.</p>
       </section>
 
       <section className="mission">
         <Icon n="sprout" size={44} />
         <h2>Our Mission</h2>
-        <p>Empower 1 Million Women AgroPreneurs <i>•</i> Build a Trusted AIM Trade Corridor <i>•</i> Make Agri Trade Simple, Inclusive &amp; Transparent.</p>
+        <p>Empower 1 Million Women AgroPreneurs <i>•</i> Build a Trusted Global Trade Corridor <i>•</i> Make Agri Trade Simple, Inclusive &amp; Transparent.</p>
         <Link to="/join?role=agropreneur" className="hbtn light">Learn About Our Impact<Icon n="arrow" size={16} /></Link>
       </section>
     </>

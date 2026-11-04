@@ -25,7 +25,7 @@ export function Corridor() {
         <div className="icards" style={{ '--cols': 4 }}>{DTC.pillars.map(([t, items]) => <Reveal key={t} className="icard"><h3>{t}</h3><Checks items={items} /></Reveal>)}</div>
       </Sec>
       <Sec tag="THE TRUST ARCHITECTURE" title="Six ideas, one system."><Cards items={DTC.terms} /></Sec>
-      <Sec alt tag="AFRICA · INDIA · MIDDLE EAST" title="One trade corridor." lede={`The AIM corridor lists ${unique.length} countries in the Middle East and Africa, plus India.`}>
+      <Sec alt tag="AFRICA · INDIA · MIDDLE EAST" title="One trade corridor." lede={`The AIM corridor lists ${unique.length} countries in the Middle East and Africa, plus India, our first sourcing hub.`}>
         <div className="two">
           <Reveal className="panelx"><h3>Middle East ({CORRIDOR.middleEast.length})</h3><p className="tags">{CORRIDOR.middleEast.map((c) => <span key={c}>{c}</span>)}</p></Reveal>
           <Reveal className="panelx"><h3>Africa ({CORRIDOR.africa.length})</h3><p className="tags">{CORRIDOR.africa.map((c) => <span key={c}>{c}</span>)}</p></Reveal>
@@ -112,7 +112,7 @@ export function Agropreneur() {
     <>
       <Hero tag="AGROPRENEUR PROGRAM" title="Your gateway to global markets." lede="We simplify the challenges of selling agricultural commodities with trusted global connections. Learn agricultural entrepreneurship with our 2-month free training." actions={[['Sign up', '/join?role=agropreneur'], ['Export income calculator', '/tools?tool=export', true]]} />
       <Sec tag="WHAT YOU GET" title="Training, setup and funding."><Cards items={AGRO.features} /></Sec>
-      <Sec alt tag="FOR YOU?" title="Join India’s export revolution." lede="Sell your local produce globally, store and process it, and become an agricultural exporter. The program is built for women entrepreneurs in agriculture."><p className="note">{AGRO.note}</p></Sec>
+      <Sec alt tag="FOR YOU?" title="Join the global export revolution." lede="Sell your local produce globally, store and process it, and become an agricultural exporter. The program is built for women entrepreneurs in agriculture."><p className="note">{AGRO.note}</p></Sec>
       <Sec tag="FAQ" title="Frequently asked questions."><FAQ items={AGRO.faq} /></Sec>
       <Band title="Sell your local produce globally." actions={[['Join as an AgroPreneur', '/join?role=agropreneur']]} />
     </>

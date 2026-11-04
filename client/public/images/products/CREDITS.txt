@@ -1,7 +1,7 @@
-Product photos from Wikimedia Commons:
-basmati-raw.jpg     Raw Basmati Rice (CC BY-SA 4.0)
-basmati-india.jpg   Basmati Rice India, raw (CC BY 2.0)
-parboiled.jpg       Riso parboiled (CC BY-SA 3.0)
-sona-masoori.jpg    Masoori Rice (CC BY 2.0)
-closeup.jpg         CloseupRice 03 (CC BY-SA 4.0)
-Replace with your own product photos (same names) before launch.
+Product photos from Wikimedia Commons (resized to 1600x1200, cropped to 4:3):
+basmati-pot, basmati-bowl, basmati-field, longgrain, steam-yellow, jasmine, sona-masoori, parboiled
+Sources (all CC BY / CC BY-SA, attribution required):
+ Raw Basmati Rice (CC BY-SA 4.0) · Basmati Rice India, raw (CC BY 2.0)
+ Basmati rice in Bangladesh (CC BY-SA 4.0) · Long grain rice (CC BY-SA 4.0) · Rice Grains 1 (CC BY-SA 4.0)
+ 2014 uncooked Thai jasmine rice (CC BY-SA 4.0) · Sona-masuri (CC BY-SA 3.0) · Riso parboiled (CC BY-SA 3.0)
+Replace with your own product photos (same file names) before launch.

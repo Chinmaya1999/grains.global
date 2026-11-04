@@ -64,5 +64,5 @@ export default function SatelliteMap() {
     ro.observe(el.current);
     return () => { ro.disconnect(); map.remove(); };
   }, []);
-  return <div ref={el} className="satmap" role="img" aria-label="Satellite map of the trade corridor between India, the Middle East and Africa" />;
+  return <div ref={el} className="satmap" role="img" aria-label="Satellite map of the trade corridor between Asia, the Middle East and Africa" />;
 }

@@ -5,7 +5,7 @@ import { Icon, Photo } from '../components/Art.jsx';
 import { LogoMark } from '../components/Logo.jsx';
 
 const ROLES = [
-  ['buyer', 'Buyer', 'cart', 'Source verified rice from India with transparent pricing.'],
+  ['buyer', 'Buyer', 'cart', 'Source verified agri commodities from trusted origins with transparent pricing.'],
   ['seller', 'Seller', 'store', 'List offers and sell to verified global buyers.'],
   ['partner', 'Partner', 'handshake', 'Own the buyer relationship in your country and share the margin.'],
   ['agropreneur', 'AgroPreneur', 'sprout', 'Aggregate supply from farmers, with free training and funding.'],
@@ -97,7 +97,7 @@ export default function Auth() {
             <ul>
               <li><Icon n="shield" size={20} />Every buyer and seller is verified before they trade</li>
               <li><Icon n="bank" size={20} />Compare finance quotes from banks and NBFCs</li>
-              <li><Icon n="globe" size={20} />The Africa – India – Middle East corridor, in one place</li>
+              <li><Icon n="globe" size={20} />A global agri trade corridor, in one place</li>
             </ul>
             <p className="proof">Accredited by DPIIT and the ICC and SGCCI chambers of commerce</p>
           </div>

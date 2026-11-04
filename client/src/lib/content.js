@@ -36,7 +36,7 @@ export const ABOUT = {
   ],
   vision: [
     'To build the world’s most trusted agri-trade infrastructure: one that connects markets, unlocks finance and uplifts communities.',
-    'As we expand across India, the Middle East, Africa and key trade corridors, our focus stays clear: empower businesses, enable global trade, and create opportunities for millions of farmers and women entrepreneurs.',
+    'As we expand across Asia, the Middle East, Africa and key trade corridors worldwide, our focus stays clear: empower businesses, enable global trade, and create opportunities for millions of farmers and women entrepreneurs.',
   ],
 };
 
@@ -246,7 +246,7 @@ export const AGRO = {
     ['What support will I get to set up my business?', 'End-to-end support: business model development, regulatory compliance guidance, access to suppliers, branding and go-to-market strategy.'],
     ['How will I find buyers?', 'Through our market-linkage platform you are connected to domestic and international buyers, with help networking with wholesalers, retailers and institutional buyers.'],
   ],
-  note: 'If you are outside India and want to sell through us, join as a Global Trading Partner.',
+  note: 'If you are outside our home market and want to sell through us, join as a Global Trading Partner.',
 };
 
 // ---- Finance ----
@@ -308,7 +308,7 @@ export const RICE = {
     ['Is this rice suitable for export?', 'Yes. It is sourced from ISO and HACCP-compliant mills and inspected to export-quality standards.'],
     ['Are bulk and private-label options available?', 'Yes. Customised packaging and branding are available for bulk orders.'],
     ['Can I request samples before a bulk order?', 'Yes. Use the request form on this page and mention that you need samples.'],
-    ['Which regions import Indian steam rice the most?', 'The Middle East, Africa, Europe and North America are major importers.'],
+    ['Which regions import steam rice the most?', 'The Middle East, Africa, Europe and North America are major importers.'],
   ],
 };
 
@@ -364,11 +364,32 @@ export const REGISTRY = { SETTINGS, COMPANY, ABOUT, WHY, TEAM, MANIFESTO, SUSTAI
 // Snapshot of the built-in text, taken before any admin overrides are applied.
 export const DEFAULTS = JSON.parse(JSON.stringify(REGISTRY));
 
-// Catalogue photos (Wikimedia Commons, CC licensed; see public/images/products/CREDITS.txt).
+// Catalogue photos (Wikimedia Commons, CC licensed; see public/images/products/CREDITS.txt). One per variety, shared only where the pool runs out.
+const PRODUCT_IMAGES = {
+  "1121-steam-basmati-rice-8-35-mm": "basmati-pot",
+  "1121-golden-sella-basmati-rice-8-35-mm": "parboiled",
+  "1121-white-sella-basmati-rice-8-35-mm": "basmati-bowl",
+  "1509-steam-basmati-rice-8-40-mm": "longgrain",
+  "1509-golden-sella-basmati-rice-8-40-mm": "steam-yellow",
+  "1509-white-sella-basmati-rice-8-40-mm": "basmati-field",
+  "1718-steam-basmati-rice-8-40-mm": "jasmine",
+  "1718-golden-sella-basmati-rice-8-35-mm": "parboiled",
+  "1718-white-sella-basmati-rice-8-35-mm": "longgrain",
+  "1401-steam-basmati-rice-7-70-mm": "basmati-pot",
+  "1401-white-sella-basmati-rice-7-70-mm": "basmati-bowl",
+  "pr-14-steam-6-90-mm": "longgrain",
+  "pr-14-white-sella-6-90-mm": "basmati-field",
+  "pr-14-golden-sella-6-80-mm": "steam-yellow",
+  "sharbati-steam-7-10-mm": "jasmine",
+  "sharbati-raw-7-10-mm": "longgrain",
+  "sharbati-white-sella-7-10-mm": "longgrain",
+  "sharbati-golden-sella-7-00-mm": "parboiled",
+  "sugandha-steam-rice-7-90-mm": "basmati-pot",
+  "sugandha-white-sella-7-90-mm": "basmati-bowl",
+  "sugandha-golden-sella-7-85-mm": "steam-yellow",
+  "sona-masoori-steam-5-20-mm": "sona-masoori"
+};
 export function productImage(p) {
-  const s = p.slug || '';
-  if (s.startsWith('sona-masoori')) return 'products/sona-masoori';
-  if (p.processing === 'Golden Sella') return 'products/parboiled';
-  if (p.family === 'Basmati') return s.startsWith('1121') || s.startsWith('1401') ? 'products/basmati-raw' : 'products/basmati-india';
-  return p.processing === 'Raw' ? 'products/closeup' : 'products/parboiled';
+  const f = PRODUCT_IMAGES[p.slug] || (p.processing === 'Golden Sella' ? 'steam-yellow' : p.family === 'Basmati' ? 'basmati-pot' : 'longgrain');
+  return `products/${f}`;
 }
