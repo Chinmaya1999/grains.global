@@ -6,6 +6,7 @@ import LeadForm from '../components/LeadForm.jsx';
 import { request } from '../api.js';
 import { RICE, productImage } from '../lib/content.js';
 import { priceLabel, lengthLabel } from '../lib/format.js';
+import { applySeo, productSeo, SITE } from '../lib/seo.js';
 
 export default function ProductDetail() {
   const { slug } = useParams();
@@ -16,6 +17,21 @@ export default function ProductDetail() {
     request(`/products/${slug}`).then(setP).catch(() => setP(null));
     request(`/offers?product=${slug}`).then(setOffers).catch(() => setOffers([]));
   }, [slug]);
+
+  useEffect(() => {
+    if (!p) return undefined;
+    const img = `/images/${productImage(p)}.jpg`;
+    applySeo({ ...productSeo(p), image: img });
+    const ld = document.createElement('script');
+    ld.type = 'application/ld+json';
+    ld.textContent = JSON.stringify({
+      '@context': 'https://schema.org', '@type': 'Product', name: p.name, description: p.blurb, category: `${p.family} rice`,
+      image: SITE + img, brand: { '@type': 'Brand', name: 'Agri Global' },
+      ...(p.avgPriceUsd ? { offers: { '@type': 'Offer', priceCurrency: 'USD', price: p.avgPriceUsd, priceSpecification: { '@type': 'UnitPriceSpecification', priceCurrency: 'USD', price: p.avgPriceUsd, unitCode: 'TNE' }, availability: 'https://schema.org/InStock', url: `${SITE}/rice/${p.slug}` } } : {}),
+    });
+    document.head.appendChild(ld);
+    return () => ld.remove();
+  }, [p]);
 
   if (p === undefined) return <div className="page" />;
   if (p === null) return <div className="page"><h1 className="h1">Variety not found.</h1><Link className="btn" to="/marketplace">Back to the catalogue</Link></div>;

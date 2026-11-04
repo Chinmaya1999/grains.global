@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /account
+Disallow: /api/
+
+Sitemap: https://agriglobal.co.in/sitemap.xml

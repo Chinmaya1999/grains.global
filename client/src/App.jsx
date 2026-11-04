@@ -17,6 +17,7 @@ import ProductDetail from './pages/ProductDetail.jsx';
 import { About, WhyUs, Team, Manifesto, Sustainability, Livelihood, Contact, Privacy, Terms, Documents } from './pages/Company.jsx';
 import { Platform, Corridor, Trust, Fraud, Technology, ForBuyers, ForSellers, Agropreneur, Finance, Lenders } from './pages/Platform.jsx';
 import { COMPANY, SETTINGS } from './lib/content.js';
+import { applySeo, seoFor } from './lib/seo.js';
 import { ContentProvider } from './lib/contentStore.jsx';
 
 const TABS = [['/', 'Home', 'home'], ['/marketplace', 'Market', 'store'], ['/tools', 'Tools', 'calc'], ['/partner', 'Partners', 'handshake'], ['/account', 'Account', 'user']];
@@ -59,8 +60,6 @@ export function PublicRoutes({ location }) {
   );
 }
 
-const DEFAULT_TITLE = document.title;
-
 function Shell() {
   const { pathname } = useLocation();
   const isAdmin = pathname.startsWith('/admin');
@@ -72,15 +71,19 @@ function Shell() {
     }
     scrollTo(0, 0);
   }, [pathname, hash]);
-  // Each page gets its own browser-tab / history title, taken from its main heading.
+  // Each page gets its own browser-tab title, meta description, canonical URL and social tags (see lib/seo.js).
+  // Product pages set their own once the variety has loaded.
   useEffect(() => {
+    if (pathname.startsWith('/rice/')) return;
+    const known = seoFor(pathname);
+    if (known) { applySeo({ image: '/images/hero-woman.jpg', ...known }); return; }
     const t = setTimeout(() => {
       const h = document.querySelector('h1')?.textContent?.trim();
       const short = h && h.length > 58 ? `${h.slice(0, 57)}…` : h;
-      document.title = isAdmin ? `Admin${short ? ` · ${short}` : ''}` : pathname === '/' || !short ? DEFAULT_TITLE : `${short} · Agri Global`;
+      applySeo({ title: short ? `${short} | Agri Global` : 'Agri Global', path: pathname, noindex: !short || short === 'Off the map.' });
     }, 250);
     return () => clearTimeout(t);
-  }, [pathname, isAdmin]);
+  }, [pathname]);
   if (pathname.startsWith('/dashboard')) return <Routes><Route path="*" element={<Dashboard />} /></Routes>;
   if (isAdmin) return <Routes><Route path="/admin/:tab?" element={<Admin />} /></Routes>;
 
