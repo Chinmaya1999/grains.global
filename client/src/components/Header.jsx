@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../lib/auth.jsx';
 import { Icon } from './Art.jsx';
 import { Logo } from './Logo.jsx';
@@ -68,6 +68,7 @@ export default function Header() {
   const { user } = useAuth();
   const [open, setOpen] = useState(false);
   const { pathname } = useLocation();
+  const navigate = useNavigate();
   const [group, setGroup] = useState(null);
   const [searching, setSearching] = useState(false);
   const initial = (user?.name || '').trim().charAt(0).toUpperCase();
@@ -92,6 +93,7 @@ export default function Header() {
     {SETTINGS.announcement && <div className="annc" role="status">{SETTINGS.announcement}</div>}
     <header className="hdr">
       <div className="hdr-in">
+        {pathname !== '/' && <button className="ib backbtn" aria-label="Go back" onClick={() => (window.history.length > 1 ? navigate(-1) : navigate('/'))}><Icon n="arrow" size={19} className="flip" /></button>}
         <Logo to={user ? (user.role === 'admin' ? '/admin' : '/dashboard') : '/'} />
         <nav className={`menu ${open ? 'open' : ''}`} aria-label="Main">
           {MENU.map(([label, items, cols, feat], idx) => {

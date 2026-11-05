@@ -782,3 +782,16 @@ h1, h2, h3 { letter-spacing: -.025em; }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
 .foot .logo img { background: #fff; border-radius: 14px; padding: 4px; box-sizing: content-box; width: 40px; height: 40px; }
 .foot .logo .lg b { color: #fff; }
+
+/* ---------- mobile menu: solid panel above the page (a later .hdr backdrop-filter was trapping it inside the header) ---------- */
+@media (max-width: 1180px) {
+  .hdr { -webkit-backdrop-filter: none; backdrop-filter: none; background: #fff; }
+  .menu { overflow-y: auto; overflow-x: hidden; background: #fff; z-index: 85; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+  .menu:not(.open) { visibility: hidden; }
+}
+/* back button (mobile only) */
+.hdr .backbtn { display: none; }
+@media (max-width: 1180px) {
+  .hdr .backbtn { display: grid; flex: none; margin-left: -6px; }
+}
+.hdr .backbtn .flip { transform: rotate(180deg); }
