@@ -38,6 +38,17 @@ const products = [
   sku('sugandha-white-sella-7-90-mm', 'Sugandha White Sella', 'Non-Basmati', 'White Sella', 7.9),
   sku('sugandha-golden-sella-7-85-mm', 'Sugandha Golden Sella', 'Non-Basmati', 'Golden Sella', 7.85),
   sku('sona-masoori-steam-5-20-mm', 'Sona Masoori Steam', 'Non-Basmati', 'Steam', 5.2, { price: 510, hsn: '10063090', blurb: 'Sona Masoori Steam is a popular lightweight rice known for softness, versatile cooking quality and a mild aroma, sourced from South Indian growing regions and processed with steam technology.' }),
+  sku('matta-rosematta-rice-6-50-mm', 'Matta (Rosematta) Rice', 'Non-Basmati', 'Parboiled', 6.5, { hsn: '10063090', price: 450, blurb: 'Matta (Rosematta) Rice is a traditional red-bran parboiled rice from Kerala, prized for its earthy flavour, high fibre and hearty bite.' }),
+  sku('brown-rice-whole-grain-6-80-mm', 'Brown Rice Whole Grain', 'Non-Basmati', 'Raw', 6.8, { hsn: '10062000', price: 465, blurb: 'Whole-grain brown rice with the bran layer intact, rich in fibre and minerals, for health-food and retail packing.' }),
+  sku('brown-rice-medium-grain-5-50-mm', 'Brown Rice Medium Grain', 'Non-Basmati', 'Raw', 5.5, { hsn: '10062000', price: 480, blurb: 'Medium-grain brown rice with a soft, slightly chewy texture, popular for wholesome meals and meal-kit programmes.' }),
+  sku('red-cargo-rice-6-60-mm', 'Red Cargo Rice', 'Non-Basmati', 'Raw', 6.6, { hsn: '10062000', price: 495, blurb: 'Red cargo rice keeps its natural red bran for a nutty flavour and high antioxidant content.' }),
+  sku('black-rice-premium-6-00-mm', 'Black Rice Premium', 'Non-Basmati', 'Raw', 6.0, { hsn: '10063090', price: 510, blurb: 'Premium black (forbidden) rice, rich in anthocyanins, with a deep purple-black colour and a mild nutty taste.' }),
+  sku('black-rice-regular-milled-5-90-mm', 'Black Rice Regular Milled', 'Non-Basmati', 'Raw', 5.9, { hsn: '10063090', price: 525, blurb: 'Regular milled black rice sold in bulk for retailers and food processors, graded for uniform size and colour.' }),
+  sku('purple-rice-6-20-mm', 'Purple Rice', 'Non-Basmati', 'Raw', 6.2, { hsn: '10063090', price: 540, blurb: 'Purple rice with natural pigments, soft texture when cooked and a subtle floral aroma.' }),
+  sku('tricolour-rice-blend-6-30-mm', 'Tricolour Rice Blend', 'Non-Basmati', 'Raw', 6.3, { hsn: '10063090', price: 555, blurb: 'A ready blend of white, red and black rice, packed for premium retail and gourmet channels.' }),
+  sku('red-glutinous-rice-5-00-mm', 'Red Glutinous Rice', 'Non-Basmati', 'Raw', 5.0, { hsn: '10063090', price: 570, blurb: 'Short-grain red glutinous (sticky) rice used for traditional sweets, dumplings and festival dishes.' }),
+  sku('marsi-red-parboiled-rice-6-00-mm', 'Marsi Red Parboiled Rice', 'Non-Basmati', 'Parboiled', 6.0, { hsn: '10063090', price: 585, blurb: 'Marsi red parboiled rice with a robust grain and rustic taste, widely used in regional cuisines.' }),
+  sku('mixed-whole-grain-rice-6-20-mm', 'Mixed Whole Grain Rice', 'Non-Basmati', 'Raw', 6.2, { hsn: '10062000', price: 600, blurb: 'A multi-colour whole-grain rice mix, packed for health-conscious consumers and wellness brands.' }),
 ];
 
 // 29 countries are listed on the corridor page (Egypt appears under both regions), plus India.
