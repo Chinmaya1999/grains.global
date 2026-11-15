@@ -94,7 +94,7 @@ function Shell() {
         <PublicRoutes />
         <footer className="foot">
           <div className="foot-in">
-            <div><Logo /><p>{COMPANY.legalName}<br />Registered office: {COMPANY.registered}</p></div>
+            <div><Logo /></div>
             <div><b>Platform</b><Link to="/marketplace">Marketplace</Link><Link to="/finance">Trade finance</Link><Link to="/tools">Tools</Link><Link to="/prompts">AI prompts</Link><Link to="/corridor">Digital Trade Corridor</Link><Link to="/trust">Trust framework</Link></div>
             <div><b>Join</b><Link to="/for-buyers">Buyers</Link><Link to="/for-sellers">Sellers</Link><Link to="/partner">Partners</Link><Link to="/agropreneur">AgroPreneurs</Link><Link to="/lenders">Banks &amp; NBFCs</Link></div>
             <div><b>Company</b><Link to="/about">About us</Link><Link to="/team">Our team</Link><Link to="/sustainability">Sustainability</Link><Link to="/contact">Contact</Link><Link to="/privacy">Privacy policy</Link><Link to="/terms">Terms &amp; conditions</Link><Link to="/documents">Documents</Link></div>
@@ -102,7 +102,7 @@ function Shell() {
           <div className="foot-ids">
             {COMPANY.ids.map(([k, v]) => <span key={k}>{k}: {v}</span>)}
           </div>
-          <div className="foot-bar"><span>© 2026 Agri Global · {COMPANY.legalName}</span><span className="socials">
+          <div className="foot-bar"><span>© 2026 Agri Global · Powered by UUO Innovation Private Limited</span><span className="socials">
             {SETTINGS.contactEmail && <a href={`mailto:${SETTINGS.contactEmail}`}>{SETTINGS.contactEmail}</a>}
             {SETTINGS.whatsapp && <a href={`https://wa.me/${SETTINGS.whatsapp.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer">WhatsApp</a>}
             {COMPANY.social.map(([n, u]) => <a key={n} href={u} target="_blank" rel="noopener noreferrer">{n}</a>)}</span></div>

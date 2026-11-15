@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { Hero, Sec, Cards, Checks, Band, Prose, Table } from '../components/Blocks.jsx';
 import { Reveal } from '../components/bits.jsx';
 import LeadForm from '../components/LeadForm.jsx';
-import { COMPANY, SETTINGS, ABOUT, WHY, TEAM, MANIFESTO, SUSTAIN, LIVELIHOOD, PRIVACY, TERMS } from '../lib/content.js';
+import { COMPANY, SETTINGS, ABOUT, WHY, TEAM, TEAM_PHOTOS, MANIFESTO, SUSTAIN, LIVELIHOOD, PRIVACY, TERMS } from '../lib/content.js';
 
 const initials = (n) => n.split(' ').map((w) => w[0]).slice(0, 2).join('');
 
@@ -41,10 +41,10 @@ export function WhyUs() {
 }
 
 export function Team() {
-  const Person = ({ n, t }) => <Reveal className="person"><span>{initials(n)}</span><h3>{n}</h3>{t && <p>{t}</p>}</Reveal>;
+  const Person = ({ n, t }) => <Reveal className="person"><span>{TEAM_PHOTOS[n] ? <img src={TEAM_PHOTOS[n]} alt={n} loading="lazy" /> : initials(n)}</span><h3>{n}</h3>{t && <p>{t}</p>}</Reveal>;
   return (
     <>
-      <Hero tag="OUR TEAM" title="The team behind it." lede="The founders and leaders behind the vision of Agri Global." />
+      <Hero tag="OUR TEAM" title="Meet the people behind Agri Global." lede="The founders and leaders behind the vision of Agri Global." />
       <Sec tag="FOUNDERS" title="Brains behind the vision."><div className="people">{TEAM.founders.map(([n]) => <Person key={n} n={n} t="Founder" />)}</div></Sec>
       <Sec alt tag="LEADERSHIP" title="Behind the scenes, our real superheroes."><div className="people">{TEAM.leaders.map(([n, t]) => <Person key={n} n={n} t={t} />)}</div></Sec>
       <Sec tag="PARTNERS" title="Fuelling the journey of Agri Global."><div className="people">{TEAM.partners.map(([n, t]) => <Person key={n} n={n} t={t} />)}</div></Sec>

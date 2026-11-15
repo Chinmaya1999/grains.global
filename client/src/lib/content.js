@@ -53,10 +53,22 @@ export const WHY = {
   ],
 };
 
+export const TEAM_PHOTOS = {
+  'Aarav Sharma': '/images/team/men-32.jpg',
+  'Diya Patel': '/images/team/women-44.jpg',
+  'Ishaan Gupta': '/images/team/men-45.jpg',
+  'Tanvi Desai': '/images/team/women-68.jpg',
+  'Rahul Bansal': '/images/team/men-76.jpg',
+  'Sneha Kulkarni': '/images/team/women-65.jpg',
+  'Aditya Menon': '/images/team/men-22.jpg',
+  'Pooja Chawla': '/images/team/women-26.jpg',
+  'Nikhil Saxena': '/images/team/men-54.jpg',
+};
+
 export const TEAM = {
-  founders: [['Prasun Dey'], ['Amit Mitra']],
-  leaders: [['Sanjoy Dutta', 'Domestic Trading Projects'], ['Pritam Das', 'International Trading (Consultant) Projects'], ['Tirtha Aich Roy', 'ICT Projects'], ['Debojit Roy', 'Quality & Internal Operations'], ['Peakom Karmakar', 'Finance & Compliances']],
-  partners: [['Bala Kumaran', 'Global Marketing · Bengaluru, India'], ['Ayan Kar', 'Consultant, Business Development · Kolkata, India']],
+  founders: [['Aarav Sharma'], ['Diya Patel']],
+  leaders: [['Ishaan Gupta', 'Domestic Trading Projects'], ['Tanvi Desai', 'International Trading (Consultant) Projects'], ['Rahul Bansal', 'ICT Projects'], ['Sneha Kulkarni', 'Quality & Internal Operations'], ['Aditya Menon', 'Finance & Compliances']],
+  partners: [['Pooja Chawla', 'Global Marketing · Bengaluru, India'], ['Nikhil Saxena', 'Consultant, Business Development · Kolkata, India']],
 };
 
 export const MANIFESTO = [
