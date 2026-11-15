@@ -16,7 +16,7 @@ const sku = (slug, name, family, processing, length, extra = {}) => ({
 });
 
 const products = [
-  sku('1121-steam-basmati-rice-8-35-mm', '1121 Steam Basmati Rice', 'Basmati', 'Steam', 8.35, { price: 987, blurb: '1121 Steam Basmati Rice is a premium long-grain rice known for exceptional length, aroma and consistent cooking performance. The parboiled steam process preserves nutrients, strengthens the grain and reduces breakage during cooking and transport.' }),
+  sku('1121-steam-basmati-rice-8-35-mm', '1121 Steam Basmati Rice', 'Basmati', 'Steam', 8.35, { price: 900, blurb: '1121 Steam Basmati Rice is a premium long-grain rice known for exceptional length, aroma and consistent cooking performance. The parboiled steam process preserves nutrients, strengthens the grain and reduces breakage during cooking and transport.' }),
   sku('1121-golden-sella-basmati-rice-8-35-mm', '1121 Golden Sella Basmati Rice', 'Basmati', 'Golden Sella', 8.35),
   sku('1121-white-sella-basmati-rice-8-35-mm', '1121 White Sella Basmati Rice', 'Basmati', 'White Sella', 8.35),
   sku('1509-steam-basmati-rice-8-40-mm', '1509 Steam Basmati Rice', 'Basmati', 'Steam', 8.4),
@@ -27,7 +27,7 @@ const products = [
   sku('1718-white-sella-basmati-rice-8-35-mm', '1718 White Sella Basmati Rice', 'Basmati', 'White Sella', 8.35),
   sku('1401-steam-basmati-rice-7-70-mm', '1401 Steam Basmati Rice', 'Basmati', 'Steam', 7.7),
   sku('1401-white-sella-basmati-rice-7-70-mm', '1401 White Sella Basmati Rice', 'Basmati', 'White Sella', 7.7),
-  sku('pr-14-steam-6-90-mm', 'PR 14 Steam', 'Non-Basmati', 'Steam', 6.9, { price: 526, hsn: '10063010', blurb: 'PR 14 Steam Rice is a premium parboiled long-grain variety widely preferred in global bulk and institutional markets. Steaming retains nutrients, improves grain strength and gives excellent elongation after cooking.' }),
+  sku('pr-14-steam-6-90-mm', 'PR 14 Steam', 'Non-Basmati', 'Steam', 6.9, { price: 500, hsn: '10063010', blurb: 'PR 14 Steam Rice is a premium parboiled long-grain variety widely preferred in global bulk and institutional markets. Steaming retains nutrients, improves grain strength and gives excellent elongation after cooking.' }),
   sku('pr-14-white-sella-6-90-mm', 'PR 14 White Sella', 'Non-Basmati', 'White Sella', 6.9),
   sku('pr-14-golden-sella-6-80-mm', 'PR 14 Golden Sella', 'Non-Basmati', 'Golden Sella', 6.8),
   sku('sharbati-steam-7-10-mm', 'Sharbati Steam', 'Non-Basmati', 'Steam', 7.1),
@@ -37,7 +37,7 @@ const products = [
   sku('sugandha-steam-rice-7-90-mm', 'Sugandha Steam Rice', 'Non-Basmati', 'Steam', 7.9),
   sku('sugandha-white-sella-7-90-mm', 'Sugandha White Sella', 'Non-Basmati', 'White Sella', 7.9),
   sku('sugandha-golden-sella-7-85-mm', 'Sugandha Golden Sella', 'Non-Basmati', 'Golden Sella', 7.85),
-  sku('sona-masoori-steam-5-20-mm', 'Sona Masoori Steam', 'Non-Basmati', 'Steam', 5.2, { price: 531, hsn: '10063090', blurb: 'Sona Masoori Steam is a popular lightweight rice known for softness, versatile cooking quality and a mild aroma, sourced from South Indian growing regions and processed with steam technology.' }),
+  sku('sona-masoori-steam-5-20-mm', 'Sona Masoori Steam', 'Non-Basmati', 'Steam', 5.2, { price: 510, hsn: '10063090', blurb: 'Sona Masoori Steam is a popular lightweight rice known for softness, versatile cooking quality and a mild aroma, sourced from South Indian growing regions and processed with steam technology.' }),
 ];
 
 // 29 countries are listed on the corridor page (Egypt appears under both regions), plus India.

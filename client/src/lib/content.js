@@ -1,18 +1,18 @@
-// Page content taken from the live grains.global site (wording tightened).
+// Demo page content (placeholder company details and wording).
 // Roadmap items are marked so the site doesn't present them as live.
 
 export const COMPANY = {
-  legalName: 'Agrimaati Ecosystem Private Limited',
-  registered: '204, Saumya Square, Nr. Govardhan Party Plot, Thaltej, Daskroi, Ahmedabad, Gujarat, India, 380059',
+  legalName: 'Demo Agro Trading Private Limited',
+  registered: '123 Sample Street, Demo Business Park, Sample City, Sample State, India, 000000',
   ids: [
-    ['CIN', 'U01610GJ2025PTC164738'], ['Date of incorporation', 'July 2, 2025'], ['Registrar of Companies', 'RoC Ahmedabad'],
-    ['Authorised & paid-up capital', '₹10,000'],
+    ['CIN', 'U00000XX0000PTC000000'], ['Date of incorporation', 'January 1, 2020'], ['Registrar of Companies', 'RoC Demo City'],
+    ['Authorised & paid-up capital', '₹1,00,000'],
   ],
   documents: ['Incorporation Certificate'],
   social: [
-    ['YouTube', 'https://www.youtube.com/@GrainsGlobal'], ['Instagram', 'https://www.instagram.com/grainsglobal'],
-    ['LinkedIn', 'https://www.linkedin.com/company/grains-global/posts/?feedView=all'],
-    ['Facebook', 'https://www.facebook.com/people/Agropreneurs-Market-Technologies-Pvt-Ltd/61555311479573/'],
+    ['YouTube', 'https://www.youtube.com/@example'], ['Instagram', 'https://www.instagram.com/example'],
+    ['LinkedIn', 'https://www.linkedin.com/company/example'],
+    ['Facebook', 'https://www.facebook.com/example'],
   ],
 };
 
