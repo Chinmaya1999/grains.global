@@ -32,14 +32,14 @@ Push to `main` and the pipeline does everything:
 Pull requests and other branches run the CI workflow only (tests + a Docker build, nothing is pushed or deployed).
 
 ### One-time setup
-- **Server** (done): Docker, Docker Compose, swap and `/opt/grains` on the EC2 instance. Open inbound port 80 (and 22) in the security group.
+- **Server** (done): Docker, Docker Compose, swap and `/opt/grains` on the EC2 instance. Open inbound ports 8090 and 22 in the security group.
 - **GitHub**: run `DOCKERHUB_TOKEN='…' bash deploy/bootstrap-github.sh` once. It creates the private repo, stores the secrets (`DOCKERHUB_USERNAME`, `DOCKERHUB_TOKEN`, `EC2_HOST`, `EC2_USER`, `EC2_SSH_KEY`, `EC2_KNOWN_HOSTS`, `MONGODB_URI`, `JWT_SECRET`, `ADMIN_EMAIL`) and variables (`CLIENT_ORIGIN`, `COOKIE_SECURE`), and pushes. Add `--dry-run` to preview.
 - **MongoDB Atlas**: Network Access must allow the server's IP.
 
 ### Everyday
 - Logs: `ssh ec2-user@<host> 'cd /opt/grains && docker compose logs -f'`
 - Redeploy a specific commit: Actions → Deploy → Run workflow (or `bash deploy.sh <tag>` on the server).
-- **HTTPS**: Caddy (in `deploy/docker-compose.yml`, configured by `deploy/Caddyfile`) serves `agriglobal.co.in` (site) and `api.agriglobal.co.in` (API) over HTTPS with automatic Let's Encrypt certificates. Requirements: DNS A records for `agriglobal.co.in`, `www` and `api` pointing at the server, inbound ports 80 and 443 open in the security group, and repo variables `CLIENT_ORIGIN=https://agriglobal.co.in` and `COOKIE_SECURE=true`.
+- **Port**: the site is served over plain HTTP on port 8090, because another project on the server uses 80/443. Set repo variables `CLIENT_ORIGIN=http://<host>:8090` and `COOKIE_SECURE=false`. `deploy/Caddyfile` is not used by the pipeline.
 
 
 ## Tests

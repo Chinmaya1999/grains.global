@@ -11,7 +11,7 @@ echo "Deploying $NEW_TAG (previous: ${PREV_TAG:-none})"
 
 health() { # waits up to ~2 minutes for the site and the API to answer
   for _ in $(seq 1 40); do
-    if curl -fsS -m 4 http://127.0.0.1:8080/healthz >/dev/null 2>&1 && curl -fsS -m 4 http://127.0.0.1:8080/api/health >/dev/null 2>&1; then return 0; fi
+    if curl -fsS -m 4 http://127.0.0.1:8090/healthz >/dev/null 2>&1 && curl -fsS -m 4 http://127.0.0.1:8090/api/health >/dev/null 2>&1; then return 0; fi
     sleep 3
   done
   return 1
@@ -24,7 +24,7 @@ trap 'docker logout >/dev/null 2>&1 || true' EXIT
 up "$NEW_TAG"
 if health; then
   echo "Healthy: $NEW_TAG is live."
-  docker image prune -af --filter "until=72h" >/dev/null 2>&1 || true
+  docker image prune -f >/dev/null 2>&1 || true   # dangling only: other projects share this server
   exit 0
 fi
 
