@@ -102,7 +102,7 @@ function Shell() {
           <div className="foot-ids">
             {COMPANY.ids.map(([k, v]) => <span key={k}>{k}: {v}</span>)}
           </div>
-          <div className="foot-bar"><span>© 2026 Agri Global · Powered by UUO Innovation Private Limited</span><span className="socials">
+          <div className="foot-bar"><span>© 2026 Agri Global · Powered by THE BULK BUYERS FZC LLC</span><span className="socials">
             {SETTINGS.contactEmail && <a href={`mailto:${SETTINGS.contactEmail}`}>{SETTINGS.contactEmail}</a>}
             {SETTINGS.whatsapp && <a href={`https://wa.me/${SETTINGS.whatsapp.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer">WhatsApp</a>}
             {COMPANY.social.map(([n, u]) => <a key={n} href={u} target="_blank" rel="noopener noreferrer">{n}</a>)}</span></div>
