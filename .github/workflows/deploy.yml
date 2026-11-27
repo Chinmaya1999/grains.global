@@ -45,7 +45,7 @@ jobs:
     needs: preflight
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v4
         with: { node-version: 22, cache: npm, cache-dependency-path: '**/package-lock.json' }
       - name: Server
@@ -67,7 +67,7 @@ jobs:
     outputs:
       tag: ${{ steps.tag.outputs.tag }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - id: tag
         run: echo "tag=${GITHUB_SHA::12}" >> "$GITHUB_OUTPUT"
       - uses: docker/setup-buildx-action@v3
@@ -108,7 +108,7 @@ jobs:
       SSH_USER: ${{ secrets.EC2_USER }}
       TAG: ${{ needs.images.outputs.tag }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Prepare SSH (host key is pinned, not trusted on first use)
         env:
