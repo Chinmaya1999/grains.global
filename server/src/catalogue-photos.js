@@ -58,4 +58,5 @@ export const STOCK_PHOTOS = {
   'agrifound-light-red-onion': 'lasalgaon-red-onion',
   'pusa-red-onion': 'bhima-shakti-bhima-super-onion',
   'white-onion-pusa-white': 'white-onion-pusa-white',
+  'white-peas': 'white-peas',
 };
