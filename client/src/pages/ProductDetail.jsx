@@ -64,6 +64,7 @@ export default function ProductDetail() {
           <div>
             <Table head={['Parameter', 'Value']} rows={specRows} />
             <p className="note">Indicative values; confirm exact specification and grade in your offer or sample.</p>
+            {p.image?.startsWith('catalogue/stock/') && <p className="note">Representative photo, not the actual lot. <a className="link" href="/images/catalogue/stock/CREDITS.txt" target="_blank" rel="noreferrer">Photo credits</a></p>}
           </div>
           <ProductPhoto name={productImage(p)} alt={p.name} className="pphoto" />
         </div>

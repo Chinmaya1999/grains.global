@@ -3,6 +3,8 @@
 // All numbers are indicative; final limits are agreed in the buyer's specification.
 // Existing rice SKUs only receive extra details (price and description are left alone). New products are created in full.
 
+import { STOCK_PHOTOS } from './catalogue-photos.js';
+
 const rows = (list) => list.map(([label, value]) => ({ label, value }));
 const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
@@ -195,7 +197,9 @@ const SPICES = [
     }),
 ];
 
-export const NEW_PRODUCTS = [...NEW_RICE, ...GRAINS, ...PULSES, ...OILSEEDS, ...ONIONS, ...SPICES];
+// Supplier catalogue photos win; other products get a representative stock photo where one exists.
+export const NEW_PRODUCTS = [...NEW_RICE, ...GRAINS, ...PULSES, ...OILSEEDS, ...ONIONS, ...SPICES]
+  .map((p) => (!p.image && STOCK_PHOTOS[p.slug] ? { ...p, image: `catalogue/stock/${STOCK_PHOTOS[p.slug]}` } : p));
 
 // Safe to run repeatedly: never deletes anything, and never overwrites a price or description someone has edited.
 export async function importCatalogue(Product) {
@@ -208,6 +212,8 @@ export async function importCatalogue(Product) {
   for (const p of NEW_PRODUCTS) {
     const r = await Product.updateOne({ slug: p.slug }, { $setOnInsert: p }, { upsert: true, setDefaultsOnInsert: false });
     if (r.upsertedCount) created += 1;
+    // products imported before they had a photo get one now; a photo already set is never replaced
+    else if (p.image) await Product.updateOne({ slug: p.slug, image: null }, { $set: { image: p.image } });
   }
   return { created, updated, missing };
 }

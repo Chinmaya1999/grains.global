@@ -1,0 +1,56 @@
+Representative product photos from Wikimedia Commons, resized and cropped on screen.
+CC BY and CC BY-SA photos require this attribution. Replace with your own photos when available.
+
+traditional-basmati-rice.jpg: "Basmati Rice India, raw.jpg" by cookbookman17, CC BY 2.0, https://commons.wikimedia.org/wiki/File:Basmati_Rice_India,_raw.jpg
+basmati-386-rice.jpg: "Long grain rice.jpg" by Gaurav Dhwaj Khadka, CC BY-SA 4.0, https://commons.wikimedia.org/wiki/File:Long_grain_rice.jpg
+pusa-basmati-1885-1847-rice.jpg: "Raw Basmati Rice.jpg" by Gaurav Dhwaj Khadka, CC BY-SA 4.0, https://commons.wikimedia.org/wiki/File:Raw_Basmati_Rice.jpg
+ir36-rice.jpg: "Rice on a plate.jpg" by unknown, CC BY-SA 3.0, https://commons.wikimedia.org/wiki/File:Rice_on_a_plate.jpg
+swarna-rice.jpg: "Uncooked ST25 rice on bamboo surface.jpg" by VinhNguyen.1257, CC BY-SA 4.0, https://commons.wikimedia.org/wiki/File:Uncooked_ST25_rice_on_bamboo_surface.jpg
+hmt-ponni-kolam-rice.jpg: "A closeup scene of Ponni rice.JPG" by Thamizhpparithi Maari, CC BY-SA 3.0, https://commons.wikimedia.org/wiki/File:A_closeup_scene_of_Ponni_rice.JPG
+pr-11-parmal-rice.jpg: "Riso parboiled.jpg" by Luigi Chiesa, CC BY-SA 3.0, https://commons.wikimedia.org/wiki/File:Riso_parboiled.jpg
+jeera-samba-gobindobhog-kalanamak-rice.jpg: "Kalanamak rice grains.jpg" by Anay.m.tripathi, CC BY-SA 4.0, https://commons.wikimedia.org/wiki/File:Kalanamak_rice_grains.jpg
+sharbati-wheat.jpg: "Wheat grains microfocus.jpg" by अंशुल गौतम, CC BY-SA 4.0, https://commons.wikimedia.org/wiki/File:Wheat_grains_microfocus.jpg
+lokwan-wheat.jpg: "Triticum aestivum naked wheat kernels.jpg" by Peer Schilperoord, CC BY-SA 4.0, https://commons.wikimedia.org/wiki/File:Triticum_aestivum_naked_wheat_kernels.jpg
+hd-2967-hd-3086-wheat.jpg: "Wheat grains kept for drying at Madhurawada.JPG" by Adityamadhav83, CC BY-SA 3.0, https://commons.wikimedia.org/wiki/File:Wheat_grains_kept_for_drying_at_Madhurawada.JPG
+white-maize.jpg: "LPCC-889-Grans de blat de moro blancs.jpg" by Miquel Pujol Palol, CC BY-SA 3.0, https://commons.wikimedia.org/wiki/File:LPCC-889-Grans_de_blat_de_moro_blancs.jpg
+flint-maize.jpg: "Зернівка кременистої кукурудзи (Zea mays).jpg" by Serhey0211994, CC BY-SA 4.0, https://commons.wikimedia.org/wiki/File:%D0%97%D0%B5%D1%80%D0%BD%D1%96%D0%B2%D0%BA%D0%B0_%D0%BA%D1%80%D0%B5%D0%BC%D0%B5%D0%BD%D0%B8%D1%81%D1%82%D0%BE%D1%97_%D0%BA%D1%83%D0%BA%D1%83%D1%80%D1%83%D0%B4%D0%B7%D0%B8_(Zea_mays).jpg
+animal-feed-maize.jpg: "Maize Corn.jpg" by Joel Penner from Winnipeg, Canada, CC BY 2.0, https://commons.wikimedia.org/wiki/File:Maize_Corn.jpg
+maize-grits-flour.jpg: "Corn grits.jpg" by Fumikas Sagisavas, CC0, https://commons.wikimedia.org/wiki/File:Corn_grits.jpg
+desi-chickpeas-kala-chana.jpg: "Black chickpeas in Village Market.jpg" by S.Elaiyaraja, CC BY-SA 4.0, https://commons.wikimedia.org/wiki/File:Black_chickpeas_in_Village_Market.jpg
+kabuli-chickpeas.jpg: "380Cicer arietinum (seeds).jpg" by Judgefloro, CC0, https://commons.wikimedia.org/wiki/File:380Cicer_arietinum_(seeds).jpg
+pigeon-peas-toor-arhar.jpg: "Cajanus cajan Steve Hurst 1.jpg" by unknown, Public domain, https://commons.wikimedia.org/wiki/File:Cajanus_cajan_Steve_Hurst_1.jpg
+green-gram-whole-moong.jpg: "Half cup of dry mung beans from China.jpg" by yevkusa, CC BY-SA 2.0, https://commons.wikimedia.org/wiki/File:Half_cup_of_dry_mung_beans_from_China.jpg
+split-green-gram-moong-dal.jpg: "Moong Dal.jpg" by Sudeshna Banerjee, CC BY-SA 3.0, https://commons.wikimedia.org/wiki/File:Moong_Dal.jpg
+black-gram-whole-urad.jpg: "Black gram.jpg" by Sanjay Acharya, CC BY-SA 3.0, https://commons.wikimedia.org/wiki/File:Black_gram.jpg
+split-black-gram-urad-dal.jpg: "Vigna mungo without skin.jpg" by Thamizhpparithi Maari, CC BY-SA 4.0, https://commons.wikimedia.org/wiki/File:Vigna_mungo_without_skin.jpg
+red-lentils-masoor.jpg: "Red lentils Gogreen.jpg" by Tiia Monto, CC BY-SA 4.0, https://commons.wikimedia.org/wiki/File:Red_lentils_Gogreen.jpg
+green-lentils.jpg: "Green lentils.jpg" by Tiia Monto, CC BY-SA 3.0, https://commons.wikimedia.org/wiki/File:Green_lentils.jpg
+yellow-peas.jpg: "Raw (dried) yellow peas.jpg" by Billjones94, CC BY-SA 4.0, https://commons.wikimedia.org/wiki/File:Raw_(dried)_yellow_peas.jpg
+cowpeas-lobia.jpg: "Vigna unguiculata 03.jpg" by Amada44, Public domain, https://commons.wikimedia.org/wiki/File:Vigna_unguiculata_03.jpg
+black-eyed-peas-chawli.jpg: "Black-eyed-pea.jpg" by Sanjay ach at English Wikipedia, CC BY-SA 3.0, https://commons.wikimedia.org/wiki/File:Black-eyed-pea.jpg
+kidney-beans-rajma.jpg: "Kidney beans.jpg" by Sanjay Acharya, CC BY-SA 3.0, https://commons.wikimedia.org/wiki/File:Kidney_beans.jpg
+horse-gram-kulthi.jpg: "Horse Gram Seeds.jpg" by Sanjay Acharya, CC BY-SA 4.0, https://commons.wikimedia.org/wiki/File:Horse_Gram_Seeds.jpg
+java-groundnut-kernels.jpg: "Groundnut kernel.JPG" by Abhay iari, CC BY-SA 4.0, https://commons.wikimedia.org/wiki/File:Groundnut_kernel.JPG
+bold-groundnut-kernels.jpg: "Fabales - Arachis hypogaea - 1.jpg" by Emőke Dénes, CC BY-SA 4.0, https://commons.wikimedia.org/wiki/File:Fabales_-_Arachis_hypogaea_-_1.jpg
+tj-spanish-groundnut-kernels.jpg: "Peeled groundnuts.jpg" by Halima Waziri, CC BY-SA 4.0, https://commons.wikimedia.org/wiki/File:Peeled_groundnuts.jpg
+blanched-groundnut-kernels.jpg: "Arachis hypogaea 005.JPG" by H. Zell, CC BY-SA 3.0, https://commons.wikimedia.org/wiki/File:Arachis_hypogaea_005.JPG
+natural-white-sesame-seeds.jpg: "Sa white sesame seeds.jpg" by Sanjay ach, CC BY-SA 3.0, https://commons.wikimedia.org/wiki/File:Sa_white_sesame_seeds.jpg
+natural-black-sesame-seeds.jpg: "Sesame seed black.JPG" by Miansari66, Public domain, https://commons.wikimedia.org/wiki/File:Sesame_seed_black.JPG
+brown-sesame-seeds.jpg: "Sesame Nam.jpg" by စာကလေး, CC0, https://commons.wikimedia.org/wiki/File:Sesame_Nam.jpg
+hulled-sesame-seeds.jpg: "White Sesame Seeds.jpg" by Sannidhishetty, CC BY-SA 4.0, https://commons.wikimedia.org/wiki/File:White_Sesame_Seeds.jpg
+soybeans.jpg: "Dried soybeans.jpg" by Fumikas Sagisavas, CC0, https://commons.wikimedia.org/wiki/File:Dried_soybeans.jpg
+yellow-mustard-seeds.jpg: "Sa yellow mustard.jpg" by Sanjay Acharya, CC BY-SA 3.0, https://commons.wikimedia.org/wiki/File:Sa_yellow_mustard.jpg
+brown-black-mustard-seeds.jpg: "Black mustard seeds.jpg" by Theredgiant, CC BY-SA 4.0, https://commons.wikimedia.org/wiki/File:Black_mustard_seeds.jpg
+rapeseed.jpg: "Brassica napus seeds, koolzaad zaden.jpg" by Rasbak, CC BY-SA 3.0, https://commons.wikimedia.org/wiki/File:Brassica_napus_seeds,_koolzaad_zaden.jpg
+oil-grade-sunflower-seeds.jpg: "Sunflower seeds. img 004.jpg" by Dmitry Makeev, CC BY-SA 4.0, https://commons.wikimedia.org/wiki/File:Sunflower_seeds._img_004.jpg
+confectionery-sunflower-seeds.jpg: "Guazi (sunflower seeds).jpg" by Mx. Granger, CC0, https://commons.wikimedia.org/wiki/File:Guazi_(sunflower_seeds).jpg
+flaxseed-linseed.jpg: "Brown Flax Seeds.jpg" by Sanjay Acharya, CC BY-SA 3.0, https://commons.wikimedia.org/wiki/File:Brown_Flax_Seeds.jpg
+castor-seeds.jpg: "Ricinus communis 008.JPG" by H. Zell, CC BY-SA 3.0, https://commons.wikimedia.org/wiki/File:Ricinus_communis_008.JPG
+niger-seeds.jpg: "Niger Seed.jpg" by Gaurav Dhwaj Khadka, CC BY 4.0, https://commons.wikimedia.org/wiki/File:Niger_Seed.jpg
+safflower-seeds.jpg: "Carthamus tinctorius - Osaka Museum of Natural History - DSC07849.JPG" by Daderot, CC0, https://commons.wikimedia.org/wiki/File:Carthamus_tinctorius_-_Osaka_Museum_of_Natural_History_-_DSC07849.JPG
+cottonseed.jpg: "Cotton seeds at Reganigudem (1).JPG" by Adityamadhav83, CC BY-SA 3.0, https://commons.wikimedia.org/wiki/File:Cotton_seeds_at_Reganigudem_(1).JPG
+nashik-red-onion.jpg: "India - Koyambedu Market - Onions 08 (3987045248).jpg" by McKay Savage from London, UK, CC BY 2.0, https://commons.wikimedia.org/wiki/File:India_-_Koyambedu_Market_-_Onions_08_(3987045248).jpg
+lasalgaon-red-onion.jpg: "Onions on a trolley in India.jpg" by Ravi Dwivedi, CC BY-SA 4.0, https://commons.wikimedia.org/wiki/File:Onions_on_a_trolley_in_India.jpg
+bhima-red-onion.jpg: "India - Koyambedu Market - Onions 06 (3987043646).jpg" by McKay Savage from London, UK, CC BY 2.0, https://commons.wikimedia.org/wiki/File:India_-_Koyambedu_Market_-_Onions_06_(3987043646).jpg
+bhima-shakti-bhima-super-onion.jpg: "India - Koyambedu Market - Onions 10 (3986292991).jpg" by McKay Savage from London, UK, CC BY 2.0, https://commons.wikimedia.org/wiki/File:India_-_Koyambedu_Market_-_Onions_10_(3986292991).jpg
+white-onion-pusa-white.jpg: "White Onions.jpg" by James Moore200, CC BY-SA 4.0, https://commons.wikimedia.org/wiki/File:White_Onions.jpg
