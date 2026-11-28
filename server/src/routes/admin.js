@@ -173,7 +173,7 @@ r.post('/products', wrap(async (req, res) => {
   if (!b.name || (isRice && !b.family)) return res.status(400).json({ error: isRice ? 'Name and family are required.' : 'Name is required.' });
   const p = await Product.create({
     slug: slugify(b.slug || b.name), name: b.name, category, family: isRice ? b.family : undefined, processing: b.processing || undefined, hsn: b.hsn || (isRice ? '10063020' : ''),
-    avgPriceUsd: +b.avgPriceUsd || 0, grain: isRice ? grain(b) : undefined,
+    avgPriceUsd: +b.avgPriceUsd || 0, avgPriceMaxUsd: +b.avgPriceMaxUsd || 0, grain: isRice ? grain(b) : undefined,
     packaging: ['25 kg PP', '50 kg PP', 'Jumbo bag', 'Private label'], incoterms: ['FOB', 'CIF', 'CFR'],
     blurb: b.blurb || `${b.name} from India.`,
   });
@@ -184,6 +184,7 @@ r.patch('/products/:id', wrap(async (req, res) => {
   const set = pick(b, ['name', 'category', 'family', 'processing', 'hsn', 'blurb']);
   if (set.family === '') delete set.family;
   if (b.avgPriceUsd !== undefined) set.avgPriceUsd = +b.avgPriceUsd;
+  if (b.avgPriceMaxUsd !== undefined) set.avgPriceMaxUsd = +b.avgPriceMaxUsd || 0;
   if (b.length || b.broken) set.grain = grain(b); // blank grain fields leave non-rice products untouched
   const p = await Product.findByIdAndUpdate(req.params.id, set, { new: true, runValidators: true });
   if (!p) return res.status(404).json({ error: 'Product not found.' });

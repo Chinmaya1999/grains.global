@@ -7,7 +7,7 @@ const SatelliteMap = lazy(() => import('../components/SatelliteMap.jsx'));
 import { getStats, getProducts } from '../api.js';
 import { STEPS, ROLES, PROMPTS, FALLBACK_VARIETIES } from '../lib/data.js';
 import { CALCS, SCORES } from '../lib/tools.js';
-import { inGroup, priceLabel, isRice } from '../lib/format.js';
+import { inGroup, priceLabel, isRice, isRange } from '../lib/format.js';
 import { productImage } from '../lib/content.js';
 
 // Each tab changes what the bar asks and where the button goes; nothing navigates until you press the button.
@@ -111,7 +111,7 @@ export default function Home() {
               <Link to={`/rice/${p.slug}`} className="vcard" key={p.slug}>
                 <div className="vph">{i === 0 && fam === 'Basmati' && <em>Bestseller</em>}<Photo name={productImage(p)} scene="rice" alt={p.name} /></div>
                 <h3>{p.name}</h3><small>HSN: {p.hsn}</small>
-                <p>{p.avgPriceUsd ? <>Avg. Price: <b>{priceLabel(p)}</b></> : <b>Price on request</b>}<span className="go"><Icon n="arrow" size={16} /></span></p>
+                <p>{p.avgPriceUsd ? <>{isRange(p) ? 'Price' : 'Avg. Price'}: <b>{priceLabel(p)}</b></> : <b>Price on request</b>}<span className="go"><Icon n="arrow" size={16} /></span></p>
               </Link>
             ))}
           </div>

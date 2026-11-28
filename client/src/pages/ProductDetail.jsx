@@ -5,7 +5,7 @@ import { ProductPhoto } from '../components/Art.jsx';
 import LeadForm from '../components/LeadForm.jsx';
 import { request } from '../api.js';
 import { RICE, productImage } from '../lib/content.js';
-import { lengthLabel, isRice, categoryOf, kindLabel, productPath } from '../lib/format.js';
+import { lengthLabel, priceAmount, isRange, isRice, categoryOf, kindLabel, productPath } from '../lib/format.js';
 import { applySeo, productSeo, SITE } from '../lib/seo.js';
 
 export default function ProductDetail() {
@@ -27,7 +27,12 @@ export default function ProductDetail() {
     ld.textContent = JSON.stringify({
       '@context': 'https://schema.org', '@type': 'Product', name: p.name, description: p.blurb, category: isRice(p) ? `${p.family} rice` : categoryOf(p),
       ...(img ? { image: SITE + img } : {}), brand: { '@type': 'Brand', name: 'Agri Global' },
-      ...(p.avgPriceUsd ? { offers: { '@type': 'Offer', priceCurrency: 'USD', price: p.avgPriceUsd, priceSpecification: { '@type': 'UnitPriceSpecification', priceCurrency: 'USD', price: p.avgPriceUsd, unitCode: 'TNE' }, availability: 'https://schema.org/InStock', url: SITE + productPath(p) } } : {}),
+      ...(p.avgPriceUsd ? {
+        offers: {
+          ...(isRange(p) ? { '@type': 'AggregateOffer', lowPrice: p.avgPriceUsd, highPrice: p.avgPriceMaxUsd } : { '@type': 'Offer', price: p.avgPriceUsd, priceSpecification: { '@type': 'UnitPriceSpecification', priceCurrency: 'USD', price: p.avgPriceUsd, unitCode: 'TNE' } }),
+          priceCurrency: 'USD', availability: 'https://schema.org/InStock', url: SITE + productPath(p),
+        },
+      } : {}),
     });
     document.head.appendChild(ld);
     return () => ld.remove();
@@ -45,7 +50,7 @@ export default function ProductDetail() {
     <>
       <Hero tag={kindLabel(p).toUpperCase()} title={p.name} lede={p.blurb}>
         <dl className="pfacts">
-          <div><dt>Average price</dt><dd>{p.avgPriceUsd ? `$${p.avgPriceUsd}` : 'On request'}{p.avgPriceUsd ? <small> /MT</small> : null}</dd></div>
+          <div><dt>{isRange(p) ? 'Price range' : 'Average price'}</dt><dd>{p.avgPriceUsd ? `$${priceAmount(p)}` : 'On request'}{p.avgPriceUsd ? <small> /MT</small> : null}</dd></div>
           {p.hsn && <div><dt>HSN code</dt><dd>{p.hsn}</dd></div>}
           {p.grain?.length ? <div><dt>Grain length</dt><dd>{lengthLabel(p)}</dd></div> : null}
           <div><dt>Origin</dt><dd>India</dd></div>

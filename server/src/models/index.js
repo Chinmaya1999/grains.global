@@ -10,6 +10,7 @@ export const Product = model('Product', new Schema({
   processing: String,
   hsn: { type: String, default: '10063020' },
   avgPriceUsd: Number,
+  avgPriceMaxUsd: Number, // set only for a price range: avgPriceUsd is the low end, this is the high end
   grain: { length: Number, broken: Number, moisture: Number },
   packaging: [String],
   incoterms: [String],

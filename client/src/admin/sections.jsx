@@ -1,5 +1,6 @@
 import { Fragment, useMemo, useState } from 'react';
 import { request, getProducts } from '../api.js';
+import { priceAmount } from '../lib/format.js';
 import { Counter } from '../components/bits.jsx';
 import { AreaChart, Donut } from './charts.jsx';
 import { REGISTRY, DEFAULTS, CONTENT_META, SETTINGS } from '../lib/content.js';
@@ -176,7 +177,8 @@ export function Products({ toast }) {
     { k: 'family', label: 'Family (rice only)', options: [['', '—'], ...['Basmati', 'Sella', 'Non-Basmati'].map((v) => [v, v])] },
     { k: 'processing', label: 'Processing', options: [['', '—'], ...['Steam', 'Raw', 'White', 'White Sella', 'Golden Sella', 'Parboiled'].map((v) => [v, v])] },
     { k: 'length', label: 'Grain length (mm)', type: 'number' }, { k: 'broken', label: 'Broken %', type: 'number' },
-    { k: 'moisture', label: 'Moisture %', type: 'number' }, { k: 'avgPriceUsd', label: 'Avg price (USD/MT, 0 = on request)', type: 'number' },
+    { k: 'moisture', label: 'Moisture %', type: 'number' }, { k: 'avgPriceUsd', label: 'Price (USD/MT, 0 = on request)', type: 'number' },
+    { k: 'avgPriceMaxUsd', label: 'Highest price, for a range (blank = single price)', type: 'number' },
     { k: 'hsn', label: 'HSN code' },
   ];
   const flat = (p) => ({ ...p, length: p.grain?.length, broken: p.grain?.broken, moisture: p.grain?.moisture });
@@ -191,7 +193,7 @@ export function Products({ toast }) {
             <tr key={p._id || p.slug}>
               <td><b>{p.name}</b><small>{[p.category || 'Rice', p.family, p.processing, p.hsn && `HSN ${p.hsn}`].filter(Boolean).join(' · ')}</small></td>
               <td>{p.grain?.length ? `${p.grain.length} mm · ≤${p.grain.broken}% broken · ${p.grain.moisture}% moisture` : `${p.specs?.length || 0} specifications`}</td>
-              <td className="hot">{p.avgPriceUsd ? `$${p.avgPriceUsd}` : <small>on request</small>}</td>
+              <td className="hot">{p.avgPriceUsd ? `$${priceAmount(p)}` : <small>on request</small>}</td>
               <td className="acts">{p._id && <>
                 <button className="gbtn sm" onClick={() => setModal(flat(p))}>Edit</button>
                 <button className="gbtn danger sm" onClick={() => confirm(`Delete ${p.name}?`) && request(`/admin/products/${p._id}`, { method: 'DELETE' }).then(() => { toast('Variety deleted'); reload(); }).catch((e) => toast(e.message, true))}>Delete</button></>}</td>

@@ -4,7 +4,7 @@ import { Icon, ProductPhoto } from '../components/Art.jsx';
 import { Reveal } from '../components/bits.jsx';
 import LeadForm from '../components/LeadForm.jsx';
 import { getProducts, getOffers } from '../api.js';
-import { inGroup, productPath, kindLabel, isRice, CATEGORIES } from '../lib/format.js';
+import { inGroup, priceAmount, isRange, productPath, kindLabel, isRice, CATEGORIES } from '../lib/format.js';
 import { productImage } from '../lib/content.js';
 
 const FAMILIES = ['All', ...CATEGORIES, 'Basmati', 'Non-Basmati', 'Sella'];
@@ -67,7 +67,7 @@ export default function Marketplace() {
               <div className="bar"><i style={{ width: `${(p.grain.length / 8.6) * 100}%` }} /></div>
               <p>{Number(p.grain.length).toFixed(2)} mm · &lt;{p.grain.broken}% broken · &lt;{p.grain.moisture}% moisture</p>
             </> : <p>{p.blurb}</p>}
-            <b className="hot">{p.avgPriceUsd ? <>${p.avgPriceUsd}<small>/MT avg</small></> : <small>Price on request</small>}</b>
+            <b className="hot">{p.avgPriceUsd ? <>${priceAmount(p)}<small>{isRange(p) ? '/MT' : '/MT avg'}</small></> : <small>Price on request</small>}</b>
           </Link>
         ))}
       </div>
