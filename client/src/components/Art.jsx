@@ -208,6 +208,12 @@ function Scene({ kind, tone }) {
 }
 
 // Shows /images/<name>.jpg when it exists, otherwise the drawn scene.
+// A product's own photo, or a neutral tile so one commodity is never illustrated with another.
+export function ProductPhoto({ name, alt, className = '' }) {
+  if (name) return <Photo name={name} scene="rice" alt={alt} className={className} />;
+  return <div className={`photo photo-none ${className}`} role="img" aria-label={`${alt}: photo coming soon`}><Icon n="leaf" size={34} /><small>Photo coming soon</small></div>;
+}
+
 export function Photo({ name, alt = '', scene, tone, className = '' }) {
   const [failed, setFailed] = useState(false);
   return (

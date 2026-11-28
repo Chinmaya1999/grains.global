@@ -48,6 +48,7 @@ export function PublicRoutes({ location }) {
           <Route path="/join" element={<Join />} />
           <Route path="/account" element={<Account />} />
           <Route path="/rice/:slug" element={<ProductDetail />} />
+          <Route path="/products/:slug" element={<ProductDetail />} />
           <Route path="/about" element={<About />} /><Route path="/why-us" element={<WhyUs />} /><Route path="/team" element={<Team />} />
           <Route path="/manifesto" element={<Manifesto />} /><Route path="/sustainability" element={<Sustainability />} /><Route path="/livelihood" element={<Livelihood />} />
           <Route path="/contact" element={<Contact />} /><Route path="/privacy" element={<Privacy />} /><Route path="/terms" element={<Terms />} /><Route path="/documents" element={<Documents />} />
@@ -74,7 +75,7 @@ function Shell() {
   // Each page gets its own browser-tab title, meta description, canonical URL and social tags (see lib/seo.js).
   // Product pages set their own once the variety has loaded.
   useEffect(() => {
-    if (pathname.startsWith('/rice/')) return;
+    if (pathname.startsWith('/rice/') || pathname.startsWith('/products/')) return;
     const known = seoFor(pathname);
     if (known) { applySeo({ image: '/images/hero-trade.jpg', ...known }); return; }
     const t = setTimeout(() => {

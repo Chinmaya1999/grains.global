@@ -412,7 +412,10 @@ const PRODUCT_IMAGES = {
   "marsi-red-parboiled-rice-6-00-mm": "marsi-red-rice",
   "mixed-whole-grain-rice-6-20-mm": "mixed-whole-grain-rice"
 };
+// Returns null when there is no photo for a product (a plain placeholder is shown instead).
 export function productImage(p) {
+  if (p.image) return p.image;
+  if (!PRODUCT_IMAGES[p.slug] && (p.specs?.length || (p.category && p.category !== 'Rice'))) return null;
   const f = PRODUCT_IMAGES[p.slug] || (p.processing === 'Golden Sella' ? 'steam-yellow' : p.family === 'Basmati' ? 'basmati-pot' : 'longgrain');
   return `products/${f}`;
 }

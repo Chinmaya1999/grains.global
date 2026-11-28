@@ -3,6 +3,7 @@ import { Product, Offer, Lead, Stat, Content } from '../models/index.js';
 import { leadLimiter } from '../security.js';
 
 const r = Router();
+const CATEGORY_ORDER = Product.schema.path('category').enumValues;
 const wrap = (fn) => (req, res, next) => fn(req, res).catch(next);
 
 r.get('/health', (_req, res) => res.json({ ok: true }));
@@ -10,7 +11,10 @@ r.get('/health', (_req, res) => res.json({ ok: true }));
 r.get('/products', wrap(async (req, res) => {
   const q = {};
   if (req.query.family) q.family = String(req.query.family);
-  res.json(await Product.find(q).sort({ family: 1, name: 1 }));
+  const list = await Product.find(q).sort({ family: 1, name: 1 });
+  const rank = (p) => CATEGORY_ORDER.indexOf(p.category); // rice first, then the other commodities
+  const noPhoto = (p) => (p.category === 'Rice' || p.image ? 0 : 1); // outside rice, products with photos come first
+  res.json(list.sort((a, b) => rank(a) - rank(b) || noPhoto(a) - noPhoto(b)));
 }));
 
 r.get('/products/:slug', wrap(async (req, res) => {

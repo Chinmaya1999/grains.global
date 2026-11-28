@@ -7,7 +7,7 @@ const SatelliteMap = lazy(() => import('../components/SatelliteMap.jsx'));
 import { getStats, getProducts } from '../api.js';
 import { STEPS, ROLES, PROMPTS, FALLBACK_VARIETIES } from '../lib/data.js';
 import { CALCS, SCORES } from '../lib/tools.js';
-import { inGroup, priceLabel } from '../lib/format.js';
+import { inGroup, priceLabel, isRice } from '../lib/format.js';
 import { productImage } from '../lib/content.js';
 
 // Each tab changes what the bar asks and where the button goes; nothing navigates until you press the button.
@@ -47,11 +47,12 @@ export default function Home() {
   useEffect(() => { getStats().then(setStats); getProducts().then((p) => p.length && setItems(p)); }, []);
   const stat = (k, d) => stats.find((s) => s.key === k) || d;
   const corridor = stat('corridor', { value: 31 }), women = stat('women', { value: 1, suffix: 'M' });
-  const count = (f) => items.filter((p) => inGroup(p, f)).length;
-  const shown = items.filter((p) => inGroup(p, fam)).slice(0, 4);
+  const rice = items.filter(isRice);
+  const count = (f) => rice.filter((p) => inGroup(p, f)).length;
+  const shown = rice.filter((p) => inGroup(p, fam)).slice(0, 4);
 
   const strip = [
-    ['leaf', items.length, '', 'Rice varieties'], ['globe', corridor.value, '', 'Corridor countries'], ['people', ROLES.length, '', 'Stakeholder types'],
+    ['leaf', items.length, '', 'Products listed'], ['globe', corridor.value, '', 'Corridor countries'], ['people', ROLES.length, '', 'Stakeholder types'],
     ['calc', CALCS.length + SCORES.length, '', 'Free tools'], ['spark', PROMPTS.length, '', 'AI prompt templates'], ['sprout', women.value, women.suffix || 'M', 'Women AgroPreneurs (target)'],
   ];
   const audience = [
@@ -101,7 +102,7 @@ export default function Home() {
             <h2>Featured Rice Varieties</h2>
             <div className="ptabs">
               {FAMILIES.map((f) => <button key={f} className={fam === f ? 'on' : ''} onClick={() => setFam(f)}>{f} ({count(f)})</button>)}
-              <button className={fam === 'All' ? 'on' : ''} onClick={() => setFam('All')}>All SKUs ({items.length})</button>
+              <button className={fam === 'All' ? 'on' : ''} onClick={() => setFam('All')}>All SKUs ({rice.length})</button>
             </div>
             <Link to="/marketplace" className="va">View All Products <Icon n="arrow" size={14} /></Link>
           </header>

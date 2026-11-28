@@ -168,10 +168,12 @@ r.delete('/offers/:id', wrap(async (req, res) => { await Offer.findByIdAndDelete
 const grain = (b) => ({ length: +b.length || 0, broken: +b.broken || 0, moisture: +b.moisture || 12 });
 r.post('/products', wrap(async (req, res) => {
   const b = req.body || {};
-  if (!b.name || !b.family) return res.status(400).json({ error: 'Name and family are required.' });
+  const category = b.category || 'Rice';
+  const isRice = category === 'Rice';
+  if (!b.name || (isRice && !b.family)) return res.status(400).json({ error: isRice ? 'Name and family are required.' : 'Name is required.' });
   const p = await Product.create({
-    slug: slugify(b.slug || b.name), name: b.name, family: b.family, processing: b.processing, hsn: b.hsn || '10063020',
-    avgPriceUsd: +b.avgPriceUsd || 0, grain: grain(b),
+    slug: slugify(b.slug || b.name), name: b.name, category, family: isRice ? b.family : undefined, processing: b.processing || undefined, hsn: b.hsn || (isRice ? '10063020' : ''),
+    avgPriceUsd: +b.avgPriceUsd || 0, grain: isRice ? grain(b) : undefined,
     packaging: ['25 kg PP', '50 kg PP', 'Jumbo bag', 'Private label'], incoterms: ['FOB', 'CIF', 'CFR'],
     blurb: b.blurb || `${b.name} from India.`,
   });
@@ -179,9 +181,10 @@ r.post('/products', wrap(async (req, res) => {
 }));
 r.patch('/products/:id', wrap(async (req, res) => {
   const b = req.body || {};
-  const set = pick(b, ['name', 'family', 'processing', 'hsn', 'blurb']);
+  const set = pick(b, ['name', 'category', 'family', 'processing', 'hsn', 'blurb']);
+  if (set.family === '') delete set.family;
   if (b.avgPriceUsd !== undefined) set.avgPriceUsd = +b.avgPriceUsd;
-  if (b.length !== undefined) set.grain = grain(b);
+  if (b.length || b.broken) set.grain = grain(b); // blank grain fields leave non-rice products untouched
   const p = await Product.findByIdAndUpdate(req.params.id, set, { new: true, runValidators: true });
   if (!p) return res.status(404).json({ error: 'Product not found.' });
   res.json(p);

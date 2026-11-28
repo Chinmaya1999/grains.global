@@ -4,7 +4,9 @@ const { Schema, model } = mongoose;
 export const Product = model('Product', new Schema({
   slug: { type: String, unique: true, required: true },
   name: { type: String, required: true },
-  family: { type: String, enum: ['Basmati', 'Non-Basmati', 'Sella'], required: true },
+  category: { type: String, enum: ['Rice', 'Grains', 'Pulses', 'Oilseeds', 'Onions', 'Spices'], default: 'Rice' },
+  // family and grain apply to rice only
+  family: { type: String, enum: ['Basmati', 'Non-Basmati', 'Sella'], required() { return this.category === 'Rice'; } },
   processing: String,
   hsn: { type: String, default: '10063020' },
   avgPriceUsd: Number,
@@ -12,6 +14,11 @@ export const Product = model('Product', new Schema({
   packaging: [String],
   incoterms: [String],
   blurb: String,
+  image: String, // path under /images without the extension
+  specs: [{ _id: false, label: String, value: String }],
+  nutrition: [{ _id: false, label: String, value: String }],
+  features: [String],
+  grades: [String],
 }, { timestamps: true }));
 
 export const Offer = model('Offer', new Schema({

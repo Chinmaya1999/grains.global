@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import mongoose from 'mongoose';
 import { Product, Offer, Stat } from './models/index.js';
+import { importCatalogue, NEW_PRODUCTS } from './catalogue.js';
 
 // The 22 rice SKUs listed in grains.global's sitemap. Grain lengths come from the SKU URLs.
 // Average prices are only known for three of them (from their product pages); the rest are 0,
@@ -54,7 +55,7 @@ const products = [
 // 29 countries are listed on the corridor page (Egypt appears under both regions), plus India.
 const stats = [
   ['corridor', 'Countries in the AIM corridor', 30, ''],
-  ['skus', 'Rice varieties listed', products.length, ''],
+  ['skus', 'Rice varieties listed', products.length + NEW_PRODUCTS.filter((p) => p.category === 'Rice').length, ''],
   ['tools', 'Free calculators & scorecards', 13, ''],
   ['women', 'Women AgroPreneurs by our goal', 1, 'M'],
 ].map(([key, label, value, suffix], order) => ({ key, label, value, suffix, order }));
@@ -62,6 +63,7 @@ const stats = [
 await mongoose.connect(process.env.MONGODB_URI);
 await Promise.all([Product.deleteMany({}), Offer.deleteMany({}), Stat.deleteMany({})]);
 const docs = await Product.insertMany(products);
+await importCatalogue(Product);
 const by = Object.fromEntries(docs.map((d) => [d.slug, d]));
 
 // Illustrative sample offers so the marketplace is never empty.
@@ -75,5 +77,5 @@ await Offer.insertMany([
   product: by[s]._id, sellerCompany: c, origin: o, destination: d, incoterm: i, quantityMT: q, priceUsdPerMT: p, status: 'live',
 })));
 await Stat.insertMany(stats);
-console.log(`Seeded ${docs.length} products, 5 sample offers, ${stats.length} stats`);
+console.log(`Seeded ${await Product.countDocuments()} products, 5 sample offers, ${stats.length} stats`);
 await mongoose.disconnect();

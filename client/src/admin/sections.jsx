@@ -172,8 +172,9 @@ export function Products({ toast }) {
   const [modal, setModal] = useState(null);
   const fields = [
     { k: 'name', label: 'Name', required: true, wide: true },
-    { k: 'family', label: 'Family', options: ['Basmati', 'Sella', 'Non-Basmati'].map((v) => [v, v]) },
-    { k: 'processing', label: 'Processing', options: ['Steam', 'Raw', 'White', 'Golden Sella'].map((v) => [v, v]) },
+    { k: 'category', label: 'Category', options: ['Rice', 'Grains', 'Pulses', 'Oilseeds', 'Onions', 'Spices'].map((v) => [v, v]) },
+    { k: 'family', label: 'Family (rice only)', options: [['', '—'], ...['Basmati', 'Sella', 'Non-Basmati'].map((v) => [v, v])] },
+    { k: 'processing', label: 'Processing', options: [['', '—'], ...['Steam', 'Raw', 'White', 'White Sella', 'Golden Sella', 'Parboiled'].map((v) => [v, v])] },
     { k: 'length', label: 'Grain length (mm)', type: 'number' }, { k: 'broken', label: 'Broken %', type: 'number' },
     { k: 'moisture', label: 'Moisture %', type: 'number' }, { k: 'avgPriceUsd', label: 'Avg price (USD/MT, 0 = on request)', type: 'number' },
     { k: 'hsn', label: 'HSN code' },
@@ -181,15 +182,15 @@ export function Products({ toast }) {
   const flat = (p) => ({ ...p, length: p.grain?.length, broken: p.grain?.broken, moisture: p.grain?.moisture });
   return (
     <>
-      <Toolbar right={<button className="gbtn pri" onClick={() => setModal({})}>+ New variety</button>}><span className="count">{data ? `${data.length} varieties` : ''}</span></Toolbar>
+      <Toolbar right={<button className="gbtn pri" onClick={() => setModal({})}>+ New product</button>}><span className="count">{data ? `${data.length} products` : ''}</span></Toolbar>
       <Err e={error} />
       {!data ? <Loading /> : (
         <div className="glass tbl-wrap"><table>
           <thead><tr><th>Variety</th><th>Spec</th><th>Avg price</th><th /></tr></thead>
           <tbody>{data.map((p) => (
             <tr key={p._id || p.slug}>
-              <td><b>{p.name}</b><small>{p.family} · {p.processing} · HSN {p.hsn}</small></td>
-              <td>{p.grain?.length} mm · ≤{p.grain?.broken}% broken · {p.grain?.moisture}% moisture</td>
+              <td><b>{p.name}</b><small>{[p.category || 'Rice', p.family, p.processing, p.hsn && `HSN ${p.hsn}`].filter(Boolean).join(' · ')}</small></td>
+              <td>{p.grain?.length ? `${p.grain.length} mm · ≤${p.grain.broken}% broken · ${p.grain.moisture}% moisture` : `${p.specs?.length || 0} specifications`}</td>
               <td className="hot">{p.avgPriceUsd ? `$${p.avgPriceUsd}` : <small>on request</small>}</td>
               <td className="acts">{p._id && <>
                 <button className="gbtn sm" onClick={() => setModal(flat(p))}>Edit</button>
@@ -197,7 +198,7 @@ export function Products({ toast }) {
             </tr>))}</tbody>
         </table></div>
       )}
-      {modal && <FormModal title={modal._id ? 'Edit variety' : 'New variety'} fields={fields} initial={modal} onClose={() => setModal(null)}
+      {modal && <FormModal title={modal._id ? 'Edit product' : 'New product'} fields={fields} initial={modal} onClose={() => setModal(null)}
         onSave={async (b) => { await request(modal._id ? `/admin/products/${modal._id}` : '/admin/products', { method: modal._id ? 'PATCH' : 'POST', body: b }); toast('Variety saved'); reload(); }} />}
     </>
   );

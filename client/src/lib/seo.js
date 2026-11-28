@@ -60,6 +60,9 @@ export function seoFor(path) {
 }
 
 export function productSeo(p) {
+  if (p.category && p.category !== 'Rice') {
+    return { title: `${p.name} Export from India | ${BRAND}`, description: `${p.blurb} Specifications, packaging and quotes on ${BRAND}.`, path: `/products/${p.slug}` };
+  }
   const kind = p.family === 'Basmati' ? 'Basmati' : 'Non-Basmati';
   return {
     title: `${p.name} Export | ${kind} Rice ${p.grain?.length ? `${Number(p.grain.length).toFixed(2)} mm ` : ''}| ${BRAND}`.replace(/\s+\|/g, ' |'),

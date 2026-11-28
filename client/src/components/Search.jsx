@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getProducts } from '../api.js';
-import { priceLabel } from '../lib/format.js';
+import { priceLabel, productPath, kindLabel, isRice } from '../lib/format.js';
 import { Icon } from './Art.jsx';
 
 // [title, path, icon, keywords people might type]
@@ -46,11 +46,11 @@ export default function Search({ onClose }) {
 
   const items = useMemo(() => {
     const term = q.trim();
-    const rice = (term ? products.filter((p) => match(`${p.name} ${p.family} ${p.processing} ${p.hsn} ${p.grain?.length}`, term)) : products.filter((p) => p.avgPriceUsd)).slice(0, term ? 6 : 4)
-      .map((p) => ({ kind: 'Rice', icon: 'leaf', label: p.name, sub: `${p.family} · ${p.processing} · ${priceLabel(p)}`, to: `/rice/${p.slug}` }));
+    const rice = (term ? products.filter((p) => match(`${p.name} ${kindLabel(p)} ${isRice(p) ? 'rice' : ''} ${p.hsn} ${p.grain?.length}`, term)) : products.filter((p) => p.avgPriceUsd)).slice(0, term ? 6 : 4)
+      .map((p) => ({ kind: 'Product', icon: 'leaf', label: p.name, sub: `${kindLabel(p)} · ${priceLabel(p)}`, to: productPath(p) }));
     const pages = (term ? PAGES.filter(([t, , , k]) => match(`${t} ${k}`, term)) : PAGES.slice(0, 5)).slice(0, 5)
       .map(([t, to, icon]) => ({ kind: 'Page', icon, label: t, sub: to.split('?')[0], to }));
-    const all = term ? [{ kind: 'Search', icon: 'search', label: `Search all rice for “${term}”`, sub: 'Open the marketplace with this search', to: `/marketplace?q=${encodeURIComponent(term)}` }] : [];
+    const all = term ? [{ kind: 'Search', icon: 'search', label: `Search all products for “${term}”`, sub: 'Open the marketplace with this search', to: `/marketplace?q=${encodeURIComponent(term)}` }] : [];
     return [...all, ...rice, ...pages];
   }, [q, products]);
 
@@ -71,7 +71,7 @@ export default function Search({ onClose }) {
       <div className="srch" style={{ top }} role="dialog" aria-label="Search the site" aria-modal="true">
         <div className="srch-in">
           <Icon n="search" size={20} />
-          <input ref={input} value={q} onChange={(e) => setQ(e.target.value)} onKeyDown={key} placeholder="Search rice, tools, pages…" autoComplete="off" spellCheck="false"
+          <input ref={input} value={q} onChange={(e) => setQ(e.target.value)} onKeyDown={key} placeholder="Search products, tools, pages…" autoComplete="off" spellCheck="false"
             role="combobox" aria-expanded="true" aria-controls="srch-list" aria-activedescendant={`sr-${active}`} aria-label="Search" enterKeyHint="search" />
           {q && <button className="srch-clear" onClick={() => { setQ(''); input.current?.focus(); }} aria-label="Clear search"><Icon n="close" size={16} /></button>}
           <kbd>Esc</kbd>
@@ -79,7 +79,7 @@ export default function Search({ onClose }) {
         <ul id="srch-list" role="listbox">
           {!q && <li className="srch-h" role="presentation">Popular</li>}
           {items.map((it, i) => {
-            const head = it.kind !== lastKind && q ? <li className="srch-h" role="presentation" key={`h${i}`}>{it.kind === 'Search' ? '' : it.kind === 'Rice' ? 'Rice varieties' : 'Pages'}</li> : null;
+            const head = it.kind !== lastKind && q ? <li className="srch-h" role="presentation" key={`h${i}`}>{it.kind === 'Search' ? '' : it.kind === 'Product' ? 'Products' : 'Pages'}</li> : null;
             lastKind = it.kind;
             return (
               <Fragment key={it.to + it.label}>
@@ -94,7 +94,7 @@ export default function Search({ onClose }) {
               </Fragment>
             );
           })}
-          {q && items.length <= 1 && <li className="srch-empty" role="presentation">No rice or pages match “{q}”. Try “basmati”, “sella” or “finance”.</li>}
+          {q && items.length <= 1 && <li className="srch-empty" role="presentation">No products or pages match “{q}”. Try “basmati”, “wheat” or “finance”.</li>}
         </ul>
         <div className="srch-foot"><span><kbd>↑</kbd><kbd>↓</kbd> to move</span><span><kbd>Enter</kbd> to open</span><span><kbd>/</kbd> to search anywhere</span></div>
       </div>
